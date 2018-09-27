@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c53926af-f5aa-434b-b5d9-601036028fe3" name="Default Changelist" comment="" />
+    <list default="true" id="c53926af-f5aa-434b-b5d9-601036028fe3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../git-init.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../git-init.cmd" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +45,16 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-929635092">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FavoritesManager">
     <favorites_list name="001" />
@@ -51,7 +64,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/predict.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
+            <state relative-caret-position="731">
               <caret line="54" column="30" selection-start-line="54" selection-start-column="30" selection-end-line="54" selection-end-column="30" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -64,8 +77,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="128" column="25" lean-forward="true" selection-start-line="128" selection-start-column="25" selection-end-line="128" selection-end-column="25" />
+            <state relative-caret-position="697">
+              <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -76,8 +89,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scorer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="27" column="16" lean-forward="true" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
+            <state relative-caret-position="340">
+              <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -101,13 +114,16 @@
       <find>get_model_from_name</find>
     </findStrings>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/auto_ml_getting_started.py" />
-        <option value="E:/ds/Anaconda3/Lib/site-packages/auto_ml/predictor.py" />
+        <option value="$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/auto_ml/predictor.py" />
         <option value="$PROJECT_DIR$/predict.py" />
-        <option value="E:/ds/Anaconda3/Lib/site-packages/auto_ml/utils_models.py" />
+        <option value="$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/auto_ml/utils_models.py" />
         <option value="$PROJECT_DIR$/scorer.py" />
         <option value="$PROJECT_DIR$/train.py" />
       </list>
@@ -117,6 +133,7 @@
     <option name="width" value="1504" />
     <option name="height" value="1040" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -277,8 +294,8 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1504" height="1040" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49669603" visible="true" weight="0.2319236" />
-      <window_info id="Structure" order="1" sideWeight="0.50330395" side_tool="true" visible="true" weight="0.2319236" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4944934" visible="true" weight="0.2319236" />
+      <window_info id="Structure" order="1" sideWeight="0.50550663" side_tool="true" visible="true" weight="0.2319236" />
       <window_info id="Favorites" order="2" sideWeight="0.500821" side_tool="true" weight="0.26835042" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32929516" />
@@ -303,12 +320,12 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://E:/ds/Anaconda3/Lib/site-packages/sklearn/externals/joblib/parallel.py</url>
+          <url>file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/externals/joblib/parallel.py</url>
           <line>788</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://E:/ds/Anaconda3/Lib/site-packages/auto_ml/utils_models.py</url>
+          <url>file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/auto_ml/utils_models.py</url>
           <line>593</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
@@ -321,7 +338,7 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/pandas/core/indexing.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/pandas/core/indexing.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22151">
           <caret line="1326" selection-start-line="1326" selection-end-line="1326" />
@@ -335,7 +352,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/sklearn/model_selection/_search.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/model_selection/_search.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="638" selection-start-line="638" selection-end-line="638" />
@@ -349,98 +366,98 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/sklearn/externals/joblib/parallel.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/externals/joblib/parallel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="547">
           <caret line="698" selection-start-line="698" selection-end-line="698" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/multiprocessing/pool.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/multiprocessing/pool.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
           <caret line="643" selection-start-line="643" selection-end-line="643" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/sklearn/externals/joblib/pool.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/externals/joblib/pool.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
           <caret line="370" selection-start-line="370" selection-end-line="370" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/pandas/io/parsers.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/pandas/io/parsers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="1724" lean-forward="true" selection-start-line="1724" selection-end-line="1724" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/codecs.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
           <caret line="319" selection-start-line="319" selection-end-line="319" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/sklearn/linear_model/logistic.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/linear_model/logistic.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="1216" column="36" selection-start-line="1216" selection-start-column="8" selection-end-line="1216" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/sklearn/utils/multiclass.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/utils/multiclass.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
           <caret line="171" selection-start-line="171" selection-end-line="171" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/deap/tools/_hypervolume/pyhv.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/deap/tools/_hypervolume/pyhv.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/auto_ml/utils_model_training.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/auto_ml/utils_model_training.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
           <caret line="227" column="43" selection-start-line="227" selection-start-column="43" selection-end-line="227" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/lightgbm/sklearn.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/lightgbm/sklearn.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="615" selection-start-line="615" selection-end-line="615" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/lightgbm/engine.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/lightgbm/engine.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1672">
           <caret line="224" selection-start-line="224" selection-end-line="224" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/lightgbm/basic.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/lightgbm/basic.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
           <caret line="1661" selection-start-line="1661" selection-end-line="1661" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/auto_ml/utils_models.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/auto_ml/utils_models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
           <caret line="175" column="60" selection-start-line="175" selection-start-column="60" selection-end-line="175" selection-end-column="60" />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/ds/Anaconda3/Lib/site-packages/auto_ml/predictor.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/auto_ml/predictor.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="874" column="20" selection-start-line="874" selection-start-column="20" selection-end-line="874" selection-end-column="20" />
@@ -449,7 +466,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/predict.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
+        <state relative-caret-position="731">
           <caret line="54" column="30" selection-start-line="54" selection-start-column="30" selection-end-line="54" selection-end-column="30" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
@@ -460,8 +477,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scorer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="16" lean-forward="true" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
+        <state relative-caret-position="340">
+          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -470,8 +487,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="128" column="25" lean-forward="true" selection-start-line="128" selection-start-column="25" selection-end-line="128" selection-end-column="25" />
+        <state relative-caret-position="697">
+          <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
