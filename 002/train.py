@@ -6,6 +6,7 @@ import time
 
 from sklearn.linear_model import Ridge, LogisticRegression
 from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor
+from tpot import TPOTClassifier, TPOTRegressor
 
 from sklearn.preprocessing import StandardScaler
 
@@ -89,10 +90,12 @@ def train(args):
     model_config['mode'] = args.mode
     if args.mode == 'regression':
         #model = Ridge()
-        model = GradientBoostingRegressor()
+        #model = GradientBoostingRegressor()
+        model = TPOTRegressor( generations=5, population_size=10, cv=5, verbosity=2 )
     else:
         #model = LogisticRegression()
-        model = GradientBoostingClassifier()
+        #model = GradientBoostingClassifier()
+        model = TPOTClassifier( generations=5, population_size=10, cv=5, verbosity=2 )
 
     model.fit(df_X, df_y)
     log_time('fitting')

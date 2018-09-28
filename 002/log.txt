@@ -1,0 +1,15 @@
+processing ..\..\check_1_r\
+read dataset, shape:  (365, 41) nrows None time: 0.014503002166748047
+features from datetime time: 0.022004127502441406
+missing values time: 0.0020003318786621094
+categorical encoding time: 0.026505470275878906
+drop constant features time: 0.014002799987792969
+scaling time: 0.008501768112182617
+processing ..\..\check_1_r\
+read dataset, shape:  (365, 41) nrows None time: 0.01600337028503418
+features from datetime time: 0.02150416374206543
+missing values time: 0.0015003681182861328
+categorical encoding time: 0.025005102157592773
+drop constant features time: 0.013002634048461914
+scaling time: 0.002500295639038086
+fitting time: 61.323262214660645
