@@ -1,15 +1,17 @@
 import argparse
 import os
 import pandas as pd
+import numpy as np
 import pickle
 import time
 
 from sklearn.linear_model import Ridge, LogisticRegression
 from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor
-from tpot import TPOTClassifier, TPOTRegressor
-
+from sklearn.model_selection import GridSearchCV, KFold
 from sklearn.preprocessing import StandardScaler
 
+from predict import preprocess_test_data, predict
+from scorer import score, read_test_target
 from utils import transform_datetime_features, log, log_start, log_time
 
 # use this to stop the algorithm before time limit exceeds
@@ -88,32 +90,59 @@ def train(args):
     # fitting
     log_start()
     model_config['mode'] = args.mode
-    if args.mode == 'regression':
-        #model = Ridge()
-        #model = GradientBoostingRegressor()
-        model = TPOTRegressor( generations=5, population_size=10, cv=5, verbosity=2 )
+    regression = ( args.mode == 'regression' )
+    if regression:
+        # model = Ridge()
+        models = [
+            GradientBoostingRegressor(),
+            Ridge()
+        ]
+        # scoring = 'neg_mean_squared_error'
     else:
-        #model = LogisticRegression()
-        #model = GradientBoostingClassifier()
-        model = TPOTClassifier( generations=5, population_size=10, cv=5, verbosity=2 )
+        # model = LogisticRegression()
+        models = [
+            GradientBoostingClassifier(),
+            LogisticRegression()
+        ]
+        # scoring = 'roc_auc'
 
-    model.fit(df_X, df_y)
-    log_time('fitting')
+    #    param_grid = {
+    #        'min_samples_leaf': range(1, 30),
+    #        'max_features': np.arange(0.1, 1.1, 0.1),
+    #    }
 
-    model_config['model'] = model
+    #    cv = KFold( n_splits=5, shuffle=True)
+    #    grid = GridSearchCV( model, param_grid, cv=cv, scoring=scoring, n_jobs=3)
+    #    grid.fit(df_X, df_y)
+    scores = []
+    X_test_scaled, _, _ = preprocess_test_data(args, model_config)
+    y_test = read_test_target(args)
+    for model in models:
+        model.fit(df_X, df_y)
+        prediction = predict(X_test_scaled, model)
+        scores.append( score(args, y_test, prediction ) )
+    log_time('grid fitting')
 
-    model_config_filename = os.path.join(args.model_dir, 'model_config.pkl')
-    with open(model_config_filename, 'wb') as fout:
-        pickle.dump(model_config, fout, protocol=pickle.HIGHEST_PROTOCOL)
+    if regression:
+        best_index =  np.argmin(scores)
+    else:
+        best_index = np.argmax(scores)
+
+    #model = grid.best_estimator_
+    model_config['model'] = models[best_index]
 
     log('Train time: {}'.format(time.time() - start_train_time))
+    return model_config
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--train-csv', type=argparse.FileType('r'), required=True)
     parser.add_argument('--model-dir', required=True)
     parser.add_argument('--mode', choices=['classification', 'regression'], required=True)
-    parser.add_argument('--nrows', default='')
     args = parser.parse_args()
 
-    train(args)
+    model_config = train(args)
+    model_config_filename = os.path.join(args.model_dir, 'model_config.pkl')
+    with open(model_config_filename, 'wb') as fout:
+        pickle.dump(model_config, fout, protocol=pickle.HIGHEST_PROTOCOL)
