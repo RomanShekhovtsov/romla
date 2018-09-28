@@ -1,0 +1,106 @@
+C:\p\anaconda3\python.exe C:/ds/sdsj/002/main.py
+processing ..\check_1_r\
+Read .csv time: 0.01800251007080078
+Dataset read, shape (365, 41)
+ONEHOT_MAX_UNIQUE_VALUES 20
+Preprocessing time: 0.09051156044006348
+Train time: 0.0025000572204589844
+Dataset read, shape (172, 41)
+Read .csv time: 0.0050008296966552734
+Preprocessing time: 0.03450417518615723
+Prediction time: 0.005000591278076172
+RMSE: 11.4490048871036
+Scoring time: 0.004000425338745117
+Total time: 0.16102027893066406
+99945
+--------------------------------------------------------------------------------
+processing ..\check_2_r\
+Read .csv time: 0.044005632400512695
+Dataset read, shape (13958, 10)
+ONEHOT_MAX_UNIQUE_VALUES 20
+Preprocessing time: 0.08401060104370117
+Train time: 0.005000591278076172
+Dataset read, shape (5976, 10)
+Read .csv time: 0.021002769470214844
+Preprocessing time: 0.025503158569335938
+Prediction time: 0.04450559616088867
+RMSE: 1.6338020824320973
+Scoring time: 0.011001348495483398
+Total time: 0.2390303611755371
+1210 K
+--------------------------------------------------------------------------------
+processing ..\check_3_r\
+Read .csv time: 1.6072041988372803
+Dataset read, shape (250000, 42)
+ONEHOT_MAX_UNIQUE_VALUES 20
+Preprocessing time: 13.48221206665039
+Train time: 0.2965376377105713
+Dataset read, shape (146400, 42)
+Read .csv time: 0.762096643447876
+Preprocessing time: 7.327930688858032
+Prediction time: 0.6535830497741699
+RMSE: 118263.65765372638
+Scoring time: 0.134016752243042
+Total time: 24.2935848236084
+37 M
+--------------------------------------------------------------------------------
+processing ..\check_4_c\
+Read .csv time: 7.891002178192139
+Dataset read, shape (114130, 142)
+ONEHOT_MAX_UNIQUE_VALUES 20
+Preprocessing time: 19.842519521713257
+Train time: 27.414481163024902
+Dataset read, shape (45385, 142)
+Read .csv time: 2.080764055252075
+Preprocessing time: 6.9913880825042725
+Prediction time: 0.20802640914916992
+ROC-AUC: 0.7820058461443035
+Scoring time: 0.03350424766540527
+Total time: 64.50969195365906
+268 M
+--------------------------------------------------------------------------------
+processing ..\check_5_c\
+Read .csv time: 1.9472475051879883
+Dataset read, shape (467485, 16)
+ONEHOT_MAX_UNIQUE_VALUES 20
+Preprocessing time: 25.720765829086304
+Train time: 11.752492666244507
+Dataset read, shape (169638, 16)
+Read .csv time: 0.6210789680480957
+Preprocessing time: 8.898630142211914
+Prediction time: 0.7605962753295898
+ROC-AUC: 0.698342680323539
+Scoring time: 0.11651468276977539
+Total time: 49.86583232879639
+88 M
+--------------------------------------------------------------------------------
+processing ..\check_6_c\
+Read .csv time: 4.743102073669434
+Dataset read, shape (108814, 113)
+ONEHOT_MAX_UNIQUE_VALUES 20
+Preprocessing time: 2.4568121433258057
+Train time: 87.64412927627563
+Dataset read, shape (72545, 113)
+Read .csv time: 2.100766897201538
+Preprocessing time: 0.6060769557952881
+Prediction time: 0.33254218101501465
+ROC-AUC: 0.6096430109584685
+Scoring time: 0.06100773811340332
+Total time: 97.9969437122345
+98 M
+--------------------------------------------------------------------------------
+processing ..\check_7_c\
+Read .csv time: 19.97753667831421
+Dataset read, shape (92091, 773)
+ONEHOT_MAX_UNIQUE_VALUES 20
+Preprocessing time: 31.361482620239258
+Train time: 623.2641441822052
+Dataset read, shape (87062, 773)
+Read .csv time: 11.005897521972656
+Preprocessing time: 23.714011430740356
+Prediction time: 1.2456579208374023
+RMSE: 0.059947597202382415
+Scoring time: 0.09151172637939453
+Total time: ~710
+234 M
+--------------------------------------------------------------------------------
