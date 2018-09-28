@@ -1,0 +1,26 @@
+read dataset, shape:  (365, 41) nrows None time: 0.022001028060913086
+features from datetime time: 0.029001712799072266
+missing values time: 0.003000020980834961
+categorical encoding time: 0.03300213813781738
+drop constant features time: 0.018001079559326172
+scaling time: 0.006000518798828125
+fitting time: 0.10400581359863281
+Train time: 0.22201251983642578
+Dataset read, shape (172, 41)
+read dataset time: 0.016000747680664062
+features from datetime time: 0.017000913619995117
+missing values time: 0.002000093460083008
+categorical encoding time: 0.02500152587890625
+scale time: 0.0070002079010009766
+predict time: 0.0010001659393310547
+save prediction time: 0.0030002593994140625
+Prediction time: 0.47302722930908203
+Dataset read, shape (172, 41)
+read dataset time: 0.01700139045715332
+features from datetime time: 0.017000675201416016
+missing values time: 0.0010001659393310547
+categorical encoding time: 0.02500152587890625
+scale time: 0.020000934600830078
+predict time: 0.0010001659393310547
+save prediction time: 0.003000020980834961
+Prediction time: 0.4980285167694092

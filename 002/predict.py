@@ -77,5 +77,6 @@ if __name__ == '__main__':
     parser.add_argument('--test-csv', type=argparse.FileType('r'), required=True)
     parser.add_argument('--prediction-csv', type=argparse.FileType('w'), required=True)
     parser.add_argument('--model-dir', required=True)
+    parser.add_argument('--nrows', default='')
     args = parser.parse_args()
     predict(args)

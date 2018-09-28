@@ -110,6 +110,7 @@ if __name__ == '__main__':
     parser.add_argument('--train-csv', type=argparse.FileType('r'), required=True)
     parser.add_argument('--model-dir', required=True)
     parser.add_argument('--mode', choices=['classification', 'regression'], required=True)
+    parser.add_argument('--nrows', default='')
     args = parser.parse_args()
 
     train(args)
