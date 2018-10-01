@@ -8,13 +8,13 @@ import pandas as pd
 
 def parse_dt(x):
     if not isinstance(x, str):
-        return -1
+        return None
     elif len(x) == len('2010-01-01'):
         return datetime.datetime.strptime(x, '%Y-%m-%d')
     elif len(x) == len('2010-01-01 10:10:10'):
         return datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
     else:
-        return -1
+        return None
 
 
 def transform_datetime_features(df):
@@ -26,7 +26,7 @@ def transform_datetime_features(df):
 
     df_dates = pd.DataFrame()
     for col_name in datetime_columns:
-        df_dates[col_name] = df[col_name].apply(lambda x: parse_dt(x))
+        df_dates[col_name] = df[col_name].apply(lambda x: parse_dt(x)).astype('datetime64')
         df_dates['number_weekday_{}'.format(col_name)] = df_dates[col_name].apply(lambda x: x.weekday())
         df_dates['number_month_{}'.format(col_name)] = df_dates[col_name].apply(lambda x: x.month)
         df_dates['number_day_{}'.format(col_name)] = df_dates[col_name].apply(lambda x: x.day)
