@@ -13,14 +13,10 @@ from sklearn.ensemble import \
     ExtraTreesClassifier, ExtraTreesRegressor, \
     AdaBoostClassifier, AdaBoostRegressor
 from sklearn.svm import LinearSVC, SVC
-from sklearn.model_selection import GridSearchCV, KFold
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import cross_val_score
 
-#from predict import preprocess_test_data, predict
-#from scorer import score, read_test_target
-from utils import transform_datetime_features, log, log_start, log_time
-#from utils import read_csv, optimize_dataframe, estimate_csv
 from utils import *
 
 # use this to stop the algorithm before time limit exceeds
@@ -29,7 +25,7 @@ N_JOBS =4
 
 ONEHOT_MAX_UNIQUE_VALUES = 20
 MAX_DATASET_COLUMNS = 1000
-BIG_DATASET_SIZE = 300 * 1024 * 1024 # 300MB
+BIG_DATASET_SIZE = 500 * 1024 * 1024 # 300MB
 MAX_MODEL_SELECTION_ROWS = 10**5
 
 NEG_MEAN_SQUARED_ERROR = 'neg_mean_squared_error'
@@ -58,13 +54,15 @@ def train(args):
     model_config = {}
 
     # TODO: FAIL CHECK!!!
-    is_big = True #os.path.getsize(args.train_csv) > BIG_DATASET_SIZE
 
-    model_config['is_big'] = is_big
 
     #train_estimate = estimate_csv(args.train_csv)
     #log('estimate', args.train_csv, train_estimate)
     df = read_csv(args.train_csv, args.nrows)
+
+    initial_dataset_size = sys.getsizeof(df)
+    is_big = initial_dataset_size > BIG_DATASET_SIZE
+    model_config['is_big'] = is_big
 
     # missing values
     log_start()
@@ -82,7 +80,21 @@ def train(args):
 
     train_rows, train_cols = df_X.shape
 
-    if not is_big:
+    if is_big:
+        log_start()
+        new_feature_count = min(train_cols,
+                                int(train_cols / (initial_dataset_size / BIG_DATASET_SIZE)))
+        # take only high correlated features
+        correlations = np.abs([
+            np.corrcoef(df_y, df_X[col_name])[0, 1]
+            for col_name in df_X.columns if col_name.startswith('number')
+        ])
+        new_columns = df_X.columns[np.argsort(correlations)[-new_feature_count:]]
+        df_X = df_X[new_columns]
+        log_time('remove {} low correlated features'.format(train_cols - new_feature_count))
+
+    else:
+
         # features from datetime
         log_start()
         df_dates = transform_datetime_features(df_X)

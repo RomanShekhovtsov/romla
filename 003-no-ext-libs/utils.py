@@ -97,7 +97,7 @@ def read_csv( file_name, nrows):
     if nrows == -1:
         nrows = None
 
-    log_time('file {}'.format(file_name))
+    log('file {}'.format(file_name))
     log_start()
     df = pd.read_csv(file_name, low_memory=False, nrows=nrows)
     log_time('read dataset (shape: {}, nrows: {})'.format(df.shape, nrows))
