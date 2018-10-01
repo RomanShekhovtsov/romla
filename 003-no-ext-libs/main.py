@@ -8,7 +8,7 @@ from train import train
 from predict import predict, preprocess_test_data
 from scorer import score
 
-from utils import log, log_start, log_time
+from utils import *
 
 # use this to stop the algorithm before time limit exceeds
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5*60))
@@ -23,7 +23,7 @@ if __name__ == '__main__':
     parser.add_argument('--test-target-csv', required=True)
     parser.add_argument('--model-dir', required=True)
     parser.add_argument('--mode', choices=['classification', 'regression'], required=True)
-    parser.add_argument('--nrows')
+    parser.add_argument('--nrows', type=int)
 
     tests = {
         1: 'regression',
@@ -44,7 +44,7 @@ if __name__ == '__main__':
             '--prediction-csv', folder + 'predict.csv',
             '--test-target-csv', folder + 'test-target.csv',
             '--model-dir', '.',
-            '--nrows', '10000' if i in [3,4,5,6] else '1000' if i in [7,8] else '',
+            '--nrows', '10000' if i in [3,4,5,6,7,8] else '20000' if i in [] else '-1',
             '--mode', tests[i] ]
         args = parser.parse_args(argv)
 
@@ -54,4 +54,4 @@ if __name__ == '__main__':
         prediction = predict(X_scaled, model_config['model'])
         score(args, prediction=prediction)
         log('Total time: {}'.format(time.time() - start_total_time ))
-        log('-'*80)
+        log_trail('=', '\n\n')

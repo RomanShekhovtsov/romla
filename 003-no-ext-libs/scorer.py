@@ -4,17 +4,16 @@ import pandas as pd
 import time
 from sklearn.metrics import mean_squared_error, roc_auc_score
 
-from utils import log, log_start, log_time
+from utils import *
 
 
 # use this to stop the algorithm before time limit exceeds
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5*60))
 
 def read_test_target( args ):
-    if args.nrows == '':
+    nrows = args.nrows
+    if nrows == -1:
         nrows = None
-    else:
-        nrows = int(args.nrows)
 
     # read dataset
     log_start()
@@ -24,10 +23,9 @@ def read_test_target( args ):
 
 def score( args, target=None, prediction=None):
 
-    if args.nrows == '':
+    nrows = args.nrows
+    if nrows == -1:
         nrows = None
-    else:
-        nrows = int(args.nrows)
 
     if target is None:
         target = read_test_target(args)
@@ -45,15 +43,17 @@ def score( args, target=None, prediction=None):
     else:
         score = roc_auc_score(target, prediction)
         log('ROC-AUC:',score)
+
+    log_trail()
     return score
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train-csv', type=argparse.FileType('r'), required=True)
-    parser.add_argument('--test-csv', type=argparse.FileType('r'), required=True)
+    parser.add_argument('--train-csv', required=True)
+    parser.add_argument('--test-csv', required=True)
     parser.add_argument('--prediction-csv', required=True)
-    parser.add_argument('--test-target-csv', type=argparse.FileType('r'), required=True)
+    parser.add_argument('--test-target-csv', required=True)
     parser.add_argument('--model-dir', required=True)
     parser.add_argument('--mode', choices=['classification', 'regression'], required=True)
     args = parser.parse_args()
