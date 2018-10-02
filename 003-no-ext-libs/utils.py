@@ -37,16 +37,16 @@ def transform_datetime_features(df):
     return df_dates
 
 
-LOG_FILE = 'logs\\{}.log'.format( time.strftime("%Y-%m-%d_%H", time.localtime()) )
+LOG_FILE = 'logs\\{}.log'.format(time.strftime("%Y-%m-%d_%H", time.localtime()))
 log_file = open(LOG_FILE, mode='a')
 start_time = -1
-DATE_FORMAT='%Y-%m-%d %H:%M:%S'
+DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
 def log(*args):
     time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    print( time_str, *args)
-    print( time_str, *args, file=log_file)
+    print(time_str, *args)
+    print(time_str, *args, file=log_file)
     log_file.flush()
 
 
@@ -56,11 +56,11 @@ def log_start():
 
 
 def log_time(*args):
-    log(*args, '[{} sec]'.format( round( time.time() - start_time, 2)))
+    log(*args, '[{} sec]'.format(round(time.time() - start_time, 2)))
 
 
 def log_trail(char='-', end='\n\n'):
-    log(char*60, '\n\n')
+    log(char * 60, '\n\n')
 
 
 def close_log():
@@ -70,7 +70,7 @@ def close_log():
 atexit.register(close_log)
 
 
-def estimate_csv( file_name, nrows=200, test_file_name = 'test_row_count.csv' ):
+def estimate_csv(file_name, nrows=200, test_file_name='test_row_count.csv'):
     """Estimate big csv file params (size, row count, row size)
     :param file_name: csv file to estimate
     :param nrows=200: rows to read. File must has more rows than nrows!
@@ -91,7 +91,7 @@ def estimate_csv( file_name, nrows=200, test_file_name = 'test_row_count.csv' ):
     return {'rows': int(rows), 'row_size': int(row_size), 'total_size': int(size)}
 
 
-def read_csv( file_name, nrows):
+def read_csv(file_name, nrows):
     if nrows == -1:
         nrows = None
 
@@ -101,6 +101,7 @@ def read_csv( file_name, nrows):
     log_time('read dataset (shape: {}, nrows: {})'.format(df.shape, nrows))
     return df
 
+
 def optimize_dataframe(df):
     """Optimize pandas dataframe size:
     - downcast numeric (int and float) types columns.
@@ -109,7 +110,7 @@ def optimize_dataframe(df):
     :return:
     """
 
-    #return df  # TODO: remove - check for failure!!!
+    # return df  # TODO: remove - check for failure!!!
 
     log_start()
 
@@ -152,6 +153,6 @@ def optimize_dataframe(df):
     #     df_opt[other_cols] = df[other_cols]
 
     new_size = sys.getsizeof(df)
-    log_time('optimize dataframe ({} to {}, ratio: {})'.format(old_size, new_size, round(old_size/new_size, 2)))
+    log_time('optimize dataframe ({} to {}, ratio: {})'.format(old_size, new_size, round(old_size / new_size, 2)))
 
     return df

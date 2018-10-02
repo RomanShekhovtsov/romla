@@ -2,22 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2422fc36-53b2-4d28-95f3-f6a377c5b777" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../001a/sberbank_python.tar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/baseline.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradient_boosting.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/003-no-ext-libs evaluation log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/003-no-ext-libs.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/003a-no-ext-libs.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2017-09-30.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2018-10-01_18-17-38_submission.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2018-10-02_15-35-21_submission.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log.bak" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log1.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/make_submission.py" beforeDir="false" afterPath="$PROJECT_DIR$/make_submission.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model_config.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_config.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/predict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-1-3.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/test-1-3.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-1.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/test-1.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-3.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/test-3.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-4-8.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/test-4-8.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-all.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/test-all.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/test.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scorer.py" beforeDir="false" afterPath="$PROJECT_DIR$/scorer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../test.ipynb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -128,14 +129,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="8956" />
+          <entry key="py" value="9112" />
           <entry key="txt" value="32" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="32" />
-          <entry key="Python" value="8956" />
+          <entry key="Python" value="9112" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -155,34 +156,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="138" column="33" lean-forward="true" selection-start-line="138" selection-start-column="33" selection-end-line="138" selection-end-column="33" />
+            <state relative-caret-position="4232">
+              <caret line="307" lean-forward="true" selection-start-line="307" selection-end-line="307" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1538495425458" expanded="true" signature="1230:2332" ph="..." />
-                <marker date="1538495425458" expanded="true" signature="3791:3795" ph="..." />
-                <marker date="1538495425458" expanded="true" signature="6116:6121" ph="..." />
-                <marker date="1538495425458" expanded="true" signature="6503:6505" ph="..." />
-                <marker date="1538495425458" expanded="true" signature="6521:6526" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/model_selection/_split.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="1988" column="13" selection-start-line="1988" selection-start-column="13" selection-end-line="1988" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://C:/p/anaconda3/Lib/site-packages/pandas/core/generic.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25772">
-              <caret line="1572" selection-start-line="1572" selection-end-line="1572" />
             </state>
           </provider>
         </entry>
@@ -190,8 +168,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scorer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="45" selection-start-line="39" selection-end-line="45" />
+            <state relative-caret-position="194">
+              <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -202,8 +180,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/predict.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="43" column="49" selection-start-line="43" selection-start-column="49" selection-end-line="43" selection-end-column="49" />
+            <state relative-caret-position="602">
+              <caret line="94" column="28" lean-forward="true" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -214,8 +192,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+            <state relative-caret-position="238">
+              <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -224,13 +202,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/argparse.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1445">
+              <caret line="101" column="17" selection-start-line="101" selection-start-column="17" selection-end-line="101" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="39" column="19" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="160">
+              <caret line="29" column="17" lean-forward="true" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -266,19 +250,21 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/scorer.py" />
         <option value="$PROJECT_DIR$/predict.py" />
+        <option value="$PROJECT_DIR$/scorer.py" />
         <option value="$PROJECT_DIR$/utils.py" />
-        <option value="$PROJECT_DIR$/train.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/train.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1363" />
+    <option name="width" value="1351" />
     <option name="height" value="1040" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -301,6 +287,141 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/002.iml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/misc.xml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/log.txt</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/main.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/predict.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/test-1-3.cmd</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/test-1.cmd</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/test-3.cmd</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/test-4-8.cmd</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/test-all.cmd</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/test.cmd</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/train.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/utils.py</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/2018-10-01_18-17-38_submission.zip</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/2018-10-02_15-35-21_submission.zip</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/make_submission.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/model_config.pkl</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/submission.cmd</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/test-all-first-500-rows.cmd</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/__pycache__/predict.cpython-36.pyc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/__pycache__/scorer.cpython-36.pyc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/__pycache__/train.cpython-36.pyc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/__pycache__/utils.cpython-36.pyc</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/baseline.log</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gradient_boosting.log</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -413,11 +534,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1363" height="1040" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1351" height="1040" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.30975142" visible="true" weight="0.20830189" />
-      <window_info id="Structure" order="1" sideWeight="0.69024855" side_tool="true" visible="true" weight="0.20830189" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.30975142" visible="true" weight="0.21020563" />
+      <window_info id="Structure" order="1" sideWeight="0.69024855" side_tool="true" visible="true" weight="0.21020563" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32929516" />
@@ -527,59 +647,34 @@
     <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/model_selection/_split.py" />
     <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/ensemble/gradient_boosting.py" />
     <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/ensemble/forest.py" />
-    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/argparse.py" />
-    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/model_selection/_validation.py" />
-    <entry file="file://C:/p/anaconda3/Lib/site-packages/pandas/core/generic.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/argparse.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25772">
-          <caret line="1572" selection-start-line="1572" selection-end-line="1572" />
+        <state relative-caret-position="1445">
+          <caret line="101" column="17" selection-start-line="101" selection-start-column="17" selection-end-line="101" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/1979240958/math.py">
+    <entry file="file://$PROJECT_DIR$/../../../Anaconda3/Lib/site-packages/sklearn/model_selection/_validation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="80" column="4" selection-start-line="80" selection-start-column="4" selection-end-line="80" selection-end-column="4" />
+        <state relative-caret-position="3519">
+          <caret line="227" column="19" selection-start-line="227" selection-start-column="19" selection-end-line="227" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/model_selection/_split.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="1988" column="13" selection-start-line="1988" selection-start-column="13" selection-end-line="1988" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/p/anaconda3/Lib/site-packages/pandas/core/generic.py" />
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/1979240958/math.py" />
+    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/model_selection/_split.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa0.406/train.py" />
+    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/model_selection/_validation.py" />
+    <entry file="file://C:/p/anaconda3/Lib/abc.py" />
+    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/ensemble/gradient_boosting.py" />
+    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/base.py" />
+    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/model_selection/_search.py" />
+    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/ensemble/forest.py" />
     <entry file="file://$PROJECT_DIR$/scorer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="45" selection-start-line="39" selection-end-line="45" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa0.406/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2040">
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/model_selection/_validation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-931">
-          <caret line="479" column="13" lean-forward="true" selection-start-line="479" selection-start-column="13" selection-end-line="479" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/predict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="43" column="49" selection-start-line="43" selection-start-column="49" selection-end-line="43" selection-end-column="49" />
+        <state relative-caret-position="194">
+          <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -588,70 +683,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+        <state relative-caret-position="238">
+          <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/p/anaconda3/Lib/abc.py">
+    <entry file="file://$PROJECT_DIR$/predict.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1958">
-          <caret line="108" column="6" selection-start-line="108" selection-start-column="6" selection-end-line="108" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/ensemble/gradient_boosting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="1861" lean-forward="true" selection-start-line="1854" selection-end-line="1861" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="56" column="4" lean-forward="true" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/model_selection/_search.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="735" column="17" selection-start-line="735" selection-start-column="17" selection-end-line="735" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/p/anaconda3/Lib/site-packages/sklearn/ensemble/forest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="1699" column="8" lean-forward="true" selection-start-line="1699" selection-start-column="8" selection-end-line="1699" selection-end-column="8" />
+        <state relative-caret-position="602">
+          <caret line="94" column="28" lean-forward="true" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="39" column="19" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="160">
+          <caret line="29" column="17" lean-forward="true" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="138" column="33" lean-forward="true" selection-start-line="138" selection-start-column="33" selection-end-line="138" selection-end-column="33" />
+        <state relative-caret-position="4232">
+          <caret line="307" lean-forward="true" selection-start-line="307" selection-end-line="307" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <marker date="1538495425458" expanded="true" signature="1230:2332" ph="..." />
-            <marker date="1538495425458" expanded="true" signature="3791:3795" ph="..." />
-            <marker date="1538495425458" expanded="true" signature="6116:6121" ph="..." />
-            <marker date="1538495425458" expanded="true" signature="6503:6505" ph="..." />
-            <marker date="1538495425458" expanded="true" signature="6521:6526" ph="..." />
           </folding>
         </state>
       </provider>

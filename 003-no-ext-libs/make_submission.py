@@ -1,7 +1,7 @@
 import time
 from zipfile import ZipFile
 folder = r''
-zip_file_name = folder + time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime()) + '_submission.zip'
+zip_file_name = r'submissions\{}_submission.zip'.format( time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime()) )
     
 files = [
     'metadata.json',

@@ -12,7 +12,7 @@ from scorer import score
 from utils import *
 
 # use this to stop the algorithm before time limit exceeds
-TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5*60))
+TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
 
 if __name__ == '__main__':
     try:
@@ -39,15 +39,15 @@ if __name__ == '__main__':
         }
         for i in [3]:  # tests.keys():
             start_total_time = time.time()
-            folder = r'..\..\check_' +  str(i) + '_' + tests[i][0] + '\\'
+            folder = r'..\..\check_' + str(i) + '_' + tests[i][0] + '\\'
             argv = [
                 '--train-csv', folder + 'train.csv',
                 '--test-csv', folder + 'test.csv',
                 '--prediction-csv', folder + 'prediction.csv',
                 '--test-target-csv', folder + 'test-target.csv',
                 '--model-dir', '.',
-                '--nrows', '10000' if i in [4,5,6,7] else '500' if i in [8] else '-1',
-                '--mode', tests[i] ]
+                '--nrows', '10000' if i in [4, 5, 6, 7] else '500' if i in [8] else '-1',
+                '--mode', tests[i]]
             args = parser.parse_args(argv)
 
             log('processing', folder)
@@ -60,5 +60,5 @@ if __name__ == '__main__':
             log_trail('=', '\n\n')
 
     except BaseException as e:
-        log('EXCEPTION:',e)
+        log('EXCEPTION:', e)
         log(traceback.format_exc())

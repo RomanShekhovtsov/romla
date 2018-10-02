@@ -6,11 +6,11 @@ from sklearn.metrics import mean_squared_error, roc_auc_score
 
 from utils import *
 
-
 # use this to stop the algorithm before time limit exceeds
-TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5*60))
+TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
 
-def read_test_target( args ):
+
+def read_test_target(args):
     nrows = args.nrows
     if nrows == -1:
         nrows = None
@@ -21,8 +21,8 @@ def read_test_target( args ):
     log_time('read', args.test_target_csv, 'shape', target.shape)
     return target['target']
 
-def score( args, target=None, prediction=None):
 
+def score(args, target=None, prediction=None):
     nrows = args.nrows
     if nrows == -1:
         nrows = None
@@ -42,7 +42,7 @@ def score( args, target=None, prediction=None):
         log('RMSE:', score)
     else:
         score = roc_auc_score(target, prediction)
-        log('ROC-AUC:',score)
+        log('ROC-AUC:', score)
 
     log_trail()
     return score

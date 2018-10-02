@@ -7,6 +7,10 @@ import pickle
 import time
 import math
 
+import xgboost as xgb
+import lightgbm
+import catboost
+
 from sklearn.linear_model import Ridge, LogisticRegression
 from sklearn.ensemble import \
     GradientBoostingClassifier, GradientBoostingRegressor, \
@@ -22,22 +26,22 @@ from sklearn.metrics import mean_squared_error, roc_auc_score
 from utils import *
 
 # use this to stop the algorithm before time limit exceeds
-TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5*60))
-N_JOBS =4
+TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
+N_JOBS = 4
 
 ONEHOT_MAX_UNIQUE_VALUES = 20
 MAX_DATASET_COLUMNS = 1000
-BIG_DATASET_SIZE = 500 * 1024 * 1024 # 300MB
-MAX_MODEL_SELECTION_ROWS = 10**5
+BIG_DATASET_SIZE = 500 * 1024 * 1024  # 300MB
+MAX_MODEL_SELECTION_ROWS = 10 ** 5
 
 TRAIN_TEST_SPLIT_TEST_SIZE = 0.25
 SAMPLING_RATES = (5000, 10000, 15000)
-MIN_TRAIN_ROWS=SAMPLING_RATES[0]*(1 - TRAIN_TEST_SPLIT_TEST_SIZE)
+MIN_TRAIN_ROWS = SAMPLING_RATES[0] * (1 - TRAIN_TEST_SPLIT_TEST_SIZE)
 
 NEG_MEAN_SQUARED_ERROR = 'neg_mean_squared_error'
 
 
-def evaluate_model( model, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
+def evaluate_model(model, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
     rows = y.shape[0]
     if rows < min_train_rows:
 
@@ -69,8 +73,7 @@ def evaluate_model( model, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
     return score, method
 
 
-def iterate_models( models, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
-
+def iterate_models(models, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
     scores = []
     rows = y.shape[0]
 
@@ -81,7 +84,7 @@ def iterate_models( models, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
         scores.append(score)
 
         if scoring == NEG_MEAN_SQUARED_ERROR:
-            print_score = (-score)**0.5
+            print_score = (-score) ** 0.5
         else:
             print_score = score
         log_time('{} {} rows (score:{})'.format(method, y.shape[0], print_score))
@@ -89,12 +92,14 @@ def iterate_models( models, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
 
     return scores
 
-def model_tuning( model, X, y, scoring):
+
+def model_tuning(model, X, y, scoring):
     scores = []
     rows = y.shape[0]
 
     model_name = model.__class__.__name__
 
+    n_iter = None
     if model_name == 'GradientBoostingRegressor':
 
         # def __init__(self, loss='ls', learning_rate=0.1, n_estimators=100,
@@ -106,11 +111,17 @@ def model_tuning( model, X, y, scoring):
         #              warm_start=False, presort='auto'):
         estimator = GradientBoostingRegressor()
         params = {'learning_rate': [0.05, 0.1, 0.15],
-                  'min_samples_split': [2,4,8],
-                  'min_samples_leaf': [1,2,4],
-                  'max_depth':[2,3,4]
-        }
+                  'min_samples_split': [2, 4, 8],
+                  'min_samples_leaf': [1, 2, 4],
+                  'max_depth': [2, 3, 4]
+                  }
+        n_iter = 81
 
+    elif model_name == 'XGBRegressor':
+        estimator = xgb.XGBRegressor()
+        params = {'max_depth': range(2,16)
+                  }
+        n_iter = 14
 
     elif model_name == 'RandomForestRegressor':
         # n_estimators = 10,
@@ -130,11 +141,12 @@ def model_tuning( model, X, y, scoring):
         # verbose = 0,
         # warm_start = False):
         estimator = RandomForestRegressor()
-        params = {'min_samples_split': [2,4,8],
-                  'max_features': ['auto','sqrt','log2'],
-                  'min_samples_leaf': [1,2,4],
-                  'max_depth': [3,5,7]
-        }
+        params = {'min_samples_split': [2, 4, 8],
+                  'max_features': ['auto', 'sqrt', 'log2'],
+                  'min_samples_leaf': [1, 2, 4],
+                  'max_depth': [3, 5, 7]
+                  }
+        n_iter = 81
 
     elif model_name == 'ExtraTreesRegressor':
         # n_estimators = 10,
@@ -159,6 +171,7 @@ def model_tuning( model, X, y, scoring):
                   'min_samples_leaf': [1, 2, 4],
                   'max_depth': [3, 5, 7]
                   }
+        n_iter = 81
     #
     # elif model_name == 'AdaBoostRegressor':
     #
@@ -183,7 +196,7 @@ def model_tuning( model, X, y, scoring):
     #              error_score='raise', return_train_score="warn"):
     searcher = RandomizedSearchCV(estimator,
                                   params,
-                                  n_iter=81,
+                                  n_iter=n_iter,
                                   scoring=scoring,
                                   n_jobs=4,
                                   cv=3,
@@ -191,6 +204,8 @@ def model_tuning( model, X, y, scoring):
     searcher.fit(X, y)
 
     return searcher.best_estimator_
+
+
 
 def train(args):
     start_train_time = time.time()
@@ -200,9 +215,8 @@ def train(args):
 
     # TODO: FAIL CHECK!!!
 
-
-    #train_estimate = estimate_csv(args.train_csv)
-    #log('estimate', args.train_csv, train_estimate)
+    # train_estimate = estimate_csv(args.train_csv)
+    # log('estimate', args.train_csv, train_estimate)
     df = read_csv(args.train_csv, args.nrows)
 
     initial_dataset_size = sys.getsizeof(df)
@@ -254,9 +268,9 @@ def train(args):
             df_dates.fillna(-1, inplace=True)
         log_time('missing dates values')
 
-        #optimize
+        # optimize
         optimize_dataframe(df_dates)
-        df_X = pd.concat( (df_X, df_dates), axis=1 )
+        df_X = pd.concat((df_X, df_dates), axis=1)
         df_dates = None
 
     # calculate unique values
@@ -289,11 +303,10 @@ def train(args):
 
         log_time('categorical encoding ({} columns)'.format(len(df_cat.columns)))
         optimize_dataframe(df_cat)
-        df_X = pd.concat( (df_X, df_cat), axis=1 )
+        df_X = pd.concat((df_X, df_cat), axis=1)
         df_cat = None
 
     model_config['categorical_values'] = categorical_values
-
 
     # use only numeric columns
     used_columns = [
@@ -322,18 +335,19 @@ def train(args):
     # scaling
     log_start()
     scaler = StandardScaler()
-    df_X = scaler.fit_transform(df_X)
+    df_X = scaler.fit_transform(df_X.values.astype(np.float32))
     log_time('scaling (df_X size:', sys.getsizeof(df_X), ')')
     model_config['scaler'] = scaler
 
     # fitting
     log_start()
+    booster = xgb.Booster()
     model_config['mode'] = args.mode
-    regression = ( args.mode == 'regression' )
+    regression = (args.mode == 'regression')
     if regression:
         scoring = NEG_MEAN_SQUARED_ERROR
         models = [
-            GradientBoostingRegressor(),
+            xgb.XGBRegressor(),
             RandomForestRegressor(),
             ExtraTreesRegressor(),
             AdaBoostRegressor()
@@ -342,14 +356,14 @@ def train(args):
     else:
         scoring = 'roc_auc'
         models = [
-            GradientBoostingClassifier(),
+            xgb.XGBClassifier(),
             RandomForestClassifier(),
             ExtraTreesClassifier(),
             AdaBoostClassifier()
         ]
-        if train_rows < 10**4:
-            models.append( LinearSVC() )
-            models.append( SVC() )
+        if train_rows < 10 ** 4:
+            models.append(LinearSVC())
+            models.append(SVC())
 
     #    param_grid = {
     #        'min_samples_leaf': range(1, 30),
@@ -360,8 +374,8 @@ def train(args):
     #    grid = GridSearchCV( model, param_grid, cv=cv, scoring=scoring, n_jobs=N_JOBS)
     #    grid.fit(df_X, df_y)
 
-    #X_test_scaled, _, _ = preprocess_test_data(args, model_config)
-    #y_test = read_test_target(args)
+    # X_test_scaled, _, _ = preprocess_test_data(args, model_config)
+    # y_test = read_test_target(args)
 
     log('Starting models selection by sampling data by {} rows'.format(SAMPLING_RATES))
 
@@ -371,7 +385,7 @@ def train(args):
 
         scores = iterate_models(models, X_selection, y_selection, scoring)
 
-        #already cross-validate on full dataset, go best model selection
+        # already cross-validate on full dataset, go best model selection
         if y_selection.shape[0] == train_rows:
             log('Sample size meet dataset size, stop sampling')
             break
@@ -388,12 +402,12 @@ def train(args):
             break
 
         models = selected  # leave only best models for next iteration
-        log('Survive {} models'.format( len(models) ))
+        log('Survive {} models'.format(len(models)))
 
     best_index = np.argmax(scores)
     model = models[best_index]
 
-    samples = 30000
+    samples = 10000
     X_selection = df_X[:min(samples, train_rows)]
     y_selection = df_y[:min(samples, train_rows)]
 
@@ -401,7 +415,7 @@ def train(args):
     log('best model:', model)
     best_model = model_tuning(model, X_selection, y_selection, scoring)
     log_time('evaluate best model')
-    #best_model = model
+    # best_model = model
 
     log_start()
     best_model.fit(df_X, y=df_y)
@@ -426,4 +440,3 @@ if __name__ == '__main__':
     model_config_filename = os.path.join(args.model_dir, 'model_config.pkl')
     with open(model_config_filename, 'wb') as fout:
         pickle.dump(model_config, fout, protocol=pickle.HIGHEST_PROTOCOL)
-
