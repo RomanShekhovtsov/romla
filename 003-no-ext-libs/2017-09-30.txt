@@ -1,0 +1,1167 @@
+2018-09-30 00:33:41 processing ..\..\check_1_r\
+2018-09-30 00:33:41 read dataset, shape:  (365, 42) nrows None running: 0.02 sec
+2018-09-30 00:33:41 memory usage: 144279
+2018-09-30 00:34:08 processing ..\..\check_1_r\
+2018-09-30 00:34:08 read dataset, shape:  (365, 42) nrows None running: 0.02 sec
+2018-09-30 00:34:08 memory usage: 144279
+2018-09-30 00:34:08 missing values running: 0.0 sec
+2018-09-30 00:34:08 features from datetime (df_X size: 46459 ) running: 0.03 sec
+2018-09-30 00:34:08 used columns: 45 df_X size: 42809
+2018-09-30 00:34:08 scaling (df_X size: 131512 ) running: 0.01 sec
+2018-09-30 00:34:09 cross validation (score: -32.16484052830274 ) running: 1.31 sec
+2018-09-30 00:34:09 GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,
+             learning_rate=0.1, loss='ls', max_depth=3, max_features=None,
+             max_leaf_nodes=None, min_impurity_decrease=0.0,
+             min_impurity_split=None, min_samples_leaf=1,
+             min_samples_split=2, min_weight_fraction_leaf=0.0,
+             n_estimators=100, presort='auto', random_state=None,
+             subsample=1.0, verbose=0, warm_start=False)
+2018-09-30 00:34:10 cross validation (score: -37.20520575627902 ) running: 1.32 sec
+2018-09-30 00:34:10 RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:34:12 cross validation (score: -37.023836667439824 ) running: 1.43 sec
+2018-09-30 00:34:12 ExtraTreesRegressor(bootstrap=False, criterion='mse', max_depth=None,
+          max_features='auto', max_leaf_nodes=None,
+          min_impurity_decrease=0.0, min_impurity_split=None,
+          min_samples_leaf=1, min_samples_split=2,
+          min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+          oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:34:13 cross validation (score: -52.28863319461552 ) running: 1.41 sec
+2018-09-30 00:34:13 AdaBoostRegressor(base_estimator=None, learning_rate=1.0, loss='linear',
+         n_estimators=50, random_state=None)
+2018-09-30 00:34:13 fit best model GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,
+             learning_rate=0.1, loss='ls', max_depth=3, max_features=None,
+             max_leaf_nodes=None, min_impurity_decrease=0.0,
+             min_impurity_split=None, min_samples_leaf=1,
+             min_samples_split=2, min_weight_fraction_leaf=0.0,
+             n_estimators=100, presort='auto', random_state=None,
+             subsample=1.0, verbose=0, warm_start=False) running: 0.08 sec
+2018-09-30 00:34:13 Train time: 5.6733245849609375
+2018-09-30 00:34:13 Dataset read, shape (172, 41)
+2018-09-30 00:34:13 read dataset running: 0.01 sec
+2018-09-30 00:34:13 features from datetime running: 0.02 sec
+2018-09-30 00:34:13 missing values running: 0.0 sec
+2018-09-30 00:36:59 processing ..\..\check_1_r\
+2018-09-30 00:36:59 read dataset, shape:  (365, 42) nrows None running: 0.02 sec
+2018-09-30 00:36:59 memory usage: 144279
+2018-09-30 00:36:59 missing values running: 0.0 sec
+2018-09-30 00:36:59 features from datetime (df_X size: 46459 ) running: 0.03 sec
+2018-09-30 00:36:59 used columns: 45 df_X size: 42809
+2018-09-30 00:36:59 scaling (df_X size: 131512 ) running: 0.0 sec
+2018-09-30 00:37:00 cross validation (score: -32.298482753658135 ) running: 1.36 sec
+2018-09-30 00:37:00 GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,
+             learning_rate=0.1, loss='ls', max_depth=3, max_features=None,
+             max_leaf_nodes=None, min_impurity_decrease=0.0,
+             min_impurity_split=None, min_samples_leaf=1,
+             min_samples_split=2, min_weight_fraction_leaf=0.0,
+             n_estimators=100, presort='auto', random_state=None,
+             subsample=1.0, verbose=0, warm_start=False)
+2018-09-30 00:37:02 cross validation (score: -35.87368378030991 ) running: 1.28 sec
+2018-09-30 00:37:02 RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:37:03 cross validation (score: -34.82555369563101 ) running: 1.32 sec
+2018-09-30 00:37:03 ExtraTreesRegressor(bootstrap=False, criterion='mse', max_depth=None,
+          max_features='auto', max_leaf_nodes=None,
+          min_impurity_decrease=0.0, min_impurity_split=None,
+          min_samples_leaf=1, min_samples_split=2,
+          min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+          oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:37:04 cross validation (score: -49.35192401036661 ) running: 1.31 sec
+2018-09-30 00:37:04 AdaBoostRegressor(base_estimator=None, learning_rate=1.0, loss='linear',
+         n_estimators=50, random_state=None)
+2018-09-30 00:37:04 fit best model GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,
+             learning_rate=0.1, loss='ls', max_depth=3, max_features=None,
+             max_leaf_nodes=None, min_impurity_decrease=0.0,
+             min_impurity_split=None, min_samples_leaf=1,
+             min_samples_split=2, min_weight_fraction_leaf=0.0,
+             n_estimators=100, presort='auto', random_state=None,
+             subsample=1.0, verbose=0, warm_start=False) running: 0.08 sec
+2018-09-30 00:37:04 Train time: 5.464312553405762
+2018-09-30 00:37:04 Dataset read, shape (172, 41)
+2018-09-30 00:37:04 read dataset running: 0.01 sec
+2018-09-30 00:37:04 features from datetime running: 0.01 sec
+2018-09-30 00:37:04 missing values running: 0.0 sec
+2018-09-30 00:37:04 categorical encoding running: 0.0 sec
+2018-09-30 00:37:04 scale running: 0.0 sec
+2018-09-30 00:37:04 predict running: 0.0 sec
+2018-09-30 00:37:04 read ..\..\check_1_r\test-target.csv shape (172, 2) running: 0.0 sec
+2018-09-30 00:37:04 RMSE: 26.13619230186575
+2018-09-30 00:37:04 Total time: 5.490314245223999
+2018-09-30 00:37:04 ================================================================================ 
+
+
+2018-09-30 00:37:04 processing ..\..\check_2_r\
+2018-09-30 00:37:04 read dataset, shape:  (13958, 11) nrows None running: 0.04 sec
+2018-09-30 00:37:04 memory usage: 3316502
+2018-09-30 00:37:04 missing values running: 0.01 sec
+2018-09-30 00:37:05 features from datetime (df_X size: 516550 ) running: 0.0 sec
+2018-09-30 00:37:05 used columns: 20 df_X size: 488634
+2018-09-30 00:37:05 scaling (df_X size: 2233392 ) running: 0.01 sec
+2018-09-30 00:37:07 cross validation (score: -1.5784040112253537 ) running: 2.23 sec
+2018-09-30 00:37:07 GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,
+             learning_rate=0.1, loss='ls', max_depth=3, max_features=None,
+             max_leaf_nodes=None, min_impurity_decrease=0.0,
+             min_impurity_split=None, min_samples_leaf=1,
+             min_samples_split=2, min_weight_fraction_leaf=0.0,
+             n_estimators=100, presort='auto', random_state=None,
+             subsample=1.0, verbose=0, warm_start=False)
+2018-09-30 00:37:09 cross validation (score: -1.0460187127205849 ) running: 1.89 sec
+2018-09-30 00:37:09 RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:37:10 cross validation (score: -1.000885738950882 ) running: 1.7 sec
+2018-09-30 00:37:10 ExtraTreesRegressor(bootstrap=False, criterion='mse', max_depth=None,
+          max_features='auto', max_leaf_nodes=None,
+          min_impurity_decrease=0.0, min_impurity_split=None,
+          min_samples_leaf=1, min_samples_split=2,
+          min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+          oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:37:12 cross validation (score: -4.305429092499858 ) running: 2.14 sec
+2018-09-30 00:37:12 AdaBoostRegressor(base_estimator=None, learning_rate=1.0, loss='linear',
+         n_estimators=50, random_state=None)
+2018-09-30 00:37:13 fit best model ExtraTreesRegressor(bootstrap=False, criterion='mse', max_depth=None,
+          max_features='auto', max_leaf_nodes=None,
+          min_impurity_decrease=0.0, min_impurity_split=None,
+          min_samples_leaf=1, min_samples_split=2,
+          min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+          oob_score=False, random_state=None, verbose=0, warm_start=False) running: 0.49 sec
+2018-09-30 00:37:13 Train time: 8.588490962982178
+2018-09-30 00:37:13 Dataset read, shape (5976, 10)
+2018-09-30 00:37:13 read dataset running: 0.02 sec
+2018-09-30 00:37:13 features from datetime running: 0.0 sec
+2018-09-30 00:37:13 missing values running: 0.0 sec
+2018-09-30 00:37:13 categorical encoding running: 0.02 sec
+2018-09-30 00:37:13 scale running: 0.0 sec
+2018-09-30 00:37:13 predict running: 0.02 sec
+2018-09-30 00:37:13 read ..\..\check_2_r\test-target.csv shape (5976, 2) running: 0.01 sec
+2018-09-30 00:37:13 RMSE: 1.2284431705767591
+2018-09-30 00:37:13 Total time: 8.656495094299316
+2018-09-30 00:37:13 ================================================================================ 
+
+
+2018-09-30 00:37:13 processing ..\..\check_3_r\
+2018-09-30 00:37:13 read dataset, shape:  (10000, 43) nrows 10000 running: 0.05 sec
+2018-09-30 00:37:13 memory usage: 4030104
+2018-09-30 00:37:13 missing values running: 0.0 sec
+2018-09-30 00:37:13 features from datetime (df_X size: 721784 ) running: 0.01 sec
+2018-09-30 00:37:13 used columns: 23 df_X size: 670944
+2018-09-30 00:37:13 scaling (df_X size: 1840112 ) running: 0.03 sec
+2018-09-30 00:37:15 cross validation (score: -7513406530.441983 ) running: 1.79 sec
+2018-09-30 00:37:15 GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,
+             learning_rate=0.1, loss='ls', max_depth=3, max_features=None,
+             max_leaf_nodes=None, min_impurity_decrease=0.0,
+             min_impurity_split=None, min_samples_leaf=1,
+             min_samples_split=2, min_weight_fraction_leaf=0.0,
+             n_estimators=100, presort='auto', random_state=None,
+             subsample=1.0, verbose=0, warm_start=False)
+2018-09-30 00:37:17 cross validation (score: -8202760122.619804 ) running: 1.57 sec
+2018-09-30 00:37:17 RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:37:18 cross validation (score: -8342140916.594356 ) running: 1.51 sec
+2018-09-30 00:37:18 ExtraTreesRegressor(bootstrap=False, criterion='mse', max_depth=None,
+          max_features='auto', max_leaf_nodes=None,
+          min_impurity_decrease=0.0, min_impurity_split=None,
+          min_samples_leaf=1, min_samples_split=2,
+          min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+          oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:37:20 cross validation (score: -12103110021.126745 ) running: 1.61 sec
+2018-09-30 00:37:20 AdaBoostRegressor(base_estimator=None, learning_rate=1.0, loss='linear',
+         n_estimators=50, random_state=None)
+2018-09-30 00:37:20 fit best model GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,
+             learning_rate=0.1, loss='ls', max_depth=3, max_features=None,
+             max_leaf_nodes=None, min_impurity_decrease=0.0,
+             min_impurity_split=None, min_samples_leaf=1,
+             min_samples_split=2, min_weight_fraction_leaf=0.0,
+             n_estimators=100, presort='auto', random_state=None,
+             subsample=1.0, verbose=0, warm_start=False) running: 0.65 sec
+2018-09-30 00:37:20 Train time: 7.303417682647705
+2018-09-30 00:37:20 Dataset read, shape (10000, 42)
+2018-09-30 00:37:20 read dataset running: 0.06 sec
+2018-09-30 00:37:21 features from datetime running: 0.52 sec
+2018-09-30 00:37:21 missing values running: 0.0 sec
+2018-09-30 00:37:21 categorical encoding running: 0.0 sec
+2018-09-30 00:37:21 scale running: 0.0 sec
+2018-09-30 00:37:21 predict running: 0.02 sec
+2018-09-30 00:37:21 read ..\..\check_3_r\test-target.csv shape (10000, 2) running: 0.01 sec
+2018-09-30 00:37:21 RMSE: 137677.70334032163
+2018-09-30 00:37:21 Total time: 7.924453258514404
+2018-09-30 00:37:21 ================================================================================ 
+
+
+2018-09-30 00:37:21 processing ..\..\check_4_c\
+2018-09-30 00:37:21 read dataset, shape:  (10000, 143) nrows 10000 running: 0.52 sec
+2018-09-30 00:37:22 memory usage: 13210104
+2018-09-30 00:37:22 missing values running: 0.01 sec
+2018-09-30 00:37:22 features from datetime (df_X size: 5071680 ) running: 0.06 sec
+2018-09-30 00:37:22 used columns: 106 df_X size: 4960104
+2018-09-30 00:37:22 scaling (df_X size: 8480112 ) running: 0.05 sec
+2018-09-30 00:37:30 cross validation (score: 0.9685023707032107 ) running: 8.09 sec
+2018-09-30 00:37:30 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 00:37:32 cross validation (score: 0.7916994426137065 ) running: 1.85 sec
+2018-09-30 00:37:32 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 00:37:33 cross validation (score: 0.7563922874074912 ) running: 1.54 sec
+2018-09-30 00:37:33 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:37:43 cross validation (score: 0.8904881868915367 ) running: 9.95 sec
+2018-09-30 00:37:43 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 00:37:52 fit best model GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False) running: 8.27 sec
+2018-09-30 00:37:52 Train time: 30.53074622154236
+2018-09-30 00:37:52 Dataset read, shape (10000, 142)
+2018-09-30 00:37:52 read dataset running: 0.62 sec
+2018-09-30 00:37:54 features from datetime running: 1.55 sec
+2018-09-30 00:37:54 missing values running: 0.01 sec
+2018-09-30 00:37:54 categorical encoding running: 0.0 sec
+2018-09-30 00:37:54 scale running: 0.03 sec
+2018-09-30 00:37:54 predict running: 0.04 sec
+2018-09-30 00:37:54 read ..\..\check_4_c\test-target.csv shape (10000, 2) running: 0.01 sec
+2018-09-30 00:37:54 ROC-AUC: 0.905037577473037
+2018-09-30 00:37:54 Total time: 32.78987526893616
+2018-09-30 00:37:54 ================================================================================ 
+
+
+2018-09-30 00:37:54 processing ..\..\check_5_c\
+2018-09-30 00:37:54 read dataset, shape:  (10000, 17) nrows 10000 running: 0.05 sec
+2018-09-30 00:37:54 memory usage: 1950104
+2018-09-30 00:37:54 missing values running: 0.0 sec
+2018-09-30 00:37:54 features from datetime (df_X size: 962168 ) running: 0.02 sec
+2018-09-30 00:37:54 used columns: 20 df_X size: 910104
+2018-09-30 00:37:54 scaling (df_X size: 1600112 ) running: 0.01 sec
+2018-09-30 00:37:56 cross validation (score: 0.7718158686653233 ) running: 2.31 sec
+2018-09-30 00:37:56 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 00:37:58 cross validation (score: 0.7225435691412035 ) running: 1.54 sec
+2018-09-30 00:37:58 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 00:37:59 cross validation (score: 0.7214993099872385 ) running: 1.36 sec
+2018-09-30 00:37:59 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:38:02 cross validation (score: 0.7676557715545899 ) running: 2.43 sec
+2018-09-30 00:38:02 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 00:38:03 fit best model GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False) running: 1.09 sec
+2018-09-30 00:38:03 Train time: 8.851506471633911
+2018-09-30 00:38:03 Dataset read, shape (10000, 16)
+2018-09-30 00:38:03 read dataset running: 0.05 sec
+2018-09-30 00:38:03 features from datetime running: 0.51 sec
+2018-09-30 00:38:03 missing values running: 0.0 sec
+2018-09-30 00:38:03 categorical encoding running: 0.0 sec
+2018-09-30 00:38:03 scale running: 0.0 sec
+2018-09-30 00:38:03 predict running: 0.02 sec
+2018-09-30 00:38:03 read ..\..\check_5_c\test-target.csv shape (10000, 2) running: 0.01 sec
+2018-09-30 00:38:03 ROC-AUC: 0.6960193150538997
+2018-09-30 00:38:03 Total time: 9.457541227340698
+2018-09-30 00:38:03 ================================================================================ 
+
+
+2018-09-30 00:38:03 processing ..\..\check_6_c\
+2018-09-30 00:38:04 read dataset, shape:  (10000, 114) nrows 10000 running: 0.3 sec
+2018-09-30 00:38:04 memory usage: 9120104
+2018-09-30 00:38:04 missing values running: 0.01 sec
+2018-09-30 00:38:04 features from datetime (df_X size: 4500104 ) running: 0.01 sec
+2018-09-30 00:38:04 used columns: 112 df_X size: 4480104
+2018-09-30 00:38:04 scaling (df_X size: 8960112 ) running: 0.04 sec
+2018-09-30 00:38:11 cross validation (score: 0.6430424809717973 ) running: 6.84 sec
+2018-09-30 00:38:11 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 00:38:12 cross validation (score: 0.582998989096306 ) running: 1.71 sec
+2018-09-30 00:38:12 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 00:38:14 cross validation (score: 0.5924940790764056 ) running: 1.62 sec
+2018-09-30 00:38:14 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:38:20 cross validation (score: 0.6329651976584884 ) running: 6.52 sec
+2018-09-30 00:38:20 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 00:38:27 fit best model GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False) running: 6.23 sec
+2018-09-30 00:38:27 Train time: 23.4843430519104
+2018-09-30 00:38:27 Dataset read, shape (10000, 113)
+2018-09-30 00:38:27 read dataset running: 0.29 sec
+2018-09-30 00:38:27 features from datetime running: 0.0 sec
+2018-09-30 00:38:27 missing values running: 0.0 sec
+2018-09-30 00:38:27 categorical encoding running: 0.0 sec
+2018-09-30 00:38:27 scale running: 0.02 sec
+2018-09-30 00:38:27 predict running: 0.03 sec
+2018-09-30 00:38:27 read ..\..\check_6_c\test-target.csv shape (10000, 2) running: 0.01 sec
+2018-09-30 00:38:27 ROC-AUC: 0.6074160904550632
+2018-09-30 00:38:27 Total time: 23.855364322662354
+2018-09-30 00:38:27 ================================================================================ 
+
+
+2018-09-30 00:38:27 processing ..\..\check_7_c\
+2018-09-30 00:38:28 read dataset, shape:  (10000, 774) nrows 10000 running: 1.36 sec
+2018-09-30 00:38:28 memory usage: 64774592
+2018-09-30 00:38:29 missing values running: 0.05 sec
+2018-09-30 00:38:30 features from datetime (df_X size: 30806450 ) running: 0.08 sec
+2018-09-30 00:38:30 used columns: 759 df_X size: 30660104
+2018-09-30 00:38:30 scaling (df_X size: 60720112 ) running: 0.35 sec
+2018-09-30 00:39:10 cross validation (score: 0.6996013296498439 ) running: 39.3 sec
+2018-09-30 00:39:10 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 00:39:12 cross validation (score: 0.5855464350688729 ) running: 2.2 sec
+2018-09-30 00:39:12 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 00:39:14 cross validation (score: 0.5406825846031426 ) running: 2.34 sec
+2018-09-30 00:39:14 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 00:39:26 cross validation (score: 0.6588642788157646 ) running: 11.46 sec
+2018-09-30 00:39:26 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 00:39:46 fit best model GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False) running: 20.03 sec
+2018-09-30 00:39:46 Train time: 78.52549147605896
+2018-09-30 00:39:47 Dataset read, shape (10000, 773)
+2018-09-30 00:39:47 read dataset running: 1.15 sec
+2018-09-30 00:39:48 features from datetime running: 1.08 sec
+2018-09-30 00:39:48 missing values running: 0.03 sec
+2018-09-30 00:39:48 categorical encoding running: 0.01 sec
+2018-09-30 00:39:48 scale running: 0.18 sec
+2018-09-30 00:39:48 predict running: 0.14 sec
+2018-09-30 00:39:48 read ..\..\check_7_c\test-target.csv shape (10000, 2) running: 0.01 sec
+2018-09-30 00:39:48 ROC-AUC: 0.4982873262139835
+2018-09-30 00:39:48 Total time: 81.21564555168152
+2018-09-30 00:39:48 ================================================================================ 
+
+
+2018-09-30 00:39:48 processing ..\..\check_8_c\
+2018-09-30 00:39:49 read dataset, shape:  (1000, 878) nrows 1000 running: 0.22 sec
+2018-09-30 00:39:49 memory usage: 11633606
+2018-09-30 00:39:49 missing values running: 0.04 sec
+2018-09-30 00:39:53 features from datetime (df_X size: 7079812 ) running: 2.99 sec
+2018-09-30 00:39:53 used columns: 1480 df_X size: 6505104
+2018-09-30 00:42:31 processing ..\..\check_8_c\
+2018-09-30 00:42:31 read dataset, shape:  (1000, 878) nrows 1000 running: 0.23 sec
+2018-09-30 00:42:31 memory usage: 11633606
+2018-09-30 00:42:31 missing values running: 0.04 sec
+2018-09-30 00:42:35 features from datetime (df_X size: 7079812 ) running: 2.59 sec
+2018-09-30 00:42:35 used columns: 1480 df_X size: 6505104
+2018-09-30 00:42:35 scaling (df_X size: 11840112 ) running: 0.06 sec
+2018-09-30 00:43:37 processing ..\..\check_8_c\
+2018-09-30 00:43:38 read dataset, shape:  (1000, 878) nrows 1000 running: 0.28 sec
+2018-09-30 00:43:38 memory usage: 11633606
+2018-09-30 00:43:38 missing values running: 0.05 sec
+2018-09-30 00:51:50 processing ..\..\check_8_c\
+2018-09-30 00:51:50 read dataset, shape:  (1000, 878) nrows 1000 running: 0.28 sec
+2018-09-30 00:51:50 memory usage: 11633606
+2018-09-30 00:51:50 missing values running: 0.05 sec
+2018-09-30 00:51:57 features from datetime (df_X size: 7079812 ) running: 4.09 sec
+2018-09-30 00:51:58 used columns: 1480 df_X size: 6505104
+2018-09-30 00:52:24 scaling (df_X size: 11840112 ) running: 0.32 sec
+2018-09-30 00:52:35 cross validation (score: 0.790431256705129 ) running: 10.96 sec
+2018-09-30 00:52:35 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 00:52:39 cross validation (score: 0.7179527077434432 ) running: 4.28 sec
+2018-09-30 00:52:39 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 11:46:11 processing ..\..\check_8_c\
+2018-09-30 11:46:11 read dataset, shape:  (1000, 878) nrows 1000 running: 0.29 sec
+2018-09-30 11:46:12 memory usage: 11633606
+2018-09-30 11:46:12 missing values running: 0.05 sec
+2018-09-30 19:48:19 processing ..\..\check_8_c\
+2018-09-30 19:48:19 read dataset, shape:  (1000, 878) nrows 1000 running: 0.23 sec
+2018-09-30 19:48:19 memory usage: 11633606
+2018-09-30 19:52:00 processing ..\..\check_8_c\
+2018-09-30 19:52:01 read dataset, shape:  (1000, 878) nrows 1000 running: 0.22 sec
+2018-09-30 19:52:01 memory usage: 11633606
+2018-09-30 19:56:21 processing ..\..\check_8_c\
+2018-09-30 19:56:22 read dataset, shape:  (1000, 878) nrows 1000 running: 0.22 sec
+2018-09-30 19:56:22 memory usage: 11633606
+2018-09-30 19:56:22 missing values running: 0.06 sec
+2018-09-30 19:56:23 missing values running: 0.01 sec
+2018-09-30 19:56:23 used columns: 1078 df_X size: 3289104
+2018-09-30 19:56:24 scaling (df_X size: 8624112 ) running: 0.18 sec
+2018-09-30 19:56:29 cross validation (score: 0.7561973398777543 ) running: 5.25 sec
+2018-09-30 19:56:29 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 19:56:30 cross validation (score: 0.7477694360059252 ) running: 1.35 sec
+2018-09-30 19:56:30 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 19:56:32 cross validation (score: 0.7663904798453762 ) running: 1.41 sec
+2018-09-30 19:56:32 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 19:56:34 cross validation (score: 0.7977816369222301 ) running: 2.6 sec
+2018-09-30 19:56:34 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 19:56:38 cross validation (score: 0.7823098538254979 ) running: 3.38 sec
+2018-09-30 19:56:38 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-09-30 19:56:40 cross validation (score: 0.8348092679665212 ) running: 1.96 sec
+2018-09-30 19:56:40 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-09-30 19:56:40 fit best model SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False) running: 0.53 sec
+2018-09-30 19:56:40 Train time: 18.899080991744995
+2018-09-30 19:56:40 Dataset read, shape (1000, 877)
+2018-09-30 19:56:40 read dataset running: 0.23 sec
+2018-09-30 19:56:48 features from datetime running: 7.78 sec
+2018-09-30 19:56:48 missing values running: 0.05 sec
+2018-09-30 20:34:08 processing ..\..\check_8_c\
+2018-09-30 20:34:08 read dataset, shape:  (1000, 878) nrows 1000 running: 0.23 sec
+2018-09-30 20:34:08 memory usage: 11633606
+2018-09-30 20:34:08 read dataset (shape: (1000, 878) ) running: 0.3 sec
+2018-09-30 20:34:09 optimize dataset (size 4445710 ) running: 1.05 sec
+2018-09-30 20:35:13 processing ..\..\check_8_c\
+2018-09-30 20:35:13 read dataset, shape:  (1000, 878) nrows 1000 running: 0.22 sec
+2018-09-30 20:35:13 memory usage: 11633606
+2018-09-30 20:35:13 read dataset (shape: (1000, 878) ) running: 0.29 sec
+2018-09-30 20:35:32 processing ..\..\check_8_c\
+2018-09-30 20:35:32 read dataset, shape:  (1000, 878) nrows 1000 running: 0.22 sec
+2018-09-30 20:35:32 memory usage: 11633606
+2018-09-30 20:35:32 read dataset (shape: (1000, 878) ) running: 0.29 sec
+2018-09-30 20:35:32 impute missing values running: 0.06 sec
+2018-09-30 20:35:34 optimize dataset (size 4498897 ) running: 1.13 sec
+2018-09-30 20:36:30 processing ..\..\check_8_c\
+2018-09-30 20:36:30 read dataset, shape:  (1000, 878) nrows 1000 running: 0.22 sec
+2018-09-30 20:36:30 memory usage: 11633606
+2018-09-30 20:36:30 read dataset (shape: (1000, 878) ) running: 0.29 sec
+2018-09-30 20:36:30 impute missing values running: 0.06 sec
+2018-09-30 20:36:31 optimize dataset (size 4498897 ) running: 1.11 sec
+2018-09-30 20:36:38 categorical encoding (df_X size: 55951186 ) running: 6.75 sec
+2018-09-30 20:36:38 used columns: 3254 df_X size: 46184024
+2018-09-30 20:43:08 processing ..\..\check_8_c\
+2018-09-30 20:43:08 read dataset, shape:  (1000, 878) nrows 1000 running: 0.23 sec
+2018-09-30 20:43:08 memory usage: 11633606
+2018-09-30 20:43:08 read dataset (shape (1000, 878) ) running: 0.29 sec
+2018-09-30 20:43:08 impute missing values running: 0.06 sec
+2018-09-30 20:43:09 optimize dataset (size 4498897 ) running: 1.13 sec
+2018-09-30 20:43:12 categorical encoding (size 4494897 ) running: 2.66 sec
+2018-09-30 20:43:16 optimize categorical features (size 2516104 ) running: 3.97 sec
+2018-09-30 20:43:16 used columns: 3254 df_X size: 46184024
+2018-09-30 20:44:01 processing ..\..\check_8_c\
+2018-09-30 20:44:01 read dataset, shape:  (1000, 878) nrows 1000 running: 0.23 sec
+2018-09-30 20:44:01 memory usage: 11633606
+2018-09-30 20:44:01 read dataset (shape (1000, 878) ) running: 0.3 sec
+2018-09-30 20:44:01 impute missing values running: 0.06 sec
+2018-09-30 20:44:02 optimize dataset (size 4498897 ) running: 1.16 sec
+2018-09-30 20:44:05 categorical encoding (size 4494897 ) running: 2.59 sec
+2018-09-30 20:44:09 optimize categorical features (size 2516104 ) running: 3.96 sec
+2018-09-30 20:44:09 used columns: 3254 df_X size: 5465104
+2018-09-30 20:44:09 scaling (df_X size: 26032112 ) running: 0.13 sec
+2018-09-30 20:44:24 cross validation (score: 0.8137939958592132 ) running: 14.29 sec
+2018-09-30 20:44:24 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 20:44:25 cross validation (score: 0.7719080351902375 ) running: 1.51 sec
+2018-09-30 20:44:25 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 20:44:27 cross validation (score: 0.726465803035287 ) running: 1.65 sec
+2018-09-30 20:44:27 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 20:44:31 cross validation (score: 0.8136385282362527 ) running: 4.37 sec
+2018-09-30 20:44:31 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 20:44:45 cross validation (score: 0.6781640147141976 ) running: 13.41 sec
+2018-09-30 20:44:45 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-09-30 20:44:48 cross validation (score: 0.7828193898896866 ) running: 3.47 sec
+2018-09-30 20:44:48 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-09-30 20:44:54 fit best model GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False) running: 6.06 sec
+2018-09-30 20:44:54 Train time: 53.4450569152832
+2018-09-30 20:44:54 read dataset, shape:  (1000, 877) nrows 1000 running: 0.22 sec
+2018-09-30 20:44:54 memory usage: 11543151
+2018-09-30 20:44:54 read dataset (shape: (1000, 877) ) running: 0.29 sec
+2018-09-30 20:44:54 impute missing values running: 0.03 sec
+2018-09-30 20:44:55 optimize dataset (size 4522178 ) running: 1.1 sec
+2018-09-30 20:44:58 categorical encoding (size: 10064104 ) running: 2.58 sec
+2018-09-30 20:45:01 optimize categorical features (size: 1825104 ) running: 2.81 sec
+2018-09-30 20:52:00 processing ..\..\check_8_c\
+2018-09-30 20:52:00 read dataset, shape:  (1000, 878) nrows 1000 running: 0.24 sec
+2018-09-30 20:52:00 memory usage: 11633606
+2018-09-30 20:52:00 read dataset (shape (1000, 878) ) running: 0.31 sec
+2018-09-30 20:52:00 impute missing values running: 0.07 sec
+2018-09-30 20:52:01 optimize dataset (size 4566897 ) running: 1.04 sec
+2018-09-30 20:52:04 categorical encoding (size 4494897 ) running: 2.58 sec
+2018-09-30 20:52:07 optimize categorical features (size 2516104 ) running: 3.53 sec
+2018-09-30 20:52:08 used columns: 3254 (size: 5465104 )
+2018-09-30 20:52:08 scaling (df_X size: 26032112 ) running: 0.16 sec
+2018-09-30 20:52:22 cross validation (score: 0.7900777257492008 ) running: 14.39 sec
+2018-09-30 20:52:22 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 20:52:24 cross validation (score: 0.7017304607968972 ) running: 1.58 sec
+2018-09-30 20:52:24 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 20:52:25 cross validation (score: 0.6804522240066735 ) running: 1.6 sec
+2018-09-30 20:52:25 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 20:52:30 cross validation (score: 0.8136385282362527 ) running: 4.39 sec
+2018-09-30 20:52:30 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 20:52:41 cross validation (score: 0.6787697606470463 ) running: 11.2 sec
+2018-09-30 20:52:41 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-09-30 20:52:44 cross validation (score: 0.7828193898896866 ) running: 3.45 sec
+2018-09-30 20:52:44 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-09-30 20:52:47 fit best model AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None) running: 2.25 sec
+2018-09-30 20:52:47 Train time: 47.07269239425659
+2018-09-30 20:52:47 read dataset, shape:  (1000, 877) nrows 1000 running: 0.22 sec
+2018-09-30 20:52:47 memory usage: 11543151
+2018-09-30 20:52:47 read dataset (shape: (1000, 877) ) running: 0.29 sec
+2018-09-30 20:52:47 impute missing values running: 0.03 sec
+2018-09-30 20:52:48 optimize dataset (size 4602178 ) running: 0.96 sec
+2018-09-30 20:52:51 categorical encoding (size: 10064104 ) running: 2.54 sec
+2018-09-30 20:52:54 optimize categorical features (size: 2516104 ) running: 3.5 sec
+2018-09-30 20:52:54 scale running: 0.05 sec
+2018-09-30 20:52:54 predict running: 0.21 sec
+2018-09-30 20:52:54 read ..\..\check_8_c\test-target.csv shape (1000, 2) running: 0.05 sec
+2018-09-30 20:52:54 ROC-AUC: 0.718974358974359
+2018-09-30 20:52:54 Total time: 54.75513172149658
+2018-09-30 20:52:54 ================================================================================ 
+
+
+2018-09-30 20:53:43 processing ..\..\check_8_c\
+2018-09-30 20:53:45 read dataset, shape:  (10000, 878) nrows 10000 running: 1.73 sec
+2018-09-30 20:53:45 memory usage: 116837671
+2018-09-30 20:53:45 read dataset (shape (10000, 878) ) running: 1.92 sec
+2018-09-30 20:53:45 impute missing values running: 0.22 sec
+2018-09-30 20:53:47 optimize dataset (size 38607695 ) running: 1.48 sec
+2018-09-30 20:53:51 categorical encoding (size 38407695 ) running: 3.47 sec
+2018-09-30 20:53:55 optimize categorical features (size 22320104 ) running: 3.98 sec
+2018-09-30 20:53:55 used columns: 2981 (size: 52250104 )
+2018-09-30 20:53:56 scaling (df_X size: 238480112 ) running: 1.25 sec
+2018-09-30 20:56:28 cross validation (score: 0.8303531938551614 ) running: 152.2 sec
+2018-09-30 20:56:28 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 20:56:34 cross validation (score: 0.716909703124529 ) running: 5.38 sec
+2018-09-30 20:56:34 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 20:56:40 cross validation (score: 0.7608536121175599 ) running: 5.83 sec
+2018-09-30 20:56:40 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 20:57:18 cross validation (score: 0.7938972824310188 ) running: 38.46 sec
+2018-09-30 20:57:18 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 20:58:29 fit best model GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False) running: 70.77 sec
+2018-09-30 20:58:29 Train time: 285.77534556388855
+2018-09-30 20:58:31 read dataset, shape:  (10000, 877) nrows 10000 running: 2.26 sec
+2018-09-30 20:58:31 memory usage: 116775879
+2018-09-30 20:58:31 read dataset (shape: (10000, 877) ) running: 2.45 sec
+2018-09-30 20:58:31 impute missing values running: 0.13 sec
+2018-09-30 20:58:33 optimize dataset (size 38648640 ) running: 1.49 sec
+2018-09-30 20:58:36 categorical encoding (size: 89280104 ) running: 3.23 sec
+2018-09-30 20:58:40 optimize categorical features (size: 22320104 ) running: 4.02 sec
+2018-09-30 20:58:41 scale running: 0.59 sec
+2018-09-30 20:58:42 predict running: 0.65 sec
+2018-09-30 20:58:42 read ..\..\check_8_c\test-target.csv shape (10000, 2) running: 0.01 sec
+2018-09-30 20:58:42 ROC-AUC: 0.7322551334429883
+2018-09-30 20:58:42 Total time: 298.53607535362244
+2018-09-30 20:58:42 ================================================================================ 
+
+
+2018-09-30 21:00:46 processing ..\..\check_8_c\
+2018-09-30 21:01:24 read dataset, shape:  (143525, 878) nrows None running: 38.31 sec
+2018-09-30 21:01:26 memory usage: 1676992969
+2018-09-30 21:01:26 read dataset (shape (143525, 878) ) running: 40.26 sec
+2018-09-30 21:01:29 impute missing values running: 2.55 sec
+2018-09-30 21:01:37 optimize dataset (size 474525167 ) running: 7.74 sec
+2018-09-30 21:01:56 categorical encoding (size 473951067 ) running: 15.88 sec
+2018-09-30 21:02:13 optimize categorical features (size 259923879 ) running: 16.84 sec
+2018-09-30 21:02:14 used columns: 2564 (size: 691790604 )
+2018-09-30 21:02:30 scaling (df_X size: 2943984912 ) running: 15.44 sec
+2018-09-30 21:10:01 processing ..\..\check_8_c\
+2018-09-30 21:10:41 read dataset, shape:  (143525, 878) nrows None running: 40.32 sec
+2018-09-30 21:10:43 memory usage: 1676992969
+2018-09-30 21:10:46 impute missing values running: 2.56 sec
+2018-09-30 21:10:59 optimize dataframe ( 1721382117 to 1721382117, ratio: 1.0 ) running: 12.79 sec
+2018-09-30 21:11:18 categorical encoding (size 473951067 ) running: 15.47 sec
+2018-09-30 21:11:35 optimize dataframe ( 1039695204 to 1039695204, ratio: 1.0 ) running: 16.97 sec
+2018-09-30 21:11:37 used columns: 2564 (size: 691790604 )
+2018-09-30 21:11:51 scaling (df_X size: 2943984912 ) running: 14.79 sec
+2018-09-30 21:35:25 processing ..\..\check_8_c\
+2018-09-30 21:36:03 read dataset, shape:  (143525, 878) nrows None running: 38.36 sec
+2018-09-30 21:36:05 memory usage: 1676992969
+2018-09-30 21:36:08 impute missing values running: 2.68 sec
+2018-09-30 21:36:18 optimize dataframe ( 1721382117 to 474525167, ratio: 3.63 ) running: 9.6 sec
+2018-09-30 21:36:37 categorical encoding (size 473951067 ) running: 15.53 sec
+2018-09-30 21:36:54 optimize dataframe ( 1039695204 to 259923879, ratio: 4.0 ) running: 16.9 sec
+2018-09-30 21:36:55 used columns: 2564 (size: 691790604 )
+2018-09-30 21:37:10 scaling (df_X size: 2943984912 ) running: 14.7 sec
+2018-09-30 21:43:58 processing ..\..\check_8_c\
+2018-09-30 21:44:38 read dataset, shape: (143525, 878) nrows None running: 40.47 sec
+2018-09-30 21:44:41 impute missing values running: 2.7 sec
+2018-09-30 21:44:51 optimize dataframe ( 1721382117 to 474525167, ratio: 3.63 ) running: 10.15 sec
+2018-09-30 21:47:54 processing ..\..\check_8_c\
+2018-09-30 21:48:11 processing ..\..\check_8_c\
+2018-09-30 21:48:11 read dataset, shape: (1000, 878) nrows 1000 time: 0.22 sec
+2018-09-30 21:48:11 impute missing values time: 0.04 sec
+2018-09-30 21:48:12 optimize dataframe ( 11935266 to 4566897, ratio: 2.61 ) time: 1.04 sec
+2018-09-30 21:48:15categorical encoding (2516 columns) time: 2.55 sec
+2018-09-30 21:48:19 optimize dataframe ( 10064104 to 2516104, ratio: 4.0 ) time: 3.57 sec
+2018-09-30 21:48:19 used columns: 3254 (size: 5465104 )
+2018-09-30 21:48:19 scaling (df_X size: 26032112 ) time: 0.18 sec
+2018-09-30 21:48:33 cross validation (score: 0.7978769061916156 ) time: 14.22 sec
+2018-09-30 21:48:33 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 21:48:35 cross validation (score: 0.7238579243607687 ) time: 1.65 sec
+2018-09-30 21:48:35 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 21:48:37 cross validation (score: 0.7403339987401344 ) time: 1.7 sec
+2018-09-30 21:48:37 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 21:48:41 cross validation (score: 0.8136385282362527 ) time: 4.49 sec
+2018-09-30 21:48:41 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 21:48:53 cross validation (score: 0.6789428309135745 ) time: 11.65 sec
+2018-09-30 21:48:53 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-09-30 21:48:57 cross validation (score: 0.7828193898896866 ) time: 3.71 sec
+2018-09-30 21:48:57 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-09-30 21:48:59 fit best model AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None) time: 2.18 sec
+2018-09-30 21:48:59 Train time: 47.731730222702026
+2018-09-30 21:48:59 read dataset, shape: (1000, 877) nrows 1000 time: 0.22 sec
+2018-09-30 21:48:59 impute missing values time: 0.03 sec
+2018-09-30 21:49:00 optimize dataframe ( 11833703 to 4602178, ratio: 2.57 ) time: 1.01 sec
+2018-09-30 21:49:03categorical encoding (2516 columns) time: 2.44 sec
+2018-09-30 21:49:06 optimize dataframe ( 10064104 to 2516104, ratio: 4.0 ) time: 3.75 sec
+2018-09-30 21:49:06 scale time: 0.05 sec
+2018-09-30 21:49:07 predict time: 0.22 sec
+2018-09-30 21:49:07 read ..\..\check_8_c\test-target.csv shape (1000, 2) time: 0.03 sec
+2018-09-30 21:49:07 ROC-AUC: 0.718974358974359
+2018-09-30 21:49:07 Total time: 55.515175342559814
+2018-09-30 21:49:07 ================================================================================ 
+
+
+2018-09-30 21:54:04 processing ..\..\check_8_c\
+2018-09-30 21:54:04 read dataset, shape: (1000, 878) nrows 1000 time: 0.23 sec
+2018-09-30 21:54:04 impute missing values time: 0.04 sec
+2018-09-30 21:54:05 optimize dataframe ( 11935266 to 4566897, ratio: 2.61 ) time: 1.06 sec
+2018-09-30 21:54:08 categorical encoding (2516 columns) time: 2.55 sec
+2018-09-30 21:54:11 optimize dataframe ( 10064104 to 2516104, ratio: 4.0 ) time: 3.53 sec
+2018-09-30 21:54:11 used columns: 3254, size: 5465104
+2018-09-30 21:54:12 scaling (df_X size: 26032112 ) time: 0.18 sec
+2018-09-30 21:54:26 cross validation (score: 0.7942276497487795 ) time: 14.62 sec
+2018-09-30 21:54:26 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 21:54:28 cross validation (score: 0.769809423837258 ) time: 1.51 sec
+2018-09-30 21:54:28 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 21:54:29 cross validation (score: 0.7757569674219411 ) time: 1.56 sec
+2018-09-30 21:54:29 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 21:54:34 cross validation (score: 0.8136385282362527 ) time: 4.46 sec
+2018-09-30 21:54:34 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 21:54:46 cross validation (score: 0.6787697606470463 ) time: 12.09 sec
+2018-09-30 21:54:46 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-09-30 21:54:50 cross validation (score: 0.7828193898896866 ) time: 3.74 sec
+2018-09-30 21:54:50 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-09-30 21:54:52 fit best model AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None) time: 2.26 sec
+2018-09-30 21:54:52 Train time: 48.35576605796814
+2018-09-30 21:54:52 read dataset, shape: (1000, 877) nrows 1000 time: 0.21 sec
+2018-09-30 21:54:52 impute missing values time: 0.03 sec
+2018-09-30 21:54:53 optimize dataframe ( 11833703 to 4602178, ratio: 2.57 ) time: 1.04 sec
+2018-09-30 21:54:56 categorical encoding (2516 columns) time: 2.61 sec
+2018-09-30 21:54:59 processing ..\..\check_8_c\
+2018-09-30 21:54:59 read dataset, shape: (1000, 878), nrows: time: 0.31 sec
+2018-09-30 21:54:59 impute missing values time: 0.06 sec
+2018-09-30 21:55:00 optimize dataframe ( 10064104 to 2516104, ratio: 4.0 ) time: 3.87 sec
+2018-09-30 21:55:00 scale time: 0.06 sec
+2018-09-30 21:55:00 predict time: 0.23 sec
+2018-09-30 21:55:00 read ..\..\check_8_c\test-target.csv shape (1000, 2) time: 0.01 sec
+2018-09-30 21:55:00 ROC-AUC: 0.718974358974359
+2018-09-30 21:55:00 Total time: 56.4612295627594
+2018-09-30 21:55:00 ================================================================================ 
+
+
+2018-09-30 21:55:27 processing ..\..\check_8_c\
+2018-09-30 21:55:27 read dataset (shape: (1000, 878), nrows: 1000) time: 0.23 sec
+2018-09-30 21:55:27 impute missing values time: 0.04 sec
+2018-09-30 21:55:28 optimize dataframe ( 11935266 to 4566897, ratio: 2.61 ) time: 1.06 sec
+2018-09-30 21:55:31 categorical encoding (2516 columns) time: 2.57 sec
+2018-09-30 21:55:35 optimize dataframe ( 10064104 to 2516104, ratio: 4.0 ) time: 3.65 sec
+2018-09-30 21:55:35 used columns: 3254, size: 5465104
+2018-09-30 21:55:35 scaling (df_X size: 26032112 ) time: 0.15 sec
+2018-09-30 21:55:49 cross validation (score: 0.7716133588746348 ) time: 14.34 sec
+2018-09-30 21:55:49 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 21:55:54 cross validation (score: 0.6160063928501556 ) time: 4.88 sec
+2018-09-30 21:55:54 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 21:55:56 cross validation (score: 0.704983187459823 ) time: 1.58 sec
+2018-09-30 21:55:56 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 21:56:00 cross validation (score: 0.8136385282362527 ) time: 4.39 sec
+2018-09-30 21:56:00 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 21:56:12 cross validation (score: 0.6786832255137822 ) time: 11.48 sec
+2018-09-30 21:56:12 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-09-30 21:56:15 cross validation (score: 0.7828193898896866 ) time: 3.79 sec
+2018-09-30 21:56:15 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-09-30 21:56:18 fit best model AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None) time: 2.32 sec
+2018-09-30 21:56:18 Train time: 50.99191665649414
+2018-09-30 21:56:18 read dataset (shape: (1000, 877), nrows: 1000) time: 0.23 sec
+2018-09-30 21:56:18 impute missing values time: 0.03 sec
+2018-09-30 21:56:19 optimize dataframe ( 11833703 to 4602178, ratio: 2.57 ) time: 1.05 sec
+2018-09-30 21:56:22 categorical encoding (2516 columns) time: 2.57 sec
+2018-09-30 21:56:26 optimize dataframe ( 10064104 to 2516104, ratio: 4.0 ) time: 3.88 sec
+2018-09-30 21:56:26 scale time: 0.12 sec
+2018-09-30 21:56:26 predict time: 0.24 sec
+2018-09-30 21:56:26 read ..\..\check_8_c\test-target.csv shape (1000, 2) time: 0.01 sec
+2018-09-30 21:56:26 ROC-AUC: 0.718974358974359
+2018-09-30 21:56:26 Total time: 59.162384271621704
+2018-09-30 21:56:26 ================================================================================ 
+
+
+2018-09-30 21:57:46 processing ..\..\check_8_c\
+2018-09-30 21:57:46 read dataset (shape: (1000, 878), nrows: 1000) time: 0.24 sec
+2018-09-30 21:57:46 impute missing values time: 0.04 sec
+2018-09-30 21:57:47 optimize dataframe (11935266 to 4566897, ratio: 2.61) time: 1.04 sec
+2018-09-30 21:57:50 categorical encoding (2516 columns) time: 2.63 sec
+2018-09-30 21:57:53 optimize dataframe (10064104 to 2516104, ratio: 4.0) time: 3.54 sec
+2018-09-30 21:57:54 used columns: 3254, size: 5465104
+2018-09-30 21:57:54 scaling (df_X size: 26032112 ) time: 0.13 sec
+2018-09-30 21:58:08 cross validation (score: 0.7900452078885642 ) time: 14.55 sec
+2018-09-30 21:58:08 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 21:58:10 cross validation (score: 0.639274265848829 ) time: 1.6 sec
+2018-09-30 21:58:10 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 21:58:12 cross validation (score: 0.7097168204949594 ) time: 1.59 sec
+2018-09-30 21:58:12 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 21:58:17 cross validation (score: 0.8136385282362527 ) time: 5.0 sec
+2018-09-30 21:58:17 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 21:58:28 cross validation (score: 0.6786832255137822 ) time: 11.36 sec
+2018-09-30 21:58:28 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-09-30 21:58:32 cross validation (score: 0.7828193898896866 ) time: 3.88 sec
+2018-09-30 21:58:32 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-09-30 21:58:34 fit best model AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None) time: 2.3 sec
+2018-09-30 21:58:34 Train time: 48.399768352508545
+2018-09-30 21:58:34 read dataset (shape: (1000, 877), nrows: 1000) time: 0.21 sec
+2018-09-30 21:58:34 impute missing values time: 0.03 sec
+2018-09-30 21:58:35 optimize dataframe (11833703 to 4602178, ratio: 2.57) time: 1.0 sec
+2018-09-30 21:58:38 categorical encoding (2516 columns) time: 2.43 sec
+2018-09-30 21:58:41 optimize dataframe (10064104 to 2516104, ratio: 4.0) time: 3.67 sec
+2018-09-30 21:58:42 scale time: 0.05 sec
+2018-09-30 21:58:42 predict time: 0.22 sec
+2018-09-30 21:58:42 read ..\..\check_8_c\test-target.csv shape (1000, 2) time: 0.01 sec
+2018-09-30 21:58:42 ROC-AUC: 0.718974358974359
+2018-09-30 21:58:42 Total time: 56.060206174850464
+2018-09-30 21:58:42 ================================================================================ 
+
+
+2018-09-30 22:59:46 processing ..\..\check_8_c\
+2018-09-30 22:59:46 read dataset (shape: (1000, 878), nrows: 1000) [0.24 sec]
+2018-09-30 22:59:46 impute missing values [0.04 sec]
+2018-09-30 22:59:47 optimize dataframe (11935266 to 4566897, ratio: 2.61) [1.05 sec]
+2018-09-30 22:59:48 calculate unique values [0.24 sec]
+2018-09-30 22:59:50 categorical encoding (2516 columns) [2.5 sec]
+2018-09-30 22:59:54 optimize dataframe (10064104 to 2516104, ratio: 4.0) [3.59 sec]
+2018-09-30 22:59:54 used columns: 3254, size: 5465104
+2018-09-30 22:59:54 scaling (df_X size: 26032112 ) [0.16 sec]
+2018-09-30 23:00:41 processing ..\..\check_8_c\
+2018-09-30 23:00:42 read dataset (shape: (1000, 878), nrows: 1000) [0.22 sec]
+2018-09-30 23:00:42 impute missing values [0.04 sec]
+2018-09-30 23:00:43 optimize dataframe (11935266 to 4566897, ratio: 2.61) [1.05 sec]
+2018-09-30 23:00:43 calculate unique values [0.24 sec]
+2018-09-30 23:00:46 categorical encoding (2516 columns) [2.46 sec]
+2018-09-30 23:00:49 optimize dataframe (10064104 to 2516104, ratio: 4.0) [3.62 sec]
+2018-09-30 23:00:50 used columns: 3254, size: 5465104
+2018-09-30 23:00:50 scaling (df_X size: 26032112 ) [0.14 sec]
+2018-09-30 23:01:04 cross validation (score: 0.7956574950175113 ) [14.58 sec]
+2018-09-30 23:01:04 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 23:01:06 cross validation (score: 0.7604793508897533 ) [1.49 sec]
+2018-09-30 23:01:06 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 23:01:07 cross validation (score: 0.7706239828090702 ) [1.64 sec]
+2018-09-30 23:01:07 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 23:01:12 cross validation (score: 0.8136385282362527 ) [4.36 sec]
+2018-09-30 23:01:12 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 23:01:20 processing ..\..\check_8_c\
+2018-09-30 23:01:20 read dataset (shape: (1000, 878), nrows: 1000) [0.26 sec]
+2018-09-30 23:01:20 impute missing values [0.04 sec]
+2018-09-30 23:01:21 optimize dataframe (11935266 to 4566897, ratio: 2.61) [1.07 sec]
+2018-09-30 23:01:22 calculate unique values [0.24 sec]
+2018-09-30 23:01:24 categorical encoding (2516 columns) [2.51 sec]
+2018-09-30 23:01:54 processing ..\..\check_8_c\
+2018-09-30 23:01:54 read dataset (shape: (1000, 878), nrows: 1000) [0.23 sec]
+2018-09-30 23:01:54 impute missing values [0.04 sec]
+2018-09-30 23:01:55 optimize dataframe (11935266 to 4566897, ratio: 2.61) [1.06 sec]
+2018-09-30 23:01:56 calculate unique values [0.24 sec]
+2018-09-30 23:01:57 categorical encoding (639 columns) [0.53 sec]
+2018-09-30 23:01:57 optimize dataframe (2556104 to 639104, ratio: 4.0) [0.85 sec]
+2018-09-30 23:01:57 used columns: 1377, size: 3588104
+2018-09-30 23:01:58 scaling (df_X size: 11016112 ) [0.06 sec]
+2018-09-30 23:02:04 cross validation (score: 0.7774836389474747 ) [6.34 sec]
+2018-09-30 23:02:04 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-09-30 23:02:05 cross validation (score: 0.7101847014484154 ) [1.36 sec]
+2018-09-30 23:02:05 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-09-30 23:02:07 cross validation (score: 0.8084817598988668 ) [1.44 sec]
+2018-09-30 23:02:07 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-09-30 23:02:09 cross validation (score: 0.7996854098540406 ) [2.8 sec]
+2018-09-30 23:02:09 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-09-30 23:02:14 cross validation (score: 0.76263251700066 ) [4.08 sec]
+2018-09-30 23:02:14 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-09-30 23:02:16 cross validation (score: 0.815060445596813 ) [2.23 sec]
+2018-09-30 23:02:16 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-09-30 23:02:17 fit best model SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False) [0.72 sec]
+2018-09-30 23:02:17 Train time: 22.347278356552124
+2018-09-30 23:02:17 read dataset (shape: (1000, 877), nrows: 1000) [0.21 sec]
+2018-09-30 23:02:17 impute missing values [0.03 sec]
+2018-09-30 23:02:18 optimize dataframe (11833703 to 4602178, ratio: 2.57) [1.0 sec]
+2018-09-30 23:02:18 categorical encoding (639 columns) [0.5 sec]
+2018-09-30 23:02:19 optimize dataframe (2556104 to 639104, ratio: 4.0) [0.82 sec]
+2018-09-30 23:02:19 scale [0.02 sec]
+2018-09-30 23:02:20 predict [0.56 sec]
+2018-09-30 23:02:20 read ..\..\check_8_c\test-target.csv shape (1000, 2) [0.01 sec]
+2018-09-30 23:02:20 ROC-AUC: 0.5
+2018-09-30 23:02:20 Total time: 25.531460285186768
+2018-09-30 23:02:20 ================================================================================ 
+
+
+2018-09-30 23:02:33 processing ..\..\check_8_c\
+2018-09-30 23:03:12 read dataset (shape: (143525, 878), nrows: None) [38.89 sec]
+2018-09-30 23:03:14 impute missing values [2.64 sec]
+2018-09-30 23:03:24 optimize dataframe (1721382117 to 474525167, ratio: 3.63) [9.68 sec]
+2018-09-30 23:03:31 calculate unique values [3.2 sec]
+2018-09-30 23:03:33 categorical encoding (618 columns) [2.45 sec]
+2018-09-30 23:03:39 optimize dataframe (354793904 to 88698554, ratio: 4.0) [5.38 sec]
+2018-09-30 23:03:40 used columns: 1371, size: 520565279
+2018-09-30 23:03:48 scaling (df_X size: 1574182312 ) [7.88 sec]
+2018-09-30 23:14:18 processing ..\..\check_8_c\
+2018-09-30 23:14:59 read dataset (shape: (143525, 878), nrows: None) [40.99 sec]
+2018-09-30 23:15:02 impute missing values [2.65 sec]
+2018-09-30 23:15:12 optimize dataframe (1721382117 to 474525167, ratio: 3.63) [9.75 sec]
+2018-09-30 23:15:18 calculate unique values [3.08 sec]
+2018-09-30 23:15:19 categorical encoding (120 columns) [0.31 sec]
+2018-09-30 23:15:20 optimize dataframe (68892104 to 17223104, ratio: 4.0) [1.32 sec]
+2018-09-30 23:15:21 used columns: 873, size: 449089829
+2018-09-30 23:15:26 scaling (df_X size: 1002378712 ) [5.05 sec]
