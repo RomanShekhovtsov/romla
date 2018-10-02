@@ -8,13 +8,13 @@ import pandas as pd
 
 def parse_dt(x):
     if not isinstance(x, str):
-        return None
+        return datetime.datetime.strptime('0001-01-01', '%Y-%m-%d')
     elif len(x) == len('2010-01-01'):
         return datetime.datetime.strptime(x, '%Y-%m-%d')
     elif len(x) == len('2010-01-01 10:10:10'):
         return datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
     else:
-        return None
+        return datetime.datetime.strptime('0001-01-01', '%Y-%m-%d')
 
 
 def transform_datetime_features(df):
@@ -26,20 +26,18 @@ def transform_datetime_features(df):
 
     df_dates = pd.DataFrame()
     for col_name in datetime_columns:
-        df_dates[col_name] = df[col_name].apply(lambda x: parse_dt(x)).astype('datetime64')
-        df_dates['number_weekday_{}'.format(col_name)] = df_dates[col_name].apply(lambda x: x.weekday())
-        df_dates['number_month_{}'.format(col_name)] = df_dates[col_name].apply(lambda x: x.month)
-        df_dates['number_day_{}'.format(col_name)] = df_dates[col_name].apply(lambda x: x.day)
-        df_dates['number_hour_{}'.format(col_name)] = df_dates[col_name].apply(lambda x: x.hour)
-        df_dates['number_hour_of_week_{}'.format(col_name)] = df_dates[col_name].apply(lambda x: x.hour + x.weekday() * 24)
-        df_dates['number_minute_of_day_{}'.format(col_name)] = df_dates[col_name].apply(lambda x: x.minute + x.hour * 60)
+        df[col_name] = df[col_name].apply(lambda x: parse_dt(x))
+        df_dates['number_weekday_{}'.format(col_name)] = df[col_name].apply(lambda x: x.weekday())
+        df_dates['number_month_{}'.format(col_name)] = df[col_name].apply(lambda x: x.month)
+        df_dates['number_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.day)
+        df_dates['number_hour_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour)
+        df_dates['number_hour_of_week_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour + x.weekday() * 24)
+        df_dates['number_minute_of_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.minute + x.hour * 60)
 
-        if df_dates.isnull().values.any():
-            df_dates.fillna(-1, inplace=True)
     return df_dates
 
 
-LOG_FILE = 'log.txt'
+LOG_FILE = 'logs\\{}.log'.format( time.strftime("%Y-%m-%d_%H", time.localtime()) )
 log_file = open(LOG_FILE, mode='a')
 start_time = -1
 DATE_FORMAT='%Y-%m-%d %H:%M:%S'
@@ -118,7 +116,7 @@ def optimize_dataframe(df):
     int_cols = []
     float_cols = []
     category_cols = []
-    other_cols = []
+    # other_cols = []
 
     old_size = sys.getsizeof(df)
 
@@ -134,26 +132,26 @@ def optimize_dataframe(df):
             n_uniq = df[col_name].nunique()
             if n_uniq / total < 0.5:
                 category_cols.append(col_name)
-            else:
-                other_cols.append(col_name)
-        else:
-            other_cols.append(col_name)
+        #     else:
+        #         other_cols.append(col_name)
+        # else:
+        #     other_cols.append(col_name)
 
-    df_opt = pd.DataFrame()
+    # df_opt = pd.DataFrame()
 
     if len(int_cols) > 0:
-        df_opt[int_cols] = df[int_cols].apply(pd.to_numeric, downcast='integer')
+        df[int_cols] = df[int_cols].apply(pd.to_numeric, downcast='integer')
 
     if len(float_cols) > 0:
-        df_opt[float_cols] = df[float_cols].apply(pd.to_numeric, downcast='float')
+        df[float_cols] = df[float_cols].apply(pd.to_numeric, downcast='float')
 
     if len(category_cols) > 0:
-        df_opt[category_cols] = df[category_cols].astype('category')
+        df[category_cols] = df[category_cols].astype('category')
 
-    if len(other_cols) > 0:
-        df_opt[other_cols] = df[other_cols]
+    # if len(other_cols) > 0:
+    #     df_opt[other_cols] = df[other_cols]
 
-    new_size = sys.getsizeof(df_opt)
+    new_size = sys.getsizeof(df)
     log_time('optimize dataframe ({} to {}, ratio: {})'.format(old_size, new_size, round(old_size/new_size, 2)))
 
-    return df_opt
+    return df

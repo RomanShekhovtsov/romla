@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import pickle
 import time
+import math
 
 from sklearn.linear_model import Ridge, LogisticRegression
 from sklearn.ensemble import \
@@ -15,7 +16,8 @@ from sklearn.ensemble import \
 from sklearn.svm import LinearSVC, SVC
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_score, RandomizedSearchCV
+from sklearn.metrics import mean_squared_error, roc_auc_score
 
 from utils import *
 
@@ -28,24 +30,167 @@ MAX_DATASET_COLUMNS = 1000
 BIG_DATASET_SIZE = 500 * 1024 * 1024 # 300MB
 MAX_MODEL_SELECTION_ROWS = 10**5
 
+TRAIN_TEST_SPLIT_TEST_SIZE = 0.25
+SAMPLING_RATES = (5000, 10000, 15000)
+MIN_TRAIN_ROWS=SAMPLING_RATES[0]*(1 - TRAIN_TEST_SPLIT_TEST_SIZE)
+
 NEG_MEAN_SQUARED_ERROR = 'neg_mean_squared_error'
 
-def iterate_models( models, X, y, scoring):
+
+def evaluate_model( model, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
+    rows = y.shape[0]
+    if rows < min_train_rows:
+
+        method = 'full test'
+        model.fit(X, y=y)
+        prediction = model.predict(X)
+
+        if scoring == NEG_MEAN_SQUARED_ERROR:
+            score = -mean_squared_error(y, prediction)
+        else:
+            score = roc_auc_score(y, prediction)
+
+    # if rows < min_train_rows:
+    #     cv = math.ceil((min_train_rows / rows)) + 1  # make X_train_rows >= rows * (nfolds - 1)
+    #     cv = min(rows, cv)  # correction for extra-small datasets
+    #     method = 'cross validation ' + str(cv) + '-folds'
+    #     score = np.mean(cross_val_score(model, X, y=y, scoring=scoring, cv=cv, n_jobs=N_JOBS))
+    else:
+        method = 'train test split'
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TRAIN_TEST_SPLIT_TEST_SIZE)
+        model.fit(X_train, y=y_train)
+        prediction = model.predict(X_test)
+
+        if scoring == NEG_MEAN_SQUARED_ERROR:
+            score = -mean_squared_error(y_test, prediction)
+        else:
+            score = roc_auc_score(y_test, prediction)
+
+    return score, method
+
+
+def iterate_models( models, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
+
     scores = []
+    rows = y.shape[0]
+
     for model in models:
         log_start()
-        #TODO: вместо cross-fold использовать fit, если n < 1000
-        if y.shape[0] <= 3000:
-            cv=2
-        else:
-            cv=3
-        score = np.mean(cross_val_score(model, X, y=y, scoring=scoring, cv=cv, n_jobs=N_JOBS))
-        scores.append(np.mean(score))
+
+        score, method = evaluate_model(model, X, y, scoring, min_train_rows)
+        scores.append(score)
+
         if scoring == NEG_MEAN_SQUARED_ERROR:
-            score = (-score)**0.5
-        log_time('cross validation {} rows (score:{})'.format(y.shape[0], score))
+            print_score = (-score)**0.5
+        else:
+            print_score = score
+        log_time('{} {} rows (score:{})'.format(method, y.shape[0], print_score))
         log(model)
+
     return scores
+
+def model_tuning( model, X, y, scoring):
+    scores = []
+    rows = y.shape[0]
+
+    model_name = model.__class__.__name__
+
+    if model_name == 'GradientBoostingRegressor':
+
+        # def __init__(self, loss='ls', learning_rate=0.1, n_estimators=100,
+        #              subsample=1.0, criterion='friedman_mse', min_samples_split=2,
+        #              min_samples_leaf=1, min_weight_fraction_leaf=0.,
+        #              max_depth=3, min_impurity_decrease=0.,
+        #              min_impurity_split=None, init=None, random_state=None,
+        #              max_features=None, alpha=0.9, verbose=0, max_leaf_nodes=None,
+        #              warm_start=False, presort='auto'):
+        estimator = GradientBoostingRegressor()
+        params = {'learning_rate': [0.05, 0.1, 0.15],
+                  'min_samples_split': [2,4,8],
+                  'min_samples_leaf': [1,2,4],
+                  'max_depth':[2,3,4]
+        }
+
+
+    elif model_name == 'RandomForestRegressor':
+        # n_estimators = 10,
+        # criterion = "mse",
+        # max_depth = None,
+        # min_samples_split = 2,
+        # min_samples_leaf = 1,
+        # min_weight_fraction_leaf = 0.,
+        # max_features = "auto",
+        # max_leaf_nodes = None,
+        # min_impurity_decrease = 0.,
+        # min_impurity_split = None,
+        # bootstrap = True,
+        # oob_score = False,
+        # n_jobs = 1,
+        # random_state = None,
+        # verbose = 0,
+        # warm_start = False):
+        estimator = RandomForestRegressor()
+        params = {'min_samples_split': [2,4,8],
+                  'max_features': ['auto','sqrt','log2'],
+                  'min_samples_leaf': [1,2,4],
+                  'max_depth': [3,5,7]
+        }
+
+    elif model_name == 'ExtraTreesRegressor':
+        # n_estimators = 10,
+        # criterion = "mse",
+        # max_depth = None,
+        # min_samples_split = 2,
+        # min_samples_leaf = 1,
+        # min_weight_fraction_leaf = 0.,
+        # max_features = "auto",
+        # max_leaf_nodes = None,
+        # min_impurity_decrease = 0.,
+        # min_impurity_split = None,
+        # bootstrap = False,
+        # oob_score = False,
+        # n_jobs = 1,
+        # random_state = None,
+        # verbose = 0,
+        # warm_start = False):
+        estimator = ExtraTreesRegressor()
+        params = {'min_samples_split': [2, 4, 8],
+                  'max_features': ['auto', 'sqrt', 'log2'],
+                  'min_samples_leaf': [1, 2, 4],
+                  'max_depth': [3, 5, 7]
+                  }
+    #
+    # elif model_name == 'AdaBoostRegressor':
+    #
+    # elif model_name == 'GradientBoostingClassifier':
+    #
+    # elif model_name == 'RandomForestClassifier':
+    #
+    # elif model_name == 'ExtraTreesClassifier':
+    #
+    # elif model_name == 'AdaBoostClassifier':
+    #
+    # elif model_name == 'LinearSVC':
+    #
+    # elif model_name == 'SVC':
+
+    else:
+        raise Exception('UNKNOWN MODEL: ', model_name)
+
+    # def __init__(self, estimator, param_distributions, n_iter=10, scoring=None,
+    #              fit_params=None, n_jobs=1, iid=True, refit=True, cv=None,
+    #              verbose=0, pre_dispatch='2*n_jobs', random_state=None,
+    #              error_score='raise', return_train_score="warn"):
+    searcher = RandomizedSearchCV(estimator,
+                                  params,
+                                  n_iter=81,
+                                  scoring=scoring,
+                                  n_jobs=4,
+                                  cv=3,
+                                  return_train_score=False)
+    searcher.fit(X, y)
+
+    return searcher.best_estimator_
 
 def train(args):
     start_train_time = time.time()
@@ -72,13 +217,15 @@ def train(args):
         df.fillna(-1, inplace=True)
     log_time('impute missing values')
 
-    df = optimize_dataframe(df)
+    optimize_dataframe(df)
 
     df_y = df.target
     df_X = df.drop('target', axis=1)
     df = None
 
     train_rows, train_cols = df_X.shape
+    if train_rows < 2:
+        raise Exception('TRAIN SIZE {} < 2.'.format(train_rows))
 
     if is_big:
         log_start()
@@ -108,7 +255,7 @@ def train(args):
         log_time('missing dates values')
 
         #optimize
-        df_dates = optimize_dataframe(df_dates)
+        optimize_dataframe(df_dates)
         df_X = pd.concat( (df_X, df_dates), axis=1 )
         df_dates = None
 
@@ -123,6 +270,7 @@ def train(args):
 
     # drop constant features
     df_X.drop(df_const.index, axis=1, inplace=True)
+    log('{} constant features dropped'.format(df_const.shape[0]))
 
     # categorical encoding
     log_start()
@@ -140,7 +288,7 @@ def train(args):
                 df_cat['onehot_{}={}'.format(col_name, unique_value)] = (df_X[col_name] == unique_value).astype(int)
 
         log_time('categorical encoding ({} columns)'.format(len(df_cat.columns)))
-        df_cat = optimize_dataframe(df_cat)
+        optimize_dataframe(df_cat)
         df_X = pd.concat( (df_X, df_cat), axis=1 )
         df_cat = None
 
@@ -155,9 +303,17 @@ def train(args):
     ]
 
     df_X = df_X[used_columns]
+    if len(df_X.columns) < 1:
+        raise Exception('ALL FEATURES DROPPED, STOPPING')
 
     model_config['used_columns'] = used_columns
     log('used columns: {}, size: {}'.format(len(used_columns), sys.getsizeof(df_X)))
+
+    log_start()
+    if df_X.isnull().values.any():
+        model_config['missing'] = True
+        df_X.fillna(-1, inplace=True)
+    log_time('impute missing values')
 
     # if any(df_X.isnull()):
     #     model_config['missing'] = True
@@ -207,10 +363,9 @@ def train(args):
     #X_test_scaled, _, _ = preprocess_test_data(args, model_config)
     #y_test = read_test_target(args)
 
-    sampling_rates = (5000, 10000, 15000)
-    log('Starting models selection by sampling data by {} rows'.format(sampling_rates))
+    log('Starting models selection by sampling data by {} rows'.format(SAMPLING_RATES))
 
-    for samples in sampling_rates:
+    for samples in SAMPLING_RATES:
         X_selection = df_X[:min(samples, train_rows)]
         y_selection = df_y[:min(samples, train_rows)]
 
@@ -238,10 +393,20 @@ def train(args):
     best_index = np.argmax(scores)
     model = models[best_index]
 
+    samples = 30000
+    X_selection = df_X[:min(samples, train_rows)]
+    y_selection = df_y[:min(samples, train_rows)]
+
     log_start()
-    model.fit(df_X, y=df_y)
-    log_time('fit best model', model)
-    model_config['model'] = model
+    log('best model:', model)
+    best_model = model_tuning(model, X_selection, y_selection, scoring)
+    log_time('evaluate best model')
+    #best_model = model
+
+    log_start()
+    best_model.fit(df_X, y=df_y)
+    log_time('fit best model')
+    model_config['model'] = best_model
 
     log('Train time: {}'.format(time.time() - start_train_time))
     log_trail()
@@ -253,7 +418,7 @@ if __name__ == '__main__':
     parser.add_argument('--train-csv', required=True)
     parser.add_argument('--model-dir', required=True)
     parser.add_argument('--mode', choices=['classification', 'regression'], required=True)
-    parser.add_argument('--nrows')
+    parser.add_argument('--nrows', type=int)
     args = parser.parse_args()
 
     model_config = train(args)

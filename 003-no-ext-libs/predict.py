@@ -33,7 +33,7 @@ def preprocess_test_data(args, model_config=None):
         df.fillna(value=-1, inplace=True)
     log_time('impute missing values')
 
-    df = optimize_dataframe(df)
+    optimize_dataframe(df)
 
     line_ids = df['line_id']
     df.drop('line_id', axis=1, inplace=True)
@@ -50,7 +50,7 @@ def preprocess_test_data(args, model_config=None):
             df_dates.fillna(-1, inplace=True)
         log_time('missing dates values')
 
-        df_dates = optimize_dataframe(df_dates)
+        optimize_dataframe(df_dates)
         df = pd.concat( (df, df_dates), axis=1 )
         df_dates = None
 
@@ -62,7 +62,7 @@ def preprocess_test_data(args, model_config=None):
          df_cat['onehot_{}={}'.format(col_name, unique_value)] = (df[col_name] == unique_value).astype(int)
     log_time('categorical encoding ({} columns)'.format(len(df_cat.columns)))
 
-    df_cat = optimize_dataframe(df_cat)
+    optimize_dataframe(df_cat)
     df = pd.concat( (df, df_cat), axis=1 )
     df_cat = None
 
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     parser.add_argument('--test-csv', required=True)
     parser.add_argument('--prediction-csv', required=True)
     parser.add_argument('--model-dir', required=True)
-    parser.add_argument('--nrows')
+    parser.add_argument('--nrows', type=int)
     args = parser.parse_args()
 
     X_scaled, line_ids, model_config = preprocess_test_data(args)

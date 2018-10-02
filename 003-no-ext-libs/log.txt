@@ -3824,3 +3824,522 @@
 2018-10-01 19:27:50 ------------------------------------------------------------ 
 
 
+2018-10-02 12:54:24 file ..\..\check_1_r\train.csv
+2018-10-02 12:54:24 read dataset (shape: (100, 42), nrows: 100) [0.04 sec]
+2018-10-02 12:54:24 impute missing values [0.0 sec]
+2018-10-02 12:54:24 optimize dataframe (39604 to 14304, ratio: 2.77) [0.04 sec]
+2018-10-02 12:54:24 features from datetime (7 columns) [0.01 sec]
+2018-10-02 12:54:24 missing dates values [0.0 sec]
+2018-10-02 12:54:24 optimize dataframe (5704 to 1604, ratio: 3.56) [0.01 sec]
+2018-10-02 12:54:24 calculate unique values [0.01 sec]
+2018-10-02 12:54:24 categorical encoding (33 columns) [0.04 sec]
+2018-10-02 12:54:24 optimize dataframe (13304 to 3404, ratio: 3.91) [0.03 sec]
+2018-10-02 12:54:24 used columns: 74, size: 10604
+2018-10-02 12:54:24 scaling (df_X size: 59312 ) [0.0 sec]
+2018-10-02 12:54:24 Starting models selection by sampling data by (5000, 10000, 15000) rows
+2018-10-02 12:54:26 cross validation 100 rows (score:8.654726083203885) [2.03 sec]
+2018-10-02 12:54:26 GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,
+             learning_rate=0.1, loss='ls', max_depth=3, max_features=None,
+             max_leaf_nodes=None, min_impurity_decrease=0.0,
+             min_impurity_split=None, min_samples_leaf=1,
+             min_samples_split=2, min_weight_fraction_leaf=0.0,
+             n_estimators=100, presort='auto', random_state=None,
+             subsample=1.0, verbose=0, warm_start=False)
+2018-10-02 12:54:28 cross validation 100 rows (score:10.521968578520909) [1.92 sec]
+2018-10-02 12:54:28 RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-10-02 12:54:30 cross validation 100 rows (score:8.108102554127782) [2.0 sec]
+2018-10-02 12:54:30 ExtraTreesRegressor(bootstrap=False, criterion='mse', max_depth=None,
+          max_features='auto', max_leaf_nodes=None,
+          min_impurity_decrease=0.0, min_impurity_split=None,
+          min_samples_leaf=1, min_samples_split=2,
+          min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+          oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-10-02 12:54:32 cross validation 100 rows (score:9.284647884551486) [1.99 sec]
+2018-10-02 12:54:32 AdaBoostRegressor(base_estimator=None, learning_rate=1.0, loss='linear',
+         n_estimators=50, random_state=None)
+2018-10-02 12:54:32 Sample size meet dataset size, stop sampling
+2018-10-02 12:54:32 fit best model ExtraTreesRegressor(bootstrap=False, criterion='mse', max_depth=None,
+          max_features='auto', max_leaf_nodes=None,
+          min_impurity_decrease=0.0, min_impurity_split=None,
+          min_samples_leaf=1, min_samples_split=2,
+          min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+          oob_score=False, random_state=None, verbose=0, warm_start=False) [0.02 sec]
+2018-10-02 12:54:32 Train time: 8.184999942779541
+2018-10-02 12:54:32 ------------------------------------------------------------ 
+
+
+2018-10-02 12:54:34 file ..\..\check_1_r\test.csv
+2018-10-02 12:54:34 read dataset (shape: (100, 41), nrows: 100) [0.02 sec]
+2018-10-02 12:54:34 impute missing values [0.0 sec]
+2018-10-02 12:54:34 optimize dataframe (38804 to 13904, ratio: 2.79) [0.04 sec]
+2018-10-02 12:54:34 features from datetime (7 columns) [0.01 sec]
+2018-10-02 12:54:34 missing dates values [0.0 sec]
+2018-10-02 12:54:34 optimize dataframe (5704 to 1604, ratio: 3.56) [0.01 sec]
+2018-10-02 12:54:34 categorical encoding (33 columns) [0.04 sec]
+2018-10-02 12:54:34 optimize dataframe (13304 to 3404, ratio: 3.91) [0.04 sec]
+2018-10-02 12:54:34 scale [0.0 sec]
+2018-10-02 12:54:34 predict [0.0 sec]
+2018-10-02 12:54:34 save prediction [0.0 sec]
+2018-10-02 12:54:34 PREDICTION TIME: 0.6364998817443848
+2018-10-02 12:54:34 ------------------------------------------------------------ 
+
+
+2018-10-02 12:54:35 file ..\..\check_2_r\train.csv
+2018-10-02 12:54:35 read dataset (shape: (100, 11), nrows: 100) [0.02 sec]
+2018-10-02 12:54:35 impute missing values [0.0 sec]
+2018-10-02 12:54:35 optimize dataframe (23858 to 4982, ratio: 4.79) [0.02 sec]
+2018-10-02 12:54:35 features from datetime (0 columns) [0.0 sec]
+2018-10-02 12:54:35 missing dates values [0.0 sec]
+2018-10-02 12:54:35 optimize dataframe (24 to 24, ratio: 1.0) [0.0 sec]
+2018-10-02 12:54:35 calculate unique values [0.01 sec]
+2018-10-02 12:54:35 categorical encoding (31 columns) [0.02 sec]
+2018-10-02 12:54:35 optimize dataframe (12504 to 3204, ratio: 3.9) [0.03 sec]
+2018-10-02 12:54:35 used columns: 37, size: 5304
+2018-10-02 12:54:35 scaling (df_X size: 29712 ) [0.0 sec]
+2018-10-02 12:54:35 Starting models selection by sampling data by (5000, 10000, 15000) rows
+2018-10-02 12:54:37 cross validation 100 rows (score:2.9550588350388836) [1.92 sec]
+2018-10-02 12:54:37 GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,
+             learning_rate=0.1, loss='ls', max_depth=3, max_features=None,
+             max_leaf_nodes=None, min_impurity_decrease=0.0,
+             min_impurity_split=None, min_samples_leaf=1,
+             min_samples_split=2, min_weight_fraction_leaf=0.0,
+             n_estimators=100, presort='auto', random_state=None,
+             subsample=1.0, verbose=0, warm_start=False)
+2018-10-02 12:54:39 cross validation 100 rows (score:2.9089031131862044) [1.81 sec]
+2018-10-02 12:54:39 RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-10-02 12:54:41 cross validation 100 rows (score:3.2891955700156434) [2.2 sec]
+2018-10-02 12:54:41 ExtraTreesRegressor(bootstrap=False, criterion='mse', max_depth=None,
+          max_features='auto', max_leaf_nodes=None,
+          min_impurity_decrease=0.0, min_impurity_split=None,
+          min_samples_leaf=1, min_samples_split=2,
+          min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+          oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-10-02 12:54:43 cross validation 100 rows (score:3.1045363172538747) [2.41 sec]
+2018-10-02 12:54:43 AdaBoostRegressor(base_estimator=None, learning_rate=1.0, loss='linear',
+         n_estimators=50, random_state=None)
+2018-10-02 12:54:43 Sample size meet dataset size, stop sampling
+2018-10-02 12:54:43 fit best model RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False) [0.02 sec]
+2018-10-02 12:54:43 Train time: 8.467999935150146
+2018-10-02 12:54:43 ------------------------------------------------------------ 
+
+
+2018-10-02 12:54:45 file ..\..\check_2_r\test.csv
+2018-10-02 12:54:45 read dataset (shape: (100, 10), nrows: 100) [0.02 sec]
+2018-10-02 12:54:45 impute missing values [0.0 sec]
+2018-10-02 12:54:45 optimize dataframe (23172 to 4517, ratio: 5.13) [0.02 sec]
+2018-10-02 12:54:45 features from datetime (0 columns) [0.0 sec]
+2018-10-02 12:54:45 missing dates values [0.0 sec]
+2018-10-02 12:54:45 optimize dataframe (24 to 24, ratio: 1.0) [0.0 sec]
+2018-10-02 12:54:45 categorical encoding (31 columns) [0.03 sec]
+2018-10-02 12:54:45 optimize dataframe (12504 to 3204, ratio: 3.9) [0.06 sec]
+2018-10-02 12:54:45 scale [0.0 sec]
+2018-10-02 12:54:45 predict [0.02 sec]
+2018-10-02 12:54:45 save prediction [0.01 sec]
+2018-10-02 12:54:45 PREDICTION TIME: 0.6534998416900635
+2018-10-02 12:54:45 ------------------------------------------------------------ 
+
+
+2018-10-02 12:54:47 file ..\..\check_3_r\train.csv
+2018-10-02 12:54:47 read dataset (shape: (100, 43), nrows: 100) [0.03 sec]
+2018-10-02 12:54:47 impute missing values [0.0 sec]
+2018-10-02 12:54:47 optimize dataframe (40404 to 7351, ratio: 5.5) [0.06 sec]
+2018-10-02 12:54:47 features from datetime (7 columns) [0.01 sec]
+2018-10-02 12:54:47 missing dates values [0.0 sec]
+2018-10-02 12:54:47 optimize dataframe (1420 to 1420, ratio: 1.0) [0.02 sec]
+2018-10-02 12:54:47 calculate unique values [0.02 sec]
+2018-10-02 12:54:47 categorical encoding (0 columns) [0.0 sec]
+2018-10-02 12:54:47 optimize dataframe (24 to 24, ratio: 1.0) [0.0 sec]
+2018-10-02 12:54:47 used columns: 0, size: 104
+2018-10-02 12:54:49 file ..\..\check_3_r\test.csv
+2018-10-02 12:54:49 read dataset (shape: (100, 42), nrows: 100) [0.02 sec]
+2018-10-02 12:54:49 impute missing values [0.0 sec]
+2018-10-02 12:54:49 optimize dataframe (39604 to 7251, ratio: 5.46) [0.05 sec]
+2018-10-02 12:54:49 features from datetime (7 columns) [0.01 sec]
+2018-10-02 12:54:49 missing dates values [0.0 sec]
+2018-10-02 12:54:49 optimize dataframe (1420 to 1420, ratio: 1.0) [0.01 sec]
+2018-10-02 12:54:50 file ..\..\check_4_c\train.csv
+2018-10-02 12:54:50 read dataset (shape: (100, 143), nrows: 100) [0.04 sec]
+2018-10-02 12:54:50 impute missing values [0.0 sec]
+2018-10-02 12:54:50 optimize dataframe (132204 to 75704, ratio: 1.75) [0.1 sec]
+2018-10-02 12:54:50 features from datetime (21 columns) [0.03 sec]
+2018-10-02 12:54:50 missing dates values [0.0 sec]
+2018-10-02 12:54:50 optimize dataframe (16904 to 4604, ratio: 3.67) [0.02 sec]
+2018-10-02 12:54:50 calculate unique values [0.04 sec]
+2018-10-02 12:54:51 categorical encoding (219 columns) [0.31 sec]
+2018-10-02 12:54:51 optimize dataframe (87704 to 22004, ratio: 3.99) [0.2 sec]
+2018-10-02 12:54:51 used columns: 319, size: 58704
+2018-10-02 12:54:51 scaling (df_X size: 255312 ) [0.06 sec]
+2018-10-02 12:54:51 Starting models selection by sampling data by (5000, 10000, 15000) rows
+2018-10-02 12:54:53 cross validation 100 rows (score:0.6125636672325976) [2.05 sec]
+2018-10-02 12:54:53 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-10-02 12:54:55 cross validation 100 rows (score:0.6624009620826259) [1.91 sec]
+2018-10-02 12:54:55 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-10-02 12:54:57 cross validation 100 rows (score:0.6721915676287493) [1.97 sec]
+2018-10-02 12:54:57 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-10-02 12:54:59 cross validation 100 rows (score:0.5411007357102434) [1.93 sec]
+2018-10-02 12:54:59 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-10-02 12:55:01 cross validation 100 rows (score:0.6612337294850028) [2.02 sec]
+2018-10-02 12:55:01 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-10-02 12:55:03 cross validation 100 rows (score:0.7318477645727222) [1.96 sec]
+2018-10-02 12:55:03 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-10-02 12:55:03 Sample size meet dataset size, stop sampling
+2018-10-02 12:55:03 fit best model SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False) [0.0 sec]
+2018-10-02 12:55:03 Train time: 12.688499927520752
+2018-10-02 12:55:03 ------------------------------------------------------------ 
+
+
+2018-10-02 12:55:04 file ..\..\check_4_c\test.csv
+2018-10-02 12:55:04 read dataset (shape: (100, 142), nrows: 100) [0.03 sec]
+2018-10-02 12:55:04 impute missing values [0.0 sec]
+2018-10-02 12:55:04 optimize dataframe (131404 to 75604, ratio: 1.74) [0.1 sec]
+2018-10-02 12:55:04 features from datetime (21 columns) [0.03 sec]
+2018-10-02 12:55:04 missing dates values [0.0 sec]
+2018-10-02 12:55:04 optimize dataframe (16904 to 4504, ratio: 3.75) [0.02 sec]
+2018-10-02 12:55:04 categorical encoding (219 columns) [0.26 sec]
+2018-10-02 12:55:05 optimize dataframe (87704 to 22004, ratio: 3.99) [0.22 sec]
+2018-10-02 12:55:05 scale [0.01 sec]
+2018-10-02 12:55:05 predict [0.0 sec]
+2018-10-02 12:55:05 save prediction [0.0 sec]
+2018-10-02 12:55:05 PREDICTION TIME: 1.1150000095367432
+2018-10-02 12:55:05 ------------------------------------------------------------ 
+
+
+2018-10-02 12:55:06 file ..\..\check_5_c\train.csv
+2018-10-02 12:55:06 read dataset (shape: (100, 17), nrows: 100) [0.03 sec]
+2018-10-02 12:55:06 impute missing values [0.0 sec]
+2018-10-02 12:55:06 optimize dataframe (19604 to 11204, ratio: 1.75) [0.03 sec]
+2018-10-02 12:55:06 features from datetime (7 columns) [0.02 sec]
+2018-10-02 12:55:06 missing dates values [0.0 sec]
+2018-10-02 12:55:06 optimize dataframe (5704 to 1604, ratio: 3.56) [0.01 sec]
+2018-10-02 12:55:06 calculate unique values [0.01 sec]
+2018-10-02 12:55:07 categorical encoding (86 columns) [0.18 sec]
+2018-10-02 12:55:07 optimize dataframe (34504 to 8704, ratio: 3.96) [0.16 sec]
+2018-10-02 12:55:07 used columns: 104, size: 13404
+2018-10-02 12:55:07 scaling (df_X size: 83312 ) [0.11 sec]
+2018-10-02 12:55:07 Starting models selection by sampling data by (5000, 10000, 15000) rows
+2018-10-02 12:55:10 cross validation 100 rows (score:0.6189655172413793) [3.32 sec]
+2018-10-02 12:55:10 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-10-02 12:55:13 cross validation 100 rows (score:0.5490626710454296) [2.3 sec]
+2018-10-02 12:55:13 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-10-02 12:55:15 cross validation 100 rows (score:0.5657703886152161) [2.32 sec]
+2018-10-02 12:55:15 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-10-02 12:55:18 cross validation 100 rows (score:0.6281472359058566) [2.74 sec]
+2018-10-02 12:55:18 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-10-02 12:55:21 cross validation 100 rows (score:0.5827038861521621) [3.09 sec]
+2018-10-02 12:55:21 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-10-02 12:55:23 cross validation 100 rows (score:0.617296113847838) [1.9 sec]
+2018-10-02 12:55:23 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-10-02 12:55:23 Sample size meet dataset size, stop sampling
+2018-10-02 12:55:23 fit best model AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None) [0.07 sec]
+2018-10-02 12:55:23 Train time: 16.358499765396118
+2018-10-02 12:55:23 ------------------------------------------------------------ 
+
+
+2018-10-02 12:55:24 file ..\..\check_5_c\test.csv
+2018-10-02 12:55:24 read dataset (shape: (100, 16), nrows: 100) [0.02 sec]
+2018-10-02 12:55:24 impute missing values [0.0 sec]
+2018-10-02 12:55:24 optimize dataframe (18804 to 11304, ratio: 1.66) [0.02 sec]
+2018-10-02 12:55:24 features from datetime (7 columns) [0.01 sec]
+2018-10-02 12:55:24 missing dates values [0.0 sec]
+2018-10-02 12:55:24 optimize dataframe (5704 to 1604, ratio: 3.56) [0.01 sec]
+2018-10-02 12:55:24 categorical encoding (86 columns) [0.1 sec]
+2018-10-02 12:55:24 optimize dataframe (34504 to 8704, ratio: 3.96) [0.09 sec]
+2018-10-02 12:55:24 scale [0.01 sec]
+2018-10-02 12:55:24 predict [0.01 sec]
+2018-10-02 12:55:24 save prediction [0.0 sec]
+2018-10-02 12:55:24 PREDICTION TIME: 0.6800000667572021
+2018-10-02 12:55:24 ------------------------------------------------------------ 
+
+
+2018-10-02 12:55:25 file ..\..\check_6_c\train.csv
+2018-10-02 12:55:25 read dataset (shape: (100, 114), nrows: 100) [0.02 sec]
+2018-10-02 12:55:25 impute missing values [0.0 sec]
+2018-10-02 12:55:25 optimize dataframe (91304 to 45504, ratio: 2.01) [0.08 sec]
+2018-10-02 12:55:25 features from datetime (0 columns) [0.0 sec]
+2018-10-02 12:55:25 missing dates values [0.0 sec]
+2018-10-02 12:55:25 optimize dataframe (24 to 24, ratio: 1.0) [0.0 sec]
+2018-10-02 12:55:25 calculate unique values [0.02 sec]
+2018-10-02 12:55:26 categorical encoding (231 columns) [0.13 sec]
+2018-10-02 12:55:26 optimize dataframe (92504 to 23204, ratio: 3.99) [0.24 sec]
+2018-10-02 12:55:26 used columns: 343, size: 68004
+2018-10-02 12:55:26 scaling (df_X size: 274512 ) [0.03 sec]
+2018-10-02 12:55:26 Starting models selection by sampling data by (5000, 10000, 15000) rows
+2018-10-02 12:55:28 cross validation 100 rows (score:0.5902564102564103) [2.48 sec]
+2018-10-02 12:55:28 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-10-02 12:55:30 cross validation 100 rows (score:0.5434294871794871) [1.93 sec]
+2018-10-02 12:55:30 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-10-02 12:55:32 cross validation 100 rows (score:0.5594871794871795) [2.07 sec]
+2018-10-02 12:55:32 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-10-02 12:55:35 cross validation 100 rows (score:0.6098717948717949) [2.17 sec]
+2018-10-02 12:55:35 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-10-02 12:55:37 cross validation 100 rows (score:0.6065384615384616) [2.07 sec]
+2018-10-02 12:55:37 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-10-02 12:55:39 cross validation 100 rows (score:0.6751282051282051) [1.94 sec]
+2018-10-02 12:55:39 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-10-02 12:55:39 Sample size meet dataset size, stop sampling
+2018-10-02 12:55:39 fit best model SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False) [0.01 sec]
+2018-10-02 12:55:39 Train time: 13.249500036239624
+2018-10-02 12:55:39 ------------------------------------------------------------ 
+
+
+2018-10-02 12:55:40 file ..\..\check_6_c\test.csv
+2018-10-02 12:55:40 read dataset (shape: (100, 113), nrows: 100) [0.02 sec]
+2018-10-02 12:55:40 impute missing values [0.0 sec]
+2018-10-02 12:55:40 optimize dataframe (90504 to 45104, ratio: 2.01) [0.08 sec]
+2018-10-02 12:55:40 features from datetime (0 columns) [0.0 sec]
+2018-10-02 12:55:40 missing dates values [0.0 sec]
+2018-10-02 12:55:40 optimize dataframe (24 to 24, ratio: 1.0) [0.0 sec]
+2018-10-02 12:55:40 categorical encoding (231 columns) [0.13 sec]
+2018-10-02 12:55:40 optimize dataframe (92504 to 23204, ratio: 3.99) [0.22 sec]
+2018-10-02 12:55:40 scale [0.01 sec]
+2018-10-02 12:55:40 predict [0.0 sec]
+2018-10-02 12:55:40 save prediction [0.0 sec]
+2018-10-02 12:55:40 PREDICTION TIME: 0.9774999618530273
+2018-10-02 12:55:40 ------------------------------------------------------------ 
+
+
+2018-10-02 12:55:42 file ..\..\check_7_c\train.csv
+2018-10-02 12:55:42 read dataset (shape: (100, 774), nrows: 100) [0.05 sec]
+2018-10-02 12:55:42 impute missing values [0.0 sec]
+2018-10-02 12:55:42 optimize dataframe (645754 to 321806, ratio: 2.01) [0.57 sec]
+2018-10-02 12:55:42 features from datetime (14 columns) [0.02 sec]
+2018-10-02 12:55:42 missing dates values [0.0 sec]
+2018-10-02 12:55:42 optimize dataframe (11304 to 3004, ratio: 3.76) [0.02 sec]
+2018-10-02 12:55:42 calculate unique values [0.13 sec]
+2018-10-02 12:55:43 categorical encoding (355 columns) [0.61 sec]
+2018-10-02 12:55:43 optimize dataframe (142104 to 35604, ratio: 3.99) [0.34 sec]
+2018-10-02 12:55:43 used columns: 991, size: 287704
+2018-10-02 12:55:43 scaling (df_X size: 792912 ) [0.01 sec]
+2018-10-02 12:55:43 Starting models selection by sampling data by (5000, 10000, 15000) rows
+2018-10-02 12:55:45 cross validation 100 rows (score:0.4846938775510204) [2.08 sec]
+2018-10-02 12:55:45 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-10-02 12:55:47 cross validation 100 rows (score:0.36734693877551017) [1.93 sec]
+2018-10-02 12:55:47 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-10-02 12:55:49 cross validation 100 rows (score:0.37244897959183676) [1.94 sec]
+2018-10-02 12:55:49 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-10-02 12:55:51 cross validation 100 rows (score:0.4897959183673469) [1.94 sec]
+2018-10-02 12:55:51 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-10-02 12:55:53 cross validation 100 rows (score:0.41836734693877553) [1.98 sec]
+2018-10-02 12:55:53 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-10-02 12:55:55 cross validation 100 rows (score:0.25510204081632654) [1.97 sec]
+2018-10-02 12:55:55 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-10-02 12:55:55 Sample size meet dataset size, stop sampling
+2018-10-02 12:55:55 fit best model AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None) [0.12 sec]
+2018-10-02 12:55:55 Train time: 13.830000162124634
+2018-10-02 12:55:55 ------------------------------------------------------------ 
+
+
+2018-10-02 12:55:57 file ..\..\check_7_c\test.csv
+2018-10-02 12:55:57 read dataset (shape: (100, 773), nrows: 100) [0.05 sec]
+2018-10-02 12:55:57 impute missing values [0.0 sec]
+2018-10-02 12:55:57 optimize dataframe (644864 to 321408, ratio: 2.01) [0.57 sec]
+2018-10-02 12:55:57 features from datetime (14 columns) [0.02 sec]
+2018-10-02 12:55:57 missing dates values [0.0 sec]
+2018-10-02 12:55:57 optimize dataframe (11304 to 2904, ratio: 3.89) [0.02 sec]
+2018-10-02 12:55:58 categorical encoding (355 columns) [0.42 sec]
+2018-10-02 12:55:58 optimize dataframe (142104 to 35604, ratio: 3.99) [0.34 sec]
+2018-10-02 12:55:58 scale [0.01 sec]
+2018-10-02 12:55:58 predict [0.01 sec]
+2018-10-02 12:55:58 save prediction [0.0 sec]
+2018-10-02 12:55:58 PREDICTION TIME: 1.871000051498413
+2018-10-02 12:55:58 ------------------------------------------------------------ 
+
+
+2018-10-02 12:55:59 file ..\..\check_8_c\train.csv
+2018-10-02 12:55:59 read dataset (shape: (100, 878), nrows: 100) [0.08 sec]
+2018-10-02 12:55:59 impute missing values [0.03 sec]
+2018-10-02 12:56:00 optimize dataframe (1158209 to 522734, ratio: 2.22) [0.69 sec]
+2018-10-02 12:56:01 features from datetime (637 columns) [1.08 sec]
+2018-10-02 12:56:01 missing dates values [0.01 sec]
+2018-10-02 12:56:02 optimize dataframe (642392 to 247988, ratio: 2.59) [0.79 sec]
+2018-10-02 12:56:02 calculate unique values [0.3 sec]
+2018-10-02 12:56:02 categorical encoding (0 columns) [0.0 sec]
+2018-10-02 12:56:02 optimize dataframe (24 to 24, ratio: 1.0) [0.0 sec]
+2018-10-02 12:56:02 used columns: 1013, size: 326964
+2018-10-02 12:56:02 scaling (df_X size: 810512 ) [0.03 sec]
+2018-10-02 12:56:02 Starting models selection by sampling data by (5000, 10000, 15000) rows
+2018-10-02 12:56:05 cross validation 100 rows (score:0.5963541666666667) [2.25 sec]
+2018-10-02 12:56:05 GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=0.1, loss='deviance', max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=100,
+              presort='auto', random_state=None, subsample=1.0, verbose=0,
+              warm_start=False)
+2018-10-02 12:56:07 cross validation 100 rows (score:0.625) [1.84 sec]
+2018-10-02 12:56:07 RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+2018-10-02 12:56:09 cross validation 100 rows (score:0.6354166666666666) [2.12 sec]
+2018-10-02 12:56:09 ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='auto', max_leaf_nodes=None,
+           min_impurity_decrease=0.0, min_impurity_split=None,
+           min_samples_leaf=1, min_samples_split=2,
+           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+           oob_score=False, random_state=None, verbose=0, warm_start=False)
+2018-10-02 12:56:11 cross validation 100 rows (score:0.5546875) [2.1 sec]
+2018-10-02 12:56:11 AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+2018-10-02 12:56:13 cross validation 100 rows (score:0.5208333333333334) [2.07 sec]
+2018-10-02 12:56:13 LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+2018-10-02 12:56:15 cross validation 100 rows (score:0.6666666666666667) [2.02 sec]
+2018-10-02 12:56:15 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+2018-10-02 12:56:15 Sample size meet dataset size, stop sampling
+2018-10-02 12:56:15 fit best model SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False) [0.01 sec]
+2018-10-02 12:56:15 Train time: 15.632500171661377
+2018-10-02 12:56:15 ------------------------------------------------------------ 
+
+
+2018-10-02 12:56:16 file ..\..\check_8_c\test.csv
+2018-10-02 12:56:16 read dataset (shape: (100, 877), nrows: 100) [0.06 sec]
+2018-10-02 12:56:16 impute missing values [0.01 sec]
+2018-10-02 12:56:17 optimize dataframe (1147325 to 527121, ratio: 2.18) [0.72 sec]
+2018-10-02 12:56:18 features from datetime (637 columns) [1.09 sec]
+2018-10-02 12:56:18 missing dates values [0.01 sec]
+2018-10-02 12:56:19 optimize dataframe (639132 to 235964, ratio: 2.71) [0.84 sec]
+2018-10-02 12:56:19 categorical encoding (0 columns) [0.0 sec]
+2018-10-02 12:56:19 optimize dataframe (24 to 24, ratio: 1.0) [0.0 sec]
+2018-10-02 12:56:19 scale [0.02 sec]
+2018-10-02 12:56:19 predict [0.01 sec]
+2018-10-02 12:56:19 save prediction [0.01 sec]
+2018-10-02 12:56:19 PREDICTION TIME: 3.256499767303467
+2018-10-02 12:56:19 ------------------------------------------------------------ 
+
+
