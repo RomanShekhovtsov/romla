@@ -117,7 +117,7 @@ def optimize_dataframe(df):
     int_cols = []
     float_cols = []
     category_cols = []
-    # other_cols = []
+    other_cols = []
 
     old_size = sys.getsizeof(df)
 
@@ -133,26 +133,26 @@ def optimize_dataframe(df):
             n_uniq = df[col_name].nunique()
             if n_uniq / total < 0.5:
                 category_cols.append(col_name)
-        #     else:
-        #         other_cols.append(col_name)
-        # else:
-        #     other_cols.append(col_name)
+            else:
+                other_cols.append(col_name)
+        else:
+            other_cols.append(col_name)
 
-    # df_opt = pd.DataFrame()
+    df_opt = pd.DataFrame()
 
     if len(int_cols) > 0:
-        df[int_cols] = df[int_cols].apply(pd.to_numeric, downcast='integer')
+        df_opt[int_cols] = df[int_cols].apply(pd.to_numeric, downcast='integer')
 
     if len(float_cols) > 0:
-        df[float_cols] = df[float_cols].apply(pd.to_numeric, downcast='float')
+        df_opt[float_cols] = df[float_cols].apply(pd.to_numeric, downcast='float')
 
     if len(category_cols) > 0:
-        df[category_cols] = df[category_cols].astype('category')
+        df_opt[category_cols] = df[category_cols].astype('category')
 
-    # if len(other_cols) > 0:
-    #     df_opt[other_cols] = df[other_cols]
+    if len(other_cols) > 0:
+        df_opt[other_cols] = df[other_cols]
 
-    new_size = sys.getsizeof(df)
-    log_time('optimize dataframe ({} to {}, ratio: {})'.format(old_size, new_size, round(old_size / new_size, 2)))
+    new_size = sys.getsizeof(df_opt)
+    log_time('optimize dataframe ({} to {}, ratio: {})'.format(old_size, new_size, round(old_size/new_size, 2)))
 
-    return df
+    return df_opt

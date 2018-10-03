@@ -6,9 +6,11 @@ import numpy as np
 import pickle
 import time
 import math
+from enum import Enum
+from copy import deepcopy
 
 import xgboost as xgb
-import lightgbm
+import lightgbm as lgb
 import catboost
 
 from sklearn.linear_model import Ridge, LogisticRegression
@@ -20,7 +22,7 @@ from sklearn.ensemble import \
 from sklearn.svm import LinearSVC, SVC
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import cross_val_score, RandomizedSearchCV
+from sklearn.model_selection import cross_val_score, RandomizedSearchCV, GridSearchCV
 from sklearn.metrics import mean_squared_error, roc_auc_score
 
 from utils import *
@@ -41,6 +43,10 @@ MIN_TRAIN_ROWS = SAMPLING_RATES[0] * (1 - TRAIN_TEST_SPLIT_TEST_SIZE)
 NEG_MEAN_SQUARED_ERROR = 'neg_mean_squared_error'
 
 
+class ModelParamsSearchStrategy(Enum):
+    GRID_SEARCH = 'random'
+    FIRST_BEST = 'first_best'
+
 def evaluate_model(model, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
     rows = y.shape[0]
     if rows < min_train_rows:
@@ -48,11 +54,7 @@ def evaluate_model(model, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
         method = 'full test'
         model.fit(X, y=y)
         prediction = model.predict(X)
-
-        if scoring == NEG_MEAN_SQUARED_ERROR:
-            score = -mean_squared_error(y, prediction)
-        else:
-            score = roc_auc_score(y, prediction)
+        score = calc_score(scoring, y, prediction)
 
     # if rows < min_train_rows:
     #     cv = math.ceil((min_train_rows / rows)) + 1  # make X_train_rows >= rows * (nfolds - 1)
@@ -64,14 +66,18 @@ def evaluate_model(model, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TRAIN_TEST_SPLIT_TEST_SIZE)
         model.fit(X_train, y=y_train)
         prediction = model.predict(X_test)
-
-        if scoring == NEG_MEAN_SQUARED_ERROR:
-            score = -mean_squared_error(y_test, prediction)
-        else:
-            score = roc_auc_score(y_test, prediction)
+        score = calc_score(scoring, y_test, prediction)
 
     return score, method
 
+
+def calc_score(scoring, y_test, prediction):
+    if scoring == NEG_MEAN_SQUARED_ERROR:
+        score = -mean_squared_error(y_test, prediction)
+    else:
+        score = roc_auc_score(y_test, prediction)
+
+    return score
 
 def iterate_models(models, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
     scores = []
@@ -93,7 +99,7 @@ def iterate_models(models, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
     return scores
 
 
-def model_tuning(model, X, y, scoring):
+def model_params_search(model, X, y, scoring):
     scores = []
     rows = y.shape[0]
 
@@ -109,19 +115,31 @@ def model_tuning(model, X, y, scoring):
         #              min_impurity_split=None, init=None, random_state=None,
         #              max_features=None, alpha=0.9, verbose=0, max_leaf_nodes=None,
         #              warm_start=False, presort='auto'):
-        estimator = GradientBoostingRegressor()
+        strategy = ModelParamsSearchStrategy.GRID_SEARCH
+        # estimator = GradientBoostingRegressor()
         params = {'learning_rate': [0.05, 0.1, 0.15],
                   'min_samples_split': [2, 4, 8],
                   'min_samples_leaf': [1, 2, 4],
                   'max_depth': [2, 3, 4]
                   }
-        n_iter = 81
+        # n_iter = 81
 
-    elif model_name == 'XGBRegressor':
-        estimator = xgb.XGBRegressor()
-        params = {'max_depth': range(2,16)
-                  }
-        n_iter = 14
+    elif model_name in('XGBRegressor','XGBClassifier'):
+        strategy = ModelParamsSearchStrategy.FIRST_BEST
+        params = {'max_depth': list(range(2,16))}
+
+    elif model_name in('LGBMRegressor','LGBMClassifier'):
+
+        # def __init__(self, boosting_type="gbdt", num_leaves=31, max_depth=-1,
+        #              learning_rate=0.1, n_estimators=100,
+        #              subsample_for_bin=200000, objective=None, class_weight=None,
+        #              min_split_gain=0., min_child_weight=1e-3, min_child_samples=20,
+        #              subsample=1., subsample_freq=0, colsample_bytree=1.,
+        #              reg_alpha=0., reg_lambda=0., random_state=None,
+        #              n_jobs=-1, silent=True, importance_type='split', **kwargs):
+        #
+        strategy = ModelParamsSearchStrategy.FIRST_BEST
+        params = {'max_depth': list(range(2,16))}
 
     elif model_name == 'RandomForestRegressor':
         # n_estimators = 10,
@@ -140,13 +158,12 @@ def model_tuning(model, X, y, scoring):
         # random_state = None,
         # verbose = 0,
         # warm_start = False):
-        estimator = RandomForestRegressor()
+        strategy = ModelParamsSearchStrategy.GRID_SEARCH
         params = {'min_samples_split': [2, 4, 8],
                   'max_features': ['auto', 'sqrt', 'log2'],
                   'min_samples_leaf': [1, 2, 4],
                   'max_depth': [3, 5, 7]
                   }
-        n_iter = 81
 
     elif model_name == 'ExtraTreesRegressor':
         # n_estimators = 10,
@@ -165,26 +182,20 @@ def model_tuning(model, X, y, scoring):
         # random_state = None,
         # verbose = 0,
         # warm_start = False):
-        estimator = ExtraTreesRegressor()
+        strategy = ModelParamsSearchStrategy.GRID_SEARCH
+        # estimator = ExtraTreesRegressor()
         params = {'min_samples_split': [2, 4, 8],
                   'max_features': ['auto', 'sqrt', 'log2'],
                   'min_samples_leaf': [1, 2, 4],
                   'max_depth': [3, 5, 7]
                   }
-        n_iter = 81
-    #
+
     # elif model_name == 'AdaBoostRegressor':
-    #
     # elif model_name == 'GradientBoostingClassifier':
-    #
     # elif model_name == 'RandomForestClassifier':
-    #
     # elif model_name == 'ExtraTreesClassifier':
-    #
     # elif model_name == 'AdaBoostClassifier':
-    #
     # elif model_name == 'LinearSVC':
-    #
     # elif model_name == 'SVC':
 
     else:
@@ -194,17 +205,48 @@ def model_tuning(model, X, y, scoring):
     #              fit_params=None, n_jobs=1, iid=True, refit=True, cv=None,
     #              verbose=0, pre_dispatch='2*n_jobs', random_state=None,
     #              error_score='raise', return_train_score="warn"):
-    searcher = RandomizedSearchCV(estimator,
-                                  params,
-                                  n_iter=n_iter,
-                                  scoring=scoring,
-                                  n_jobs=4,
-                                  cv=3,
-                                  return_train_score=False)
-    searcher.fit(X, y)
+    if strategy == ModelParamsSearchStrategy.GRID_SEARCH:
 
-    return searcher.best_estimator_
+        # n_iter = 0
+        # for param_name in params.keys():
+        #     param_values = params[param_name]
+        #     n_iter += len(param_values)
 
+        estimator = deepcopy(model)  # TODO: excessive copy?
+        GridSearchCV()
+        searcher = GridSearchCV(estimator,
+                                params,
+                                scoring=scoring,
+                                n_jobs=4,
+                                cv=3,
+                                return_train_score=False)
+        searcher.fit(X, y)
+        best_estimator = searcher.best_estimator_
+
+    elif strategy == ModelParamsSearchStrategy.FIRST_BEST:
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
+        param_name = list(params.keys())[0]  # only one param for this strategy
+        param_values = params[param_name]
+        prev_score = None
+
+        for param_value in param_values:
+            estimator = deepcopy(model)
+            est_params = {param_name: param_value}
+            log(est_params)
+            estimator.set_params( **est_params)
+
+            estimator.fit(X_train, y_train)
+            predict = estimator.predict(X_test)
+            score = calc_score(scoring, y_test, predict)
+            if (not prev_score is None) and (prev_score > score):
+                log('early finish at {}={}'.format(param_name, param_value))
+                best_estimator = estimator
+                break
+            best_estimator = estimator
+            prev_score = score
+
+    return best_estimator
 
 
 def train(args):
@@ -335,35 +377,39 @@ def train(args):
     # scaling
     log_start()
     scaler = StandardScaler()
-    df_X = scaler.fit_transform(df_X.values.astype(np.float32))
-    log_time('scaling (df_X size:', sys.getsizeof(df_X), ')')
+    X = scaler.fit_transform(df_X.values).astype(np.float16)
+    df_X = None
+    log_time('scale (X size:', sys.getsizeof(X), ')')
     model_config['scaler'] = scaler
 
     # fitting
     log_start()
-    booster = xgb.Booster()
+    #booster = xgb.Booster()
     model_config['mode'] = args.mode
     regression = (args.mode == 'regression')
     if regression:
         scoring = NEG_MEAN_SQUARED_ERROR
         models = [
             xgb.XGBRegressor(),
-            RandomForestRegressor(),
-            ExtraTreesRegressor(),
-            AdaBoostRegressor()
+            lgb.LGBMRegressor()
+            # RandomForestRegressor(),
+            # ExtraTreesRegressor(),
+            # AdaBoostRegressor()
         ]
 
     else:
         scoring = 'roc_auc'
         models = [
             xgb.XGBClassifier(),
-            RandomForestClassifier(),
-            ExtraTreesClassifier(),
-            AdaBoostClassifier()
-        ]
-        if train_rows < 10 ** 4:
-            models.append(LinearSVC())
-            models.append(SVC())
+            lgb.LGBMClassifier()
+        #     RandomForestClassifier(),
+        #     ExtraTreesClassifier(),
+        #     AdaBoostClassifier()
+            ]
+
+        # if train_rows < 10 ** 4:
+        #     models.append(LinearSVC())
+        #     models.append(SVC())
 
     #    param_grid = {
     #        'min_samples_leaf': range(1, 30),
@@ -380,7 +426,7 @@ def train(args):
     log('Starting models selection by sampling data by {} rows'.format(SAMPLING_RATES))
 
     for samples in SAMPLING_RATES:
-        X_selection = df_X[:min(samples, train_rows)]
+        X_selection = X[:min(samples, train_rows)]
         y_selection = df_y[:min(samples, train_rows)]
 
         scores = iterate_models(models, X_selection, y_selection, scoring)
@@ -405,20 +451,21 @@ def train(args):
         log('Survive {} models'.format(len(models)))
 
     best_index = np.argmax(scores)
-    model = models[best_index]
+    log('best score: {}'.format(scores[best_index]))
+    best_model = models[best_index]
 
     samples = 10000
-    X_selection = df_X[:min(samples, train_rows)]
+    X_selection = X[:min(samples, train_rows)]
     y_selection = df_y[:min(samples, train_rows)]
 
     log_start()
-    log('best model:', model)
-    best_model = model_tuning(model, X_selection, y_selection, scoring)
+    log('best model:', best_model)
+    best_model = model_params_search(best_model, X_selection, y_selection, scoring)
     log_time('evaluate best model')
     # best_model = model
 
     log_start()
-    best_model.fit(df_X, y=df_y)
+    best_model.fit(X, y=df_y)
     log_time('fit best model')
     model_config['model'] = best_model
 
