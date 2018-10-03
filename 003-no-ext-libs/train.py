@@ -37,7 +37,7 @@ BIG_DATASET_SIZE = 500 * 1024 * 1024  # 300MB
 MAX_MODEL_SELECTION_ROWS = 10 ** 5
 
 TRAIN_TEST_SPLIT_TEST_SIZE = 0.25
-SAMPLING_RATES = (5000, 10000, 15000)
+SAMPLING_RATES = [10000]
 MIN_TRAIN_ROWS = SAMPLING_RATES[0] * (1 - TRAIN_TEST_SPLIT_TEST_SIZE)
 
 NEG_MEAN_SQUARED_ERROR = 'neg_mean_squared_error'
@@ -122,11 +122,13 @@ def model_params_search(model, X, y, scoring):
                   'min_samples_leaf': [1, 2, 4],
                   'max_depth': [2, 3, 4]
                   }
+        const_params = {}
         # n_iter = 81
 
     elif model_name in('XGBRegressor','XGBClassifier'):
         strategy = ModelParamsSearchStrategy.FIRST_BEST
         params = {'max_depth': list(range(2,16))}
+        const_params = {}
 
     elif model_name in('LGBMRegressor','LGBMClassifier'):
 
@@ -212,7 +214,7 @@ def model_params_search(model, X, y, scoring):
         #     param_values = params[param_name]
         #     n_iter += len(param_values)
 
-        estimator = deepcopy(model)  # TODO: excessive copy?
+        estimator = deepcopy(model)  # TODO: excessive copy for gridsearch?
         GridSearchCV()
         searcher = GridSearchCV(estimator,
                                 params,
@@ -387,11 +389,32 @@ def train(args):
     #booster = xgb.Booster()
     model_config['mode'] = args.mode
     regression = (args.mode == 'regression')
+
+    lgb_const_params = {'boosting_type': 'gbdt',
+                        'objective': 'regression' if args.mode == 'regression' else 'binary',
+                        'metric': 'rmse',
+                        'learning_rate': 0.01,
+                        'num_leaves': 200,
+                        "feature_fraction": 0.70,
+                        "bagging_fraction": 0.70,
+                        'bagging_freq': 4,
+                        'max_depth': -1,
+                        'verbosity': -1,
+                        'reg_alpha': 0.3,
+                        'reg_lambda': 0.1,
+                        # "min_split_gain":0.2,
+                        "min_child_weight": 10,
+                        'zero_as_missing': True,
+                        'num_threads': 4,
+                        }
+
     if regression:
         scoring = NEG_MEAN_SQUARED_ERROR
+        lgbr = lgb.LGBMRegressor()
+        lgbr.set_params(**lgb_const_params)
         models = [
             xgb.XGBRegressor(),
-            lgb.LGBMRegressor()
+            lgbr
             # RandomForestRegressor(),
             # ExtraTreesRegressor(),
             # AdaBoostRegressor()
@@ -399,9 +422,11 @@ def train(args):
 
     else:
         scoring = 'roc_auc'
+        lgbc = lgb.LGBMClassifier()
+        lgbc.set_params(**lgb_const_params)
         models = [
             xgb.XGBClassifier(),
-            lgb.LGBMClassifier()
+            lgbc
         #     RandomForestClassifier(),
         #     ExtraTreesClassifier(),
         #     AdaBoostClassifier()
@@ -454,7 +479,7 @@ def train(args):
     log('best score: {}'.format(scores[best_index]))
     best_model = models[best_index]
 
-    samples = 10000
+    samples = 50000 # train_rows
     X_selection = X[:min(samples, train_rows)]
     y_selection = df_y[:min(samples, train_rows)]
 
