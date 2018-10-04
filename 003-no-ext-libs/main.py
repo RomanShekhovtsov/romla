@@ -56,7 +56,7 @@ if __name__ == '__main__':
             prediction = predict(X_scaled, model_config['model'])
             score(args, prediction=prediction)
 
-            log('Total time: {}'.format(time.time() - start_total_time))
+            log('all datasets time: {}'.format(time.time() - start_total_time))
             log_trail('=', '\n\n')
 
     except BaseException as e:

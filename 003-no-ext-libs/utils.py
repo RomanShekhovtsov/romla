@@ -4,6 +4,7 @@ import atexit
 import sys
 import os
 import pandas as pd
+from contextlib import contextmanager
 
 
 def parse_dt(x):
@@ -58,6 +59,12 @@ def log_start():
 def log_time(*args):
     log(*args, '[{} sec]'.format(round(time.time() - start_time, 2)))
 
+# @contextmanager
+# def log_time(*args):
+#     t = time.time()
+#     yield
+#     log(*args, '[{} sec]'.format(round(time.time() - t, 2)))
+
 
 def log_trail(char='-', end='\n\n'):
     log(char * 60, '\n\n')
@@ -96,9 +103,8 @@ def read_csv(file_name, nrows):
         nrows = None
 
     log('file {}'.format(file_name))
-    log_start()
     df = pd.read_csv(file_name, low_memory=False, nrows=nrows)
-    log_time('read dataset (shape: {}, nrows: {})'.format(df.shape, nrows))
+    log('dataset shape: {}, nrows: {})'.format(df.shape, nrows))
     return df
 
 
@@ -111,8 +117,6 @@ def optimize_dataframe(df):
     """
 
     # return df  # TODO: remove - check for failure!!!
-
-    log_start()
 
     int_cols = []
     float_cols = []
@@ -153,6 +157,6 @@ def optimize_dataframe(df):
         df_opt[other_cols] = df[other_cols]
 
     new_size = sys.getsizeof(df_opt)
-    log_time('optimize dataframe ({} to {}, ratio: {})'.format(old_size, new_size, round(old_size/new_size, 2)))
+    log('optimize dataframe ({} to {}, ratio: {})'.format(old_size, new_size, round(old_size/new_size, 2)))
 
-    return df_opt
+    return df

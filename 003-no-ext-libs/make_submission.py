@@ -1,13 +1,12 @@
 import time
+import os
 from zipfile import ZipFile
 folder = r''
 zip_file_name = r'submissions\{}_submission.zip'.format( time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime()) )
     
-files = [
-    'metadata.json',
-    'predict.py',
-    'train.py',
-    'utils.py']
+files = [f for f in os.listdir(path='.') if f.endswith('.py')]
+files.append('metadata.json')
+
 
 with ZipFile(zip_file_name, mode='w') as submission:
     for file in files:
