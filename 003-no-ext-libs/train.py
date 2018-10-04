@@ -307,12 +307,13 @@ def model_params_search(model, X, y, scoring, speed):
         prev_score = None
 
         iteration_time = 0
+        best_estimator = model
         for param_value in param_values:
 
             if time_left() < time_to_fit_all + iteration_time:
                 log('stop model params search due to time limit:',
-                    'time left={}; time to fit all={}; last iteration time: {}',
-                    time_left(), time_to_fit_all, iteration_time)
+                    'time left={}; time to fit all={}; last iteration time: {}'.format(
+                    time_left(), time_to_fit_all, iteration_time))
                 break
 
             iteration_time = time.time()
@@ -332,7 +333,6 @@ def model_params_search(model, X, y, scoring, speed):
             best_estimator = estimator
             prev_score = score
             iteration_time = time.time() - iteration_time
-
 
     return best_estimator
 
@@ -579,6 +579,7 @@ def train(args):
 
     log('best score:', scores[best_index])
     log('best model:', best_model)
+    log('best model speed:', speed)
 
     with time_metric('model_params_search'):
         best_model = model_params_search(best_model, X, df_y, scoring, speed)
