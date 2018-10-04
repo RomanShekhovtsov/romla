@@ -12,7 +12,7 @@ run_id = str(uuid.uuid4())
 def save_metrics(metrics, subfolder):
 
     df = pd.DataFrame(metrics, index=(1,))
-    df['run_id'] = run_id
+    df['run_id'] = 'run_id'
     columns = ''.join(df.columns)
     folder = 'metrics/' + subfolder + '/'
 

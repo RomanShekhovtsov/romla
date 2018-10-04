@@ -4,6 +4,7 @@ import sys
 import pandas as pd
 import pickle
 import time
+import traceback
 
 from utils import *
 
@@ -79,8 +80,16 @@ def preprocess_test_data(args, model_config=None):
 
     return X_scaled, line_ids, model_config
 
-
 def predict(X_scaled, model):
+    try:
+        return _predict(X_scaled, model)
+    except BaseException as e:
+        log('EXCEPTION:', e)
+        log(traceback.format_exc())
+        exit(1)
+
+
+def _predict(X_scaled, model):
     start_predict_time = time.time()
 
     log_start()

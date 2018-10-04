@@ -46,7 +46,7 @@ if __name__ == '__main__':
                 '--prediction-csv', folder + 'prediction.csv',
                 '--test-target-csv', folder + 'test-target.csv',
                 '--model-dir', '.',
-                '--nrows', '5000',  # '10000' if i in [4, 5, 6, 7] else '500' if i in [8] else '-1',
+                '--nrows', '5000' if i in [4, 5, 6, 7] else '500' if i in [8] else '-1',
                 '--mode', tests[i]]
             args = parser.parse_args(argv)
 
@@ -62,3 +62,4 @@ if __name__ == '__main__':
     except BaseException as e:
         log('EXCEPTION:', e)
         log(traceback.format_exc())
+        exit(1)
