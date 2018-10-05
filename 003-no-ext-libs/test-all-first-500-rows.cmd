@@ -1,1 +1,1 @@
-call test-all.cmd --nrows 500
+CALL test-all.cmd --nrows 500

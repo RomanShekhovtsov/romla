@@ -6,6 +6,7 @@ import numpy as np
 import pickle
 import time
 import math
+import traceback
 from enum import Enum
 from copy import deepcopy
 from contextlib import contextmanager
@@ -58,7 +59,8 @@ class ModelParamsSearchStrategy(Enum):
 # seconds left to our work
 def time_left():
     t_left = TIME_LIMIT - (time.time() - start_time)
-    return min(TIME_RESERVE_SECONDS, TIME_RESERVE_COEFF * t_left)
+    t_left = TIME_RESERVE_COEFF * (t_left - TIME_RESERVE_SECONDS)
+    return max(t_left, 0)
 
 
 def evaluate_model(model, X, y, scoring, full_train):
@@ -70,11 +72,11 @@ def evaluate_model(model, X, y, scoring, full_train):
 
         t = time.time()
         model.fit(X, y=y)
-        speed['fit'] = rows / (time.time() - t + MIN_NUMBER)
+        speed['fit'] = int(rows / (time.time() - t + MIN_NUMBER))
 
         t = time.time()
         prediction = model.predict(X)
-        speed['predict'] = rows / (time.time() - t + MIN_NUMBER)
+        speed['predict'] = int(rows / (time.time() - t + MIN_NUMBER))
 
         score = calc_score(scoring, y, prediction)
 
@@ -90,11 +92,11 @@ def evaluate_model(model, X, y, scoring, full_train):
 
         t = time.time()
         model.fit(X_train, y=y_train)
-        speed['fit'] = X_train.shape[0] / (time.time() - t)
+        speed['fit'] = int(X_train.shape[0] / (time.time() - t))
 
         t = time.time()
         prediction = model.predict(X_test)
-        speed['predict'] = X_test.shape[0] / (time.time() - t)
+        speed['predict'] = int(X_test.shape[0] / (time.time() - t))
 
         score = calc_score(scoring, y_test, prediction)
 
@@ -153,7 +155,7 @@ def get_model_name(model):
 
 def calc_sample_size(test_size, total_rows, fit_speed, predict_speed, n_iter):
 
-    time_to_fit_all = total_rows / fit_speed
+    time_to_fit_all = 3 * total_rows / fit_speed  # 3 - empirical coeff.
     time_to_search = time_left() - time_to_fit_all
     time_iteration = time_to_search / n_iter
 
@@ -163,7 +165,7 @@ def calc_sample_size(test_size, total_rows, fit_speed, predict_speed, n_iter):
     sample_size = time_iteration / ((1 - test_size) / fit_speed + test_size / predict_speed)
     sample_size = min(sample_size, total_rows)
 
-    return int(sample_size)
+    return max(int(sample_size), 0), time_to_fit_all
 
 
 def model_params_search(model, X, y, scoring, speed):
@@ -275,6 +277,9 @@ def model_params_search(model, X, y, scoring, speed):
     #              fit_params=None, n_jobs=1, iid=True, refit=True, cv=None,
     #              verbose=0, pre_dispatch='2*n_jobs', random_state=None,
     #              error_score='raise', return_train_score="warn"):
+
+    best_estimator = None
+
     if strategy == ModelParamsSearchStrategy.GRID_SEARCH:
 
         # n_iter = 0
@@ -296,10 +301,9 @@ def model_params_search(model, X, y, scoring, speed):
     elif strategy == ModelParamsSearchStrategy.FIRST_BEST:
 
         test_size = 0.25
-        time_to_fit_all =  X.shape[0] / speed['fit']
 
-        samples = calc_sample_size(test_size, X.shape[0], speed['fit'], speed['predict'], n_iter)
-        log('calculated samples:', samples)
+        samples, time_to_fit_all = calc_sample_size(test_size, X.shape[0], speed['fit'], speed['predict'], n_iter)
+        log('train fit estimation: {}; sample size: {}'.format( time_to_fit_all, samples))
         X_train, X_test, y_train, y_test = train_test_split(X[:samples], y[:samples], test_size=test_size)
 
         param_name = list(params.keys())[0]  # only one param for this strategy
@@ -327,7 +331,6 @@ def model_params_search(model, X, y, scoring, speed):
 
             if (not prev_score is None) and (prev_score > score):
                 log('early finish at {}={}'.format(param_name, param_value))
-                best_estimator = estimator
                 break
 
             best_estimator = estimator
@@ -338,15 +341,21 @@ def model_params_search(model, X, y, scoring, speed):
 
 
 def train(args):
+    try:
+        return _train(args)
+    except BaseException as e:
+        log('EXCEPTION:', e)
+        log(traceback.format_exc())
+        exit(1)
+
+def _train(args):
+
     start_train_time = time.time()
 
     # dict with data necessary to make predictions
     model_config = {}
 
-    # TODO: FAIL CHECK!!!
-
-    # train_estimate = estimate_csv(args.train_csv)
-    # log('estimate', args.train_csv, train_estimate)
+    log('time limit:', TIME_LIMIT)
     metrics['dataset'] = args.train_csv
     with time_metric('read dataset'):
         df = read_csv(args.train_csv, args.nrows)
@@ -546,10 +555,12 @@ def train(args):
     log('starting models selection by sampling data by {} rows'.format(SAMPLING_RATES))
     model_selection_start = time.time()
 
+    selected = models
     for samples in SAMPLING_RATES:
         X_selection = X[:min(samples, train_rows)]
         y_selection = df_y[:min(samples, train_rows)]
 
+        models = selected # leave only best models for next iteration
         scores, speeds = iterate_models(models, X_selection, y_selection, scoring)
 
         # already cross-validate on full dataset, go best model selection
@@ -560,7 +571,7 @@ def train(args):
         # select models better than average
         selected = []
         for i in range(len(models)):
-            if scores[i] > np.mean(scores):
+            if scores[i] >= np.mean(scores):  # >= for case of equal scores for all models
                 selected.append(models[i])
 
         # only one model? go model selection
@@ -568,8 +579,7 @@ def train(args):
             log('only one model survive, stop sampling')
             break
 
-        models = selected  # leave only best models for next iteration
-        log('survive {} models'.format(len(models)))
+        log('survive {} model(s)'.format(len(selected)))
 
     metrics['model selection'] = time.time() - model_selection_start
 

@@ -1,0 +1,2 @@
+SET TIME_LIMIT=60
+CALL test-all.cmd

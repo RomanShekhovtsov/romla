@@ -1,3 +1,11 @@
+2018-10-05_00-04-58_submission.zip:
+[*]3x train fit estimation
+[*] exception handling in train(), predict()
+[*] metrics bugfix: row_id -> 'row_id'
+
+2018-10-04_22-57-27_submission.zip:
+[*] time budget bugfixes
+
 2018-10-04_19-36-04_submission.zip
 [+] simple time budget 
 [+] metrics
