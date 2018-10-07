@@ -51,12 +51,13 @@ MIN_NUMBER = 1e-10  #small number to prevent division by zero
 
 metrics = dict()
 
+
 class ModelParamsSearchStrategy(Enum):
     GRID_SEARCH = 'random'
     FIRST_BEST = 'first_best'
 
 
-# seconds left to our work
+# seconds left to work
 def time_left():
     t_left = TIME_LIMIT - (time.time() - start_time)
     t_left = TIME_RESERVE_COEFF * (t_left - TIME_RESERVE_SECONDS)
@@ -360,10 +361,13 @@ def _train(args):
     with time_metric('read dataset'):
         df = read_csv(args.train_csv, args.nrows)
     #metrics['read_csv'] = time.time() - t
-
     initial_dataset_size = sys.getsizeof(df)
     is_big = initial_dataset_size > BIG_DATASET_SIZE
     model_config['is_big'] = is_big
+
+    metrics['df_rows'] = df.shape[0]
+    metrics['df_cols'] = df.shape[1]
+    metrics['df_size'] = initial_dataset_size
 
     # missing values
     model_config['missing'] = False
@@ -461,9 +465,10 @@ def _train(args):
     ]
 
     df_X = df_X[used_columns]
-    if len(df_X.columns) < 1:
+    if len(df_X.columns) == 0:
         raise Exception('ALL FEATURES DROPPED, STOPPING')
 
+    metrics['X_columns'] = len(used_columns)
     model_config['used_columns'] = used_columns
     log('used columns: {}, size: {}'.format(len(used_columns), sys.getsizeof(df_X)))
 
@@ -476,13 +481,18 @@ def _train(args):
     #     model_config['missing'] = True
     #     df_X.fillna(-1, inplace=True)
 
+
     # scaling
-    with time_metric('scale'):
-        scaler = StandardScaler()
-        X = scaler.fit_transform(df_X.values).astype(np.float16)
-        df_X = None
-        log('scale (X size: {})'.format(sys.getsizeof(X)))
-        model_config['scaler'] = scaler
+    # with time_metric('scale'):
+    #     scaler = StandardScaler()
+    #     X = scaler.fit_transform(df_X.values.astype(np.float16))
+    #     log('scale (X size: {})'.format(sys.getsizeof(X)))
+    #     df_X = None
+    #     model_config['scaler'] = scaler
+
+    X = df_X
+
+    metrics['X_size'] = sys.getsizeof(X)
 
     # fitting
     model_config['mode'] = args.mode
@@ -590,6 +600,8 @@ def _train(args):
     log('best score:', scores[best_index])
     log('best model:', best_model)
     log('best model speed:', speed)
+
+    metrics['best_method'] = get_model_name(best_model)
 
     with time_metric('model_params_search'):
         best_model = model_params_search(best_model, X, df_y, scoring, speed)

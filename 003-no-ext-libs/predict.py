@@ -74,11 +74,13 @@ def preprocess_test_data(args, model_config=None):
     # drop_const_cols(df)
 
     # scale
-    log_start()
-    X_scaled = model_config['scaler'].transform(df)
-    log_time('scale')
+    # log_start()
+    # X_scaled = model_config['scaler'].transform(df.values.astype(np.float16))
+    # df = None
+    # log_time('scale')
+    X = df
 
-    return X_scaled, line_ids, model_config
+    return X, line_ids, model_config
 
 def predict(X_scaled, model):
     try:
@@ -89,11 +91,11 @@ def predict(X_scaled, model):
         exit(1)
 
 
-def _predict(X_scaled, model):
+def _predict(X, model):
     start_predict_time = time.time()
 
     log_start()
-    prediction = model.predict(X_scaled)
+    prediction = model.predict(X)
     log_time('predict')
     return prediction
 
@@ -117,8 +119,8 @@ if __name__ == '__main__':
     parser.add_argument('--nrows', type=int)
     args = parser.parse_args()
 
-    X_scaled, line_ids, model_config = preprocess_test_data(args)
+    X, line_ids, model_config = preprocess_test_data(args)
     model = model_config['model']
-    prediction = predict(X_scaled, model)
+    prediction = predict(X, model)
 
     save_prediction(args, line_ids, prediction)

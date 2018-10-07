@@ -32,8 +32,8 @@ def transform_datetime_features(df):
         df_dates['number_month_{}'.format(col_name)] = df[col_name].apply(lambda x: x.month)
         df_dates['number_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.day)
         df_dates['number_hour_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour)
-        df_dates['number_hour_of_week_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour + x.weekday() * 24)
-        df_dates['number_minute_of_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.minute + x.hour * 60)
+        #df_dates['number_hour_of_week_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour + x.weekday() * 24)
+        #df_dates['number_minute_of_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.minute + x.hour * 60)
 
     return df_dates
 
