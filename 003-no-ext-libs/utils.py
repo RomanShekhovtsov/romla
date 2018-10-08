@@ -8,42 +8,6 @@ from contextlib import contextmanager
 
 from log import *
 
-empty_date = datetime.datetime.strptime('0001-01-01', '%Y-%m-%d')
-
-
-def parse_dt(x):
-    if not isinstance(x, str):
-        return empty_date
-    elif len(x) == len('2010-01-01'):
-        return datetime.datetime.strptime(x, '%Y-%m-%d')
-    elif len(x) == len('2010-01-01 10:10:10'):
-        return datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
-    else:
-        return empty_date
-
-
-def transform_datetime_features(df):
-    datetime_columns = [
-        col_name
-        for col_name in df.columns
-        if col_name.startswith('datetime')
-    ]
-
-    df_dates = pd.DataFrame()
-    for col_name in datetime_columns:
-        df[col_name] = df[col_name].apply(lambda x: parse_dt(x))
-        df_dates['number_year_{}'.format(col_name)] = df[col_name].apply(lambda x: x.year)
-        df_dates['number_weekday_{}'.format(col_name)] = df[col_name].apply(lambda x: x.weekday())
-        df_dates['number_month_{}'.format(col_name)] = df[col_name].apply(lambda x: x.month)
-        df_dates['number_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.day)
-        df_dates['number_hour_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour)
-        #df_dates['number_hour_of_week_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour + x.weekday() * 24)
-        #df_dates['number_minute_of_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.minute + x.hour * 60)
-
-    return df_dates
-
-
-
 
 def estimate_csv(file_name, nrows=200, test_file_name='test_row_count.csv'):
     """Estimate big csv file params (size, row count, row size)

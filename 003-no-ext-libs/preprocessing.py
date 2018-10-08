@@ -8,6 +8,9 @@ ONEHOT_MAX_UNIQUE_VALUES = 20
 MAX_DATASET_COLUMNS = 1000
 BIG_DATASET_SIZE = 500 * 1024 * 1024  # 300MB
 
+empty_date = datetime.datetime.strptime( str(datetime.MINYEAR).rjust(4,'0') + '-01-01', '%Y-%m-%d')
+metrics = get_metrics()
+
 
 def preprocessing(args, model_config):
 
@@ -72,9 +75,9 @@ def preprocessing(args, model_config):
     with time_metric('process categorical features'):
         df_unique = df_X.apply(lambda x: x.nunique())
         df_const = df_unique[df_unique == 1]
-        df_unique = df_unique[df_unique > 2]
-        df_unique = df_unique[df_unique <= ONEHOT_MAX_UNIQUE_VALUES]
-        df_unique.sort_values(inplace=True)
+        # df_unique = df_unique[df_unique > 2]
+        # df_unique = df_unique[df_unique <= ONEHOT_MAX_UNIQUE_VALUES]
+        # df_unique.sort_values(inplace=True)
 
         # drop constant features
         df_X.drop(df_const.index, axis=1, inplace=True)
@@ -184,3 +187,35 @@ def remove_low_correlated_features(train_cols, initial_dataset_size, df_y, df_X)
         new_columns = df_X.columns[np.argsort(correlations)[-new_feature_count:]]
         df_X = df_X[new_columns]
         log('remove {} low correlated features'.format(train_cols - new_feature_count))
+
+
+def parse_dt(x):
+    if not isinstance(x, str):
+        return empty_date
+    elif len(x) == len('2010-01-01'):
+        return datetime.datetime.strptime(x, '%Y-%m-%d')
+    elif len(x) == len('2010-01-01 10:10:10'):
+        return datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
+    else:
+        return empty_date
+
+
+def transform_datetime_features(df):
+    datetime_columns = [
+        col_name
+        for col_name in df.columns
+        if col_name.startswith('datetime')
+    ]
+
+    df_dates = pd.DataFrame()
+    for col_name in datetime_columns:
+        df[col_name] = df[col_name].apply(lambda x: parse_dt(x))
+        df_dates['number_year_{}'.format(col_name)] = df[col_name].apply(lambda x: x.year)
+        df_dates['number_weekday_{}'.format(col_name)] = df[col_name].apply(lambda x: x.weekday())
+        df_dates['number_month_{}'.format(col_name)] = df[col_name].apply(lambda x: x.month)
+        df_dates['number_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.day)
+        df_dates['number_hour_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour)
+        #df_dates['number_hour_of_week_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour + x.weekday() * 24)
+        #df_dates['number_minute_of_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.minute + x.hour * 60)
+
+    return df_dates

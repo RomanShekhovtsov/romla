@@ -48,6 +48,8 @@ MIN_TRAIN_ROWS = SAMPLING_RATES[0] * (1 - TRAIN_TEST_SPLIT_TEST_SIZE)
 NEG_MEAN_SQUARED_ERROR = 'neg_mean_squared_error'
 MIN_NUMBER = 1e-10  #small number to prevent division by zero
 
+metrics = get_metrics()
+
 
 class ModelParamsSearchStrategy(Enum):
     GRID_SEARCH = 'random'
@@ -476,7 +478,7 @@ def _train(args):
         best_model.fit(X, y=y)
         model_config['model'] = best_model
 
-    save_metrics(metrics, 'train')
+    save_metrics('train')
 
     log('Train time: {}'.format(time.time() - start_train_time))
     log_trail()

@@ -9,7 +9,7 @@ import traceback
 from utils import *
 from log import *
 from metrics import *
-from preprocessing import transform_categorical_features
+from preprocessing import transform_categorical_features, transform_datetime_features
 
 # use this to stop the algorithm before time limit exceeds
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
@@ -42,21 +42,20 @@ def preprocess_test_data(args, model_config=None):
     line_ids = df['line_id']
     df.drop('line_id', axis=1, inplace=True)
 
-    if not is_big:
-        # features from datetime
-        log_start()
-        df_dates = transform_datetime_features(df)
-        log_time('features from datetime ({} columns)'.format(len(df_dates.columns)))
+    # features from datetime
+    log_start()
+    df_dates = transform_datetime_features(df)
+    log_time('features from datetime ({} columns)'.format(len(df_dates.columns)))
 
-        log_start()
-        if df_dates.isnull().values.any():
-            model_config['missing_dates'] = True
-            df_dates.fillna(-1, inplace=True)
-        log_time('missing dates values')
+    log_start()
+    if df_dates.isnull().values.any():
+        model_config['missing_dates'] = True
+        df_dates.fillna(-1, inplace=True)
+    log_time('missing dates values')
 
-        optimize_dataframe(df_dates)
-        df = pd.concat((df, df_dates), axis=1)
-        df_dates = None
+    optimize_dataframe(df_dates)
+    df = pd.concat((df, df_dates), axis=1)
+    df_dates = None
 
     # categorical encoding
     log_start()

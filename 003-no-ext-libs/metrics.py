@@ -6,7 +6,7 @@ import hashlib
 from utils import *
 from log import *
 
-metrics = {}
+__metrics = {}
 
 ROOT_METRICS_FOLDER = 'metrics/'
 run_id = str(uuid.uuid4())
@@ -16,13 +16,16 @@ run_id = str(uuid.uuid4())
 def time_metric(name):
     t = time.time()
     yield
-    metrics[name] = time.time() - t
-    log(name,'[{} sec]'.format(round(metrics[name], 2)))
+    __metrics[name] = time.time() - t
+    log(name,'[{} sec]'.format(round(__metrics[name], 2)))
 
 
-def save_metrics(metrics, subfolder):
+def get_metrics():
+    return __metrics
 
-    df = pd.DataFrame(metrics, index=(1,))
+def save_metrics(__metrics, subfolder):
+
+    df = pd.DataFrame(__metrics, index=(1,))
     df['run_id'] = run_id
     columns = ''.join(df.columns)
     folder = 'metrics/' + subfolder + '/'

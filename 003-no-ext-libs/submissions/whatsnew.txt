@@ -1,3 +1,9 @@
+2018-10-08_15-58-09_submission.zip
+[*] predict.py: removed is_big check for transform datetime feature
+
+2018-10-08_14-40-07_submission.zip:
+[*] min datetime changed to datetime.MINYEAR
+
 2018-10-05_00-04-58_submission.zip:
 [*]3x train fit estimation
 [*] exception handling in train(), predict()
