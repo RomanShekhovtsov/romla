@@ -7,6 +7,9 @@ import time
 import traceback
 
 from utils import *
+from log import *
+from metrics import *
+from preprocessing import transform_categorical_features
 
 # use this to stop the algorithm before time limit exceeds
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
@@ -57,15 +60,16 @@ def preprocess_test_data(args, model_config=None):
 
     # categorical encoding
     log_start()
-    df_cat = pd.DataFrame()
-    for col_name, unique_values in model_config['categorical_values'].items():
-        for unique_value in unique_values:
-            df_cat['onehot_{}={}'.format(col_name, unique_value)] = (df[col_name] == unique_value).astype(int)
-    log_time('categorical encoding ({} columns)'.format(len(df_cat.columns)))
+    transform_categorical_features(df, model_config['categorical_values'])
+    # df_cat = pd.DataFrame()
+    # for col_name, unique_values in model_config['categorical_values'].items():
+    #     for unique_value in unique_values:
+    #         df_cat['onehot_{}={}'.format(col_name, unique_value)] = (df[col_name] == unique_value).astype(int)
+    log_time('categorical encoding')
 
-    optimize_dataframe(df_cat)
-    df = pd.concat((df, df_cat), axis=1)
-    df_cat = None
+    # optimize_dataframe(df_cat)
+    # df = pd.concat((df, df_cat), axis=1)
+    # df_cat = None
 
     # filter columns
     used_columns = model_config['used_columns']

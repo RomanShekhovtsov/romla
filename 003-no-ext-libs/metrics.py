@@ -1,12 +1,23 @@
 import pandas as pd
 import os
 import uuid
+import hashlib
 
 from utils import *
+from log import *
 
+metrics = {}
 
 ROOT_METRICS_FOLDER = 'metrics/'
 run_id = str(uuid.uuid4())
+
+
+@contextmanager
+def time_metric(name):
+    t = time.time()
+    yield
+    metrics[name] = time.time() - t
+    log(name,'[{} sec]'.format(round(metrics[name], 2)))
 
 
 def save_metrics(metrics, subfolder):
@@ -19,7 +30,8 @@ def save_metrics(metrics, subfolder):
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-    file_name = folder + str(hex(hash(columns))).upper()[2:] + '.csv'
+    hash_digest = hashlib.md5(columns.encode('utf-8')).hexdigest()
+    file_name = folder + hash_digest.upper() + '.csv'
     file_exists = os.path.exists(file_name)
     df.to_csv(file_name, mode='a', header=not file_exists, index=False, sep=';')
     log('metrics {} to file "{}"'.format('appended' if file_exists else 'saved', file_name))

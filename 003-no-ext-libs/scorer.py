@@ -5,6 +5,7 @@ import time
 from sklearn.metrics import mean_squared_error, roc_auc_score
 
 from utils import *
+from log import *
 
 # use this to stop the algorithm before time limit exceeds
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
