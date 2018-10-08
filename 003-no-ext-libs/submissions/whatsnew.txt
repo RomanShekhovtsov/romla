@@ -1,3 +1,5 @@
+[*] metrics dictionary dublication fixed
+
 2018-10-08_15-58-09_submission.zip
 [*] predict.py: removed is_big check for transform datetime feature
 
