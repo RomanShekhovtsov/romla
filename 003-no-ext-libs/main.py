@@ -46,14 +46,14 @@ if __name__ == '__main__':
                 '--prediction-csv', folder + 'prediction.csv',
                 '--test-target-csv', folder + 'test-target.csv',
                 '--model-dir', '.',
-                '--nrows', '5000' if i in [4, 5, 6, 7] else '500' if i in [8] else '-1',
+                '--nrows', '5000' if i in [3, 4, 5, 6, 7] else '500' if i in [8] else '-1',
                 '--mode', tests[i]]
             args = parser.parse_args(argv)
 
             log('processing', folder)
             model_config = train(args)
-            X_scaled, _, _ = preprocess_test_data(args, model_config)
-            prediction = predict(X_scaled, model_config['model'])
+            X, _, _ = preprocess_test_data(args, model_config)
+            prediction = predict(X, model_config['model'])
             score(args, prediction=prediction)
 
             log('all datasets time: {}'.format(time.time() - start_total_time))

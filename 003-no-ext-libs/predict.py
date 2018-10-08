@@ -7,6 +7,9 @@ import time
 import traceback
 
 from utils import *
+from log import *
+from metrics import *
+from preprocessing import transform_categorical_features
 
 # use this to stop the algorithm before time limit exceeds
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
@@ -57,15 +60,16 @@ def preprocess_test_data(args, model_config=None):
 
     # categorical encoding
     log_start()
-    df_cat = pd.DataFrame()
-    for col_name, unique_values in model_config['categorical_values'].items():
-        for unique_value in unique_values:
-            df_cat['onehot_{}={}'.format(col_name, unique_value)] = (df[col_name] == unique_value).astype(int)
-    log_time('categorical encoding ({} columns)'.format(len(df_cat.columns)))
+    transform_categorical_features(df, model_config['categorical_values'])
+    # df_cat = pd.DataFrame()
+    # for col_name, unique_values in model_config['categorical_values'].items():
+    #     for unique_value in unique_values:
+    #         df_cat['onehot_{}={}'.format(col_name, unique_value)] = (df[col_name] == unique_value).astype(int)
+    log_time('categorical encoding')
 
-    optimize_dataframe(df_cat)
-    df = pd.concat((df, df_cat), axis=1)
-    df_cat = None
+    # optimize_dataframe(df_cat)
+    # df = pd.concat((df, df_cat), axis=1)
+    # df_cat = None
 
     # filter columns
     used_columns = model_config['used_columns']
@@ -74,11 +78,13 @@ def preprocess_test_data(args, model_config=None):
     # drop_const_cols(df)
 
     # scale
-    log_start()
-    X_scaled = model_config['scaler'].transform(df)
-    log_time('scale')
+    # log_start()
+    # X_scaled = model_config['scaler'].transform(df.values.astype(np.float16))
+    # df = None
+    # log_time('scale')
+    X = df
 
-    return X_scaled, line_ids, model_config
+    return X, line_ids, model_config
 
 def predict(X_scaled, model):
     try:
@@ -89,11 +95,11 @@ def predict(X_scaled, model):
         exit(1)
 
 
-def _predict(X_scaled, model):
+def _predict(X, model):
     start_predict_time = time.time()
 
     log_start()
-    prediction = model.predict(X_scaled)
+    prediction = model.predict(X)
     log_time('predict')
     return prediction
 
@@ -117,8 +123,8 @@ if __name__ == '__main__':
     parser.add_argument('--nrows', type=int)
     args = parser.parse_args()
 
-    X_scaled, line_ids, model_config = preprocess_test_data(args)
+    X, line_ids, model_config = preprocess_test_data(args)
     model = model_config['model']
-    prediction = predict(X_scaled, model)
+    prediction = predict(X, model)
 
     save_prediction(args, line_ids, prediction)

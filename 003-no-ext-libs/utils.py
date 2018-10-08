@@ -6,16 +6,20 @@ import os
 import pandas as pd
 from contextlib import contextmanager
 
+from log import *
+
+empty_date = datetime.datetime.strptime('0001-01-01', '%Y-%m-%d')
+
 
 def parse_dt(x):
     if not isinstance(x, str):
-        return datetime.datetime.strptime('0001-01-01', '%Y-%m-%d')
+        return empty_date
     elif len(x) == len('2010-01-01'):
         return datetime.datetime.strptime(x, '%Y-%m-%d')
     elif len(x) == len('2010-01-01 10:10:10'):
         return datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
     else:
-        return datetime.datetime.strptime('0001-01-01', '%Y-%m-%d')
+        return empty_date
 
 
 def transform_datetime_features(df):
@@ -28,53 +32,17 @@ def transform_datetime_features(df):
     df_dates = pd.DataFrame()
     for col_name in datetime_columns:
         df[col_name] = df[col_name].apply(lambda x: parse_dt(x))
+        df_dates['number_year_{}'.format(col_name)] = df[col_name].apply(lambda x: x.year)
         df_dates['number_weekday_{}'.format(col_name)] = df[col_name].apply(lambda x: x.weekday())
         df_dates['number_month_{}'.format(col_name)] = df[col_name].apply(lambda x: x.month)
         df_dates['number_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.day)
         df_dates['number_hour_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour)
-        df_dates['number_hour_of_week_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour + x.weekday() * 24)
-        df_dates['number_minute_of_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.minute + x.hour * 60)
+        #df_dates['number_hour_of_week_{}'.format(col_name)] = df[col_name].apply(lambda x: x.hour + x.weekday() * 24)
+        #df_dates['number_minute_of_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.minute + x.hour * 60)
 
     return df_dates
 
 
-LOG_FILE = 'logs\\{}.log'.format(time.strftime("%Y-%m-%d_%H", time.localtime()))
-log_file = open(LOG_FILE, mode='a')
-start_time = -1
-DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-
-
-def log(*args):
-    time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    print(time_str, *args)
-    print(time_str, *args, file=log_file)
-    log_file.flush()
-
-
-def log_start():
-    global start_time
-    start_time = time.time()
-
-
-def log_time(*args):
-    log(*args, '[{} sec]'.format(round(time.time() - start_time, 2)))
-
-# @contextmanager
-# def log_time(*args):
-#     t = time.time()
-#     yield
-#     log(*args, '[{} sec]'.format(round(time.time() - t, 2)))
-
-
-def log_trail(char='-', end='\n\n'):
-    log(char * 60, '\n\n')
-
-
-def close_log():
-    log_file.close()
-
-
-atexit.register(close_log)
 
 
 def estimate_csv(file_name, nrows=200, test_file_name='test_row_count.csv'):

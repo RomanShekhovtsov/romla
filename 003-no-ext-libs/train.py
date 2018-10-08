@@ -29,6 +29,8 @@ from sklearn.metrics import mean_squared_error, roc_auc_score
 
 from utils import *
 from metrics import *
+from log import *
+from preprocessing import preprocessing
 
 # use this to stop the algorithm before time limit exceeds
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
@@ -37,9 +39,6 @@ TIME_RESERVE_COEFF= 0.8  # we won't exceed 80% of TIME_LIMIT
 start_time = time.time()
 N_JOBS = 4
 
-ONEHOT_MAX_UNIQUE_VALUES = 20
-MAX_DATASET_COLUMNS = 1000
-BIG_DATASET_SIZE = 500 * 1024 * 1024  # 300MB
 MAX_MODEL_SELECTION_ROWS = 10 ** 5
 
 TRAIN_TEST_SPLIT_TEST_SIZE = 0.25
@@ -49,14 +48,13 @@ MIN_TRAIN_ROWS = SAMPLING_RATES[0] * (1 - TRAIN_TEST_SPLIT_TEST_SIZE)
 NEG_MEAN_SQUARED_ERROR = 'neg_mean_squared_error'
 MIN_NUMBER = 1e-10  #small number to prevent division by zero
 
-metrics = dict()
 
 class ModelParamsSearchStrategy(Enum):
     GRID_SEARCH = 'random'
     FIRST_BEST = 'first_best'
 
 
-# seconds left to our work
+# seconds left to work
 def time_left():
     t_left = TIME_LIMIT - (time.time() - start_time)
     t_left = TIME_RESERVE_COEFF * (t_left - TIME_RESERVE_SECONDS)
@@ -111,14 +109,6 @@ def calc_score(scoring, y_test, prediction):
         score = roc_auc_score(y_test, prediction)
 
     return score
-
-
-@contextmanager
-def time_metric(name):
-    t = time.time()
-    yield
-    metrics[name] = time.time() - t
-    log(name,'[{} sec]'.format(round(metrics[name], 2)))
 
 
 def iterate_models(models, X, y, scoring, min_train_rows=MIN_TRAIN_ROWS):
@@ -288,7 +278,7 @@ def model_params_search(model, X, y, scoring, speed):
         #     n_iter += len(param_values)
 
         estimator = deepcopy(model)  # TODO: excessive copy for gridsearch?
-        GridSearchCV()
+
         searcher = GridSearchCV(estimator,
                                 params,
                                 scoring=scoring,
@@ -325,8 +315,15 @@ def model_params_search(model, X, y, scoring, speed):
             est_params = {param_name: param_value}
             log('estimate', est_params)
             estimator.set_params( **est_params)
+
             estimator.fit(X_train, y_train)
+            fit_time = time.time() - iteration_time
+            fit_speed = X_train.shape[0] / fit_time
+
             predict = estimator.predict(X_test)
+            predict_time = time.time() - fit_time
+            predict_speed = X_test.shape[0] / predict_time
+
             score = calc_score(scoring, y_test, predict)
 
             if (not prev_score is None) and (prev_score > score):
@@ -357,132 +354,10 @@ def _train(args):
 
     log('time limit:', TIME_LIMIT)
     metrics['dataset'] = args.train_csv
-    with time_metric('read dataset'):
-        df = read_csv(args.train_csv, args.nrows)
-    #metrics['read_csv'] = time.time() - t
 
-    initial_dataset_size = sys.getsizeof(df)
-    is_big = initial_dataset_size > BIG_DATASET_SIZE
-    model_config['is_big'] = is_big
-
-    # missing values
-    model_config['missing'] = False
-    with time_metric('impute missing values'):
-        if df.isnull().values.any():
-            model_config['missing'] = True
-            df.fillna(-1, inplace=True)
-        else:
-            log('dataset has no missing values')
-
-    with time_metric('optimize dataframe'):
-        optimize_dataframe(df)
-
-    df_y = df.target
-    df_X = df.drop('target', axis=1)
-    df = None
-
-    train_rows, train_cols = df_X.shape
-    if train_rows < 2:
-        raise Exception('TRAIN SIZE {} < 2.'.format(train_rows))
-
-    metrics['remove low correlated features'] = 0
-    metrics['process datetime features'] = 0
-
-    if is_big:
-        with time_metric('remove low correlated features'):
-            new_feature_count = min(train_cols,
-                                    int(train_cols / (initial_dataset_size / BIG_DATASET_SIZE)))
-            # take only high correlated features
-            correlations = np.abs([
-                np.corrcoef(df_y, df_X[col_name])[0, 1]
-                for col_name in df_X.columns if col_name.startswith('number')
-            ])
-            new_columns = df_X.columns[np.argsort(correlations)[-new_feature_count:]]
-            df_X = df_X[new_columns]
-            log('remove {} low correlated features'.format(train_cols - new_feature_count))
-
-    else:
-
-        # features from datetime
-        with time_metric('process datetime features'):
-            df_dates = transform_datetime_features(df_X)
-            log('features from datetime ({} columns)'.format(len(df_dates.columns)))
-
-            # missing values
-            if df_dates.isnull().values.any():
-                model_config['missing_dates'] = True
-                df_dates.fillna(-1, inplace=True)
-            else:
-                log('no missing values in datetime features')
-
-            # optimize
-            optimize_dataframe(df_dates)
-            df_X = pd.concat((df_X, df_dates), axis=1)
-            df_dates = None
-
-    # calculate unique values
-    with time_metric('process categorical features'):
-        df_unique = df_X.apply(lambda x: x.nunique())
-        df_const = df_unique[df_unique == 1]
-        df_unique = df_unique[df_unique > 2]
-        df_unique = df_unique[df_unique <= ONEHOT_MAX_UNIQUE_VALUES]
-        df_unique.sort_values(inplace=True)
-
-        # drop constant features
-        df_X.drop(df_const.index, axis=1, inplace=True)
-        log('{} constant features dropped'.format(df_const.shape[0]))
-
-        # categorical encoding
-        categorical_values = dict()
-
-        if not is_big:
-            df_cat = pd.DataFrame()
-            for col_name in df_unique.index:
-                if df_X.shape[1] + df_cat.shape[1] + df_unique[col_name] > MAX_DATASET_COLUMNS:
-                    break
-
-                col_unique_values = df_X[col_name].unique()
-                categorical_values[col_name] = col_unique_values
-                for unique_value in col_unique_values:
-                    df_cat['onehot_{}={}'.format(col_name, unique_value)] = (df_X[col_name] == unique_value).astype(int)
-
-            log('categorical encoding ({} columns)'.format(len(df_cat.columns)))
-            optimize_dataframe(df_cat)
-            df_X = pd.concat((df_X, df_cat), axis=1)
-            df_cat = None
-
-        model_config['categorical_values'] = categorical_values
-
-    # use only numeric columns
-    used_columns = [
-        col_name
-        for col_name in df_X.columns
-        if col_name.startswith('number') or col_name.startswith('onehot')
-    ]
-
-    df_X = df_X[used_columns]
-    if len(df_X.columns) < 1:
-        raise Exception('ALL FEATURES DROPPED, STOPPING')
-
-    model_config['used_columns'] = used_columns
-    log('used columns: {}, size: {}'.format(len(used_columns), sys.getsizeof(df_X)))
-
-    with time_metric('impute missing values before scale'):
-        if df_X.isnull().values.any():
-            model_config['missing'] = True
-            df_X.fillna(-1, inplace=True)
-
-    # if any(df_X.isnull()):
-    #     model_config['missing'] = True
-    #     df_X.fillna(-1, inplace=True)
-
-    # scaling
-    with time_metric('scale'):
-        scaler = StandardScaler()
-        X = scaler.fit_transform(df_X.values).astype(np.float16)
-        df_X = None
-        log('scale (X size: {})'.format(sys.getsizeof(X)))
-        model_config['scaler'] = scaler
+    X, y = preprocessing(args, model_config)
+    metrics['X_size'] = sys.getsizeof(X)
+    train_rows = X.shape[0]
 
     # fitting
     model_config['mode'] = args.mode
@@ -558,7 +433,7 @@ def _train(args):
     selected = models
     for samples in SAMPLING_RATES:
         X_selection = X[:min(samples, train_rows)]
-        y_selection = df_y[:min(samples, train_rows)]
+        y_selection = y[:min(samples, train_rows)]
 
         models = selected # leave only best models for next iteration
         scores, speeds = iterate_models(models, X_selection, y_selection, scoring)
@@ -591,12 +466,14 @@ def _train(args):
     log('best model:', best_model)
     log('best model speed:', speed)
 
+    metrics['best_method'] = get_model_name(best_model)
+
     with time_metric('model_params_search'):
-        best_model = model_params_search(best_model, X, df_y, scoring, speed)
+        best_model = model_params_search(best_model, X, y, scoring, speed)
         # best_model = model
 
     with time_metric('fit_best_model'):
-        best_model.fit(X, y=df_y)
+        best_model.fit(X, y=y)
         model_config['model'] = best_model
 
     save_metrics(metrics, 'train')
