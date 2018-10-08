@@ -54,22 +54,22 @@ def preprocessing(args, model_config):
     # else:
 
     # features from datetime
-    with time_metric('process datetime features'):
-        df_dates = transform_datetime_features(df_X)
-        log('features from datetime ({} columns)'.format(len(df_dates.columns)))
-
-        # optimize
-        optimize_dataframe(df_dates)
-
-        # missing values
-        if df_dates.isnull().values.any():
-            model_config['missing_dates'] = True
-            df_dates.fillna(-1, inplace=True)
-        else:
-            log('no missing values in datetime features')
-
-        df_X = pd.concat((df_X, df_dates), axis=1)
-        df_dates = None
+    # with time_metric('process datetime features'):
+    #     df_dates = transform_datetime_features(df_X)
+    #     log('features from datetime ({} columns)'.format(len(df_dates.columns)))
+    #
+    #     # optimize
+    #     optimize_dataframe(df_dates)
+    #
+    #     # missing values
+    #     if df_dates.isnull().values.any():
+    #         model_config['missing_dates'] = True
+    #         df_dates.fillna(-1, inplace=True)
+    #     else:
+    #         log('no missing values in datetime features')
+    #
+    #     df_X = pd.concat((df_X, df_dates), axis=1)
+    #     df_dates = None
 
     # calculate unique values
     with time_metric('process categorical features'):
@@ -83,9 +83,9 @@ def preprocessing(args, model_config):
         df_X.drop(df_const.index, axis=1, inplace=True)
         log('{} constant features dropped'.format(df_const.shape[0]))
 
-    df_X, categorical_values = transform_categorical_features(df_X)
-    # df_X, categorical_values = onehot_categorical_features(is_big, df_unique, df_X)
-    model_config['categorical_values'] = categorical_values
+        df_X, categorical_values = transform_categorical_features(df_X)
+        # df_X, categorical_values = onehot_categorical_features(is_big, df_unique, df_X)
+        model_config['categorical_values'] = categorical_values
 
     # use only numeric columns
     used_columns = [

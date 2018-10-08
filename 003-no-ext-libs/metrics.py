@@ -23,7 +23,7 @@ def time_metric(name):
 def get_metrics():
     return __metrics
 
-def save_metrics(__metrics, subfolder):
+def save_metrics(subfolder):
 
     df = pd.DataFrame(__metrics, index=(1,))
     df['run_id'] = run_id
