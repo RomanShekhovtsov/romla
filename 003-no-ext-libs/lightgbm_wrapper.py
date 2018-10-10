@@ -5,7 +5,7 @@ from model import Model, ModelParamsSearchStrategy
 
 class LightGBMWrapper:
 
-    const_params = {'boosting_type': 'gbdt',
+    base_params = {'boosting_type': 'gbdt',
                     'metric': 'rmse',
                     'learning_rate': 0.01,
                     'num_leaves': 200,
@@ -21,23 +21,23 @@ class LightGBMWrapper:
                     'zero_as_missing': True,
                     'num_threads': 4,
                     }
-    strategy = ModelParamsSearchStrategy.FIRST_BEST
-    param_grid = {'max_depth': list(range(2, 16))}
-    n_iter = 15
+    params = {'max_depth': list(range(2, 16))}
+    strategies = {'max_depth': ModelParamsSearchStrategy.FIRST_BEST}
+    # n_iter = 15
 
     def get_regressor(self):
         est = lgb.sklearn.LGBMRegressor()
-        params = self.const_params.copy()
+        params = self.base_params.copy()
         params['objective'] = 'regression'
         est.set_params(**params)
         return self.get_model(est)
 
     def get_classifier(self):
         est = lgb.LGBMClassifier()
-        params = self.const_params.copy()
-        params['objective'] = 'binary'
+        params = self.base_params.copy()
+        params['objective'] = 'binary'  # TODO: multiclass support
         est.set_params(**params)
         return self.get_model(est)
 
     def get_model(self, est):
-        return Model(est, self.param_grid, self.strategy, self.n_iter)
+        return Model(est, self)

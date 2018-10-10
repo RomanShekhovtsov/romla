@@ -16,18 +16,13 @@ class ModelParamsSearchStrategy(Enum):
 class Model:
 
     base_estimator = None
-
-    param_grid = None
-    strategy = None
-    n_iter = None
+    wrapper = None
 
     estimators = []
 
-    def __init__(self, estimator, param_grid, strategy, n_iter):
+    def __init__(self, estimator, wrapper):
         self.base_estimators = estimator
-        self.strategy = strategy
-        self.param_grid = param_grid
-        self.n_iter = n_iter
+        self.algorithm = wrapper
 
     def get_name(self):
         return self.base_estimator.__class__.__name__

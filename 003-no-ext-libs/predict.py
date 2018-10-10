@@ -9,7 +9,7 @@ import traceback
 from utils import *
 from log import *
 from metrics import *
-from preproccessing import transform_categorical_features, transform_datetime_features
+from preprocessing import transform_categorical_features, transform_datetime_features
 
 # use this to stop the algorithm before time limit exceeds
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))

@@ -20,7 +20,7 @@ from sklearn.svm import LinearSVC, SVC
 from utils import *
 from metrics import *
 from log import *
-from preproccessing import preprocessing
+from preprocessing import preprocessing
 
 from xgboost_wrapper import XGBoostWrapper
 from lightgbm_wrapper import LightGBMWrapper
