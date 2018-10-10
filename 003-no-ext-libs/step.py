@@ -17,11 +17,14 @@ class Step:
         self.models = models
         self.scorer = scorer
         self.elimination_policy = elimination_policy
-        self.samples = samples
+        if samples == None:
+            self.samples = [1]
+        else:
+            self.samples = samples
 
     def instances(self):
         params = self.models.sample_param_space()
-        instance = self.model.get_instance
+        instance = self.model.get_instance()
         instance.set_params(params)
         yield instance
 
