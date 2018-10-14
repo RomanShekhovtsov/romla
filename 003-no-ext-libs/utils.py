@@ -10,18 +10,8 @@ from log import *
 
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
 
-# use this to stop the algorithm before time limit exceeds
-TIME_RESERVE_SECONDS = 20  # we must finish 20 seconds prior to time limit
-TIME_RESERVE_COEFF= 0.8  # we won't exceed 80% of TIME_LIMIT
 start_time = time.time()
 N_JOBS = 4
-
-
-# seconds left to work
-def time_left():
-    t_left = TIME_LIMIT - (time.time() - start_time)
-    t_left = TIME_RESERVE_COEFF * (t_left - TIME_RESERVE_SECONDS)
-    return max(t_left, 0)
 
 
 def estimate_csv(file_name, nrows=200, test_file_name='test_row_count.csv'):

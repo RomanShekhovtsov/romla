@@ -5,6 +5,7 @@ from stepTests import *
 
 class StepMock:
 
+    samples = 100
     def instances(self):
         n = 0
         while n < 2:
@@ -28,7 +29,7 @@ class PipelineTest(unittest.TestCase):
 
     def test_run_on_mocks(self):
         steps = [StepMock()]*3
-        p = Pipeline(steps, ScorerMock())
+        p = Pipeline(steps)
 
         data = 1
         res = p.run(data)
@@ -39,7 +40,8 @@ class PipelineTest(unittest.TestCase):
     @unittest.expectedFailure
     def test_run(self):
         steps = [Step()]*3
-        p = Pipeline(steps, ScorerMock())
+        steps[2].scorer = ScorerMock()
+        p = Pipeline(steps)
 
         data = 1
         res = p.run(data)
