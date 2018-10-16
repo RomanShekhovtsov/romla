@@ -1,4 +1,5 @@
 import time
+import random
 from copy import deepcopy
 from enum import Enum
 
@@ -19,10 +20,12 @@ class Model:
     wrapper = None
 
     estimators = []
+    param_space = {}
 
-    def __init__(self, estimator, wrapper):
+    def __init__(self, estimator, wrapper, param_space):
         self.base_estimators = estimator
         self.algorithm = wrapper
+        self.param_space = param_space
 
     def get_name(self):
         return self.base_estimator.__class__.__name__
@@ -125,6 +128,30 @@ class Model:
                 iteration_time = time.time() - iteration_time
 
         return best_estimator
+
+    # return params combinations count
+    def param_space_cardinality(self):
+        cardinality = 1
+        for key in self.param_space.keys():
+            cardinality *= self.param_space[key]
+        return cardinality
+
+    # sample params from param space
+    def sample_param_space(self):
+
+        param_sample = {}
+
+        for key in self.param_space.keys():
+            param_sample[key] = self.sample_param(key)
+
+        yield param_sample
+
+    # sample parameter from space
+    def sample_param(self, key):
+        # TODO: sampling types; avoid random value duplications.
+        param_distribution = self.param_space[key]
+        distribution_index = random.randint(1, len(param_distribution)) - 1
+        return param_distribution[distribution_index]
 
         # if model_name == 'GradientBoostingRegressor':
         #

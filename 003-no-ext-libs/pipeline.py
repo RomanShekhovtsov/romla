@@ -2,8 +2,10 @@ import time
 import numpy as np
 from contextlib import contextmanager
 
-SPEED_RUN_SAMPLE_SIZE = 100  # rows to speed run through all step and models to score velocity
+from step import IterationResults
+
 INITIAL_SAMPLE_SIZE = 1000 # rows to first iteration
+MAX_INSTANCES = 100  # max instances to evaluate at each step
 
 # use this to stop the algorithm before time limit exceeds
 TIME_RESERVE_SECONDS = 20  # we must finish 20 seconds prior to time limit
@@ -14,11 +16,13 @@ TIME_RESERVE_COEFF = 0.8  # we won't exceed 80% of TIME_LIMIT
 # Responsibilities:
 # 1. Execute pipeline steps
 # 2. Time management & sub-sampling
-# 3. Models elimination after each cycle.
 class Pipeline:
 
     time_budget = None
     steps = None
+
+    best_instance = None
+    best_score = None
 
     __start_time = None
     __times = {}
@@ -27,124 +31,79 @@ class Pipeline:
         self.steps = steps
         self.time_budget = time_budget
 
-    def run(self, X, y=None):
+    def run(self, x, y=None):
         self.__start_time = time.time()
-        X_speed = [X]
-        y_speed = [y]
 
+        X_list = [x]
+        y_list = [y]
         for index in range(len(self.steps)):
-            X_speed, y_speed = self.__iterate_step(0, X_speed, y_speed, speed_run = True)
+            X_list = self.__iterate_step(index, X_list, y_list)
 
-        X = [X]
-        y = [y]
-        for index in range(len(self.steps)):
-            X, y = self.__iterate_step(0, X, y)
+        last_step = self.steps[len(self.steps) - 1]
+        best_index = np.argmax(last_step.scores)
+        self.best_instance = last_step.iterated_instances[best_index]
+        self.best_score = last_step.scores[best_index]
 
-    def __iterate_step(self, step_index, X_list, y_list, speed_run=False):
+        return self.best_score
 
-        step_outputs = []
-        step_scores = []
+    # iterate different sample sizes.
+    # - for each sample:
+    #   - train test split input datasets
+    #   - iterate input datasets
+    #     - for each dataset iterate all models
+    #   - then eliminate models (and datasets).
+    def __iterate_step(self, step_index, x_list, y_list):
+
         step = self.steps[step_index]
+        datasets_count = len(x_list)
 
-        #initial sample size
+        # initial sample size
         sample_size = None
         if step.sampling:
-            if speed_run:
-                sample_size = SPEED_RUN_SAMPLE_SIZE
-            else:
-                sample_size = INITIAL_SAMPLE_SIZE
+            sample_size = INITIAL_SAMPLE_SIZE
 
-        first_run = True
-        have_time = True
-        while have_time:
+        # generate (datasets_count * MAX_INSTANCES) instances
+        step.init_instances(datasets_count, MAX_INSTANCES)
 
+        continue_sampling = True
+        while continue_sampling:
+            # TODO: stop if all datasets fully proceed, or survived only one model
 
-            for index in range(len(X_list)):
+            full_cycle_time = time.time()
 
-                X = X_list[index]
+            # train/test split for each sample
+            for index in range(len(x_list)):
+
+                X = x_list[index]
                 y = y_list[index]
 
                 if X is None:
                     continue
 
+                step.add_train_test_split(X, y)
 
-                # different data may have different len() (skip or not skip NaNs, for example).
-                rows = len(X)
-                if sample_size is None:
-                    sample_rows = rows
+            # iterate input datasets
+            output = step.iterate_datasets(sample_size)
+
+            # check time & re-calc sample size
+            full_cycle_time = time.time() - full_cycle_time
+            time_left = self.time_left()
+            have_time = time_left > full_cycle_time * 2
+
+            # check if only one instance survive
+            many_instance_survived = len(output) > 1
+
+            # define stop condition
+            continue_sampling = have_time and (many_instance_survived or (sample_size is not None))
+
+            if continue_sampling:
+                if many_instance_survived:
+                    sample_size = sample_size * 2
                 else:
-                    sample_rows = min(sample_size, rows)
+                    # only one survived - let's do last fit_transform on full dataset
+                    sample_size = None
 
-                # initiate train/test once per data sample
-                with self.timer('train_test_split' + instance.id):
-                    step.init_data(X[:sample_rows], y[:sample_rows])
-
-                for instance in step.instances(speed_run=speed_run):
-
-                    with self.timer('fit' + instance.id):
-                        # TODO: sampling methods, class balancing
-                        instance_data = instance.fit()
-
-                    with self.timer('process output'):
-
-                        # scorer sampling save_output make_score
-                        #   X      X         +           X
-                        #   X      +         +           X
-                        #   +      X         +           +
-                        #   +      +         X           +
-                        if step.scorer is None:
-                            # just save output data
-                            step_outputs.append(instance_data)
-                        else:
-                            # save scores
-                            step_scores.append(step.scorer.score(instance_data))
-                            if sample_rows is None:  # for sub-sampling
-                                step_outputs.append(instance_data)
-
-                if sample_rows is None or sample_rows == rows:
-                     X_list[index] = None  # full dataset is processed, stop future processing
-
-            # re-calc sample size
-
-
-            # check time
-            if not speed_run:
-
-            first_run = False
-
-        X_out, y_out, step.instances = self.__eliminate_by_score(step, step_outputs)
-
-        return X_out, y_out
-
-    def __eliminate_by_score(self, step, X_out, y_out):
-
-        scores = []
-
-        for X in X_out:
-            score = step.score(X_out)
-            scores.append(score)
-
-        if step.elimination_policy == 'median':
-            median = np.median(scores)
-            X_results = []
-            y_results = []
-            result_instances = []
-
-            for i in range(len(scores)):
-                if scores[i] >= median:
-                    X_results.append(X_out[i])
-                    y_results.append(y_out[i])
-                    result_instances.append(step.instances[i])
-
-        elif step.elimination_policy == 'none':
-            X_results = X_out
-            y_results = y_out
-            result_instances = step.instances()
-
-        else:
-            raise Exception('UNKNOWN ELIMINATION POLICY')
-
-        return X_results, y_results, result_instances
+        return output
 
     # seconds left to work
     def time_left(self):
