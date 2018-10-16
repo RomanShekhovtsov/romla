@@ -36,7 +36,6 @@ class StepMock:
         self.scores = deepcopy(self.__x_list[0])
         self.iterated_instances = deepcopy(self.__x_list[0])
 
-
         self.best_score = max(self.scores)
 
         self.__x_list.append(deepcopy(self.__x_list[0]))
@@ -83,6 +82,8 @@ class PipelineTest(unittest.TestCase):
         self.assertEqual(p.steps[2].best_score, 8)
 
         self.assertEqual(p.steps[0].scores[0], 6)
+        self.assertEqual(p.steps[1].scores[0], 7)
+        self.assertEqual(p.steps[2].scores[0], 8)
 
     # @unittest.expectedFailure
     def test_zero_time_budget(self):

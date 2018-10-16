@@ -71,7 +71,7 @@ class Pipeline:
     #   - then eliminate models (and datasets).
     def __iterate_step(self, step_index, x_list, y_list):
 
-        log('step {} started'.format(step_index))
+        log('STEP {} STARTED'.format(step_index))
         step = self.steps[step_index]
         datasets_count = len(x_list)
 
