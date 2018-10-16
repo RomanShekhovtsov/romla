@@ -8,36 +8,40 @@ from stepTests import *
 
 class StepMock:
 
-    sampling = False
-
-    instances = []
-
-    iterated_instances = []
-    scores = []
-
-    __x_list = []
-    __y_list = []
-
     best_score = None
+
+    def __init__(self):
+        self.sampling = False
+
+        self.instances = []
+
+        self.iterated_instances = []
+        self.scores = []
+
+        self.__x_list = []
+        self.__y_list = []
 
     def init_instances(self, max_instances):
         pass
 
     def add_train_test_split(self, x, y):
+        # print('add_train start',self.__x_list)
         self.__x_list.append(deepcopy(x))
         self.__y_list.append(deepcopy(y))
+        # print('add_train',self.__x_list)
 
     def iterate_datasets(self, sample_size):
 
+        self.__x_list[0][0] += 1
         self.scores = deepcopy(self.__x_list[0])
         self.iterated_instances = deepcopy(self.__x_list[0])
 
-        self.scores[0] += 1
+
         self.best_score = max(self.scores)
 
         self.__x_list.append(deepcopy(self.__x_list[0]))
         self.__y_list.append(deepcopy(self.__y_list[0]))
-
+        # print(self.__x_list)
         return deepcopy(self.__x_list), deepcopy(self.__y_list)
 
     # def instances(self):

@@ -18,18 +18,15 @@ TIME_RESERVE_COEFF = 0.8  # we won't exceed 80% of TIME_LIMIT
 # 2. Time management & sub-sampling
 class Pipeline:
 
-    time_budget = None
-    steps = None
-
-    best_instance = None
-    best_score = None
-
-    __start_time = None
-    __times = {}
-
     def __init__(self, steps, time_budget):
         self.steps = steps
         self.time_budget = time_budget
+
+        self.best_instance = None
+        self.best_score = None
+
+        self.__start_time = None
+        self.__times = {}
 
     def predict(self, x_train, x_test=None, y_train=None):
         self.__start_time = time.time()
@@ -74,8 +71,10 @@ class Pipeline:
     #   - then eliminate models (and datasets).
     def __iterate_step(self, step_index, x_list, y_list):
 
+        log('step {} started'.format(step_index))
         step = self.steps[step_index]
         datasets_count = len(x_list)
+
 
         # initial sample size
         sample_size = None

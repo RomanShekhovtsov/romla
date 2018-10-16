@@ -15,31 +15,6 @@ TRAIN_SIZE = 0.7
 # 3. Instances elimination after each cycle.
 class Step:
 
-    models = None
-    elimination_policy = None
-    scoring = False
-    sampling = False
-
-    instances = []
-
-    iterated_instances = []
-    x_outputs = []
-    y_outputs = []
-    scores = []
-
-    best_score = None
-    best_model = None
-
-    __scorer = None
-
-    __X_trains = []
-    __y_trains = []
-    __X_tests = []
-    __y_tests = []
-
-    __X_train_sample = None
-    __y_train_sample = None
-
     def __init__(self, models, scorer=None, elimination_policy=None, sampling=False):
 
         # params validation
@@ -51,6 +26,24 @@ class Step:
         self.sampling = sampling
         self.scoring = scorer is not None
         self.__scorer = scorer
+
+        self.instances = []
+
+        self.iterated_instances = []
+        self.x_outputs = []
+        self.y_outputs = []
+        self.scores = []
+
+        self.best_score = None
+        self.best_model = None
+
+        self.__X_trains = []
+        self.__y_trains = []
+        self.__X_tests = []
+        self.__y_tests = []
+
+        self.__X_train_sample = None
+        self.__y_train_sample = None
 
     # add train/test split for input dataset
     def add_train_test_split(self, X, y, sample):
