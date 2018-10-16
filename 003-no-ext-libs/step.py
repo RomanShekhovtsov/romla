@@ -23,8 +23,12 @@ class Step:
     instances = []
 
     iterated_instances = []
-    outputs = []
+    x_outputs = []
+    y_outputs = []
     scores = []
+
+    best_score = None
+    best_model = None
 
     __scorer = None
 
@@ -50,65 +54,67 @@ class Step:
 
     # add train/test split for input dataset
     def add_train_test_split(self, X, y, sample):
-        X_train, y_train, X_test, y_test = train_test_split(X, y, train_size=TRAIN_SIZE, stratify=y)
-        self.__X_trains.append(X_train)
+        x_train, y_train, x_test, y_test = train_test_split(X, y, train_size=TRAIN_SIZE, stratify=y)
+        self.__X_trains.append(x_train)
         self.__y_trains.append(y_train)
-        self.__X_tests.append(X_test)
+        self.__X_tests.append(x_test)
         self.__y_tests.append(y_test)
 
     # for given sample size, iterate all input datasets through all models
-    # return output datasets (when sample size == dataset size) and save scorings
+    # return output datasets (when sample size == dataset size) and save scores
     # TODO: clean data after iteration
     def iterate_datasets(self, sample_size):
 
         self.iterated_instances = []
-        self.outputs = []
+        self.x_outputs = []
+        self.y_outputs = []
         self.scores = []
 
         datasets_count = len(self.__X_trains)
         for index in range(datasets_count):
 
-            X_train = self.__X_trains[index]
+            x_train = self.__X_trains[index]
             y_train = self.__y_trains[index]
-            X_test = self.__X_tests[index]
+            x_test = self.__X_tests[index]
             y_test = self.__y_tests[index]
 
-            if X_train is None:
+            if x_train is None:
                 continue
 
             # get sample dataset
             # datasets might have different len() (skip or not skip NaNs, for example).
             # TODO: sampling methods
             # TODO: modify for re-fit (start new sample from end of previous one)
-            rows = len(X_train)
+            rows = len(x_train)
             if self.sampling:
                 sample_rows = min(sample_size, rows)
             else:
                 sample_rows = rows
 
-            X_train = X_train[:sample_rows]
+            x_train = x_train[:sample_rows]
             y_train = y_train[:sample_rows]
 
             test_rows = int(sample_rows / 2)
-            X_test = X_test[:test_rows]
+            x_test = x_test[:test_rows]
             y_test = y_test[:test_rows]
 
             # iterate sample through instances
             for instance in self.instances:
 
                 iterated_instance = deepcopy(instance)
-                output = iterated_instance.fit_transform(X_train, y_train)
+                x_output, y_output = iterated_instance.fit_transform(x_train, y_train)
 
                 # if self.sampling:
                 #    # for sub-sampling we need only scores
                 #    _output = None
 
                 self.iterated_instances.append(iterated_instance)
-                self.outputs.append(output)
+                self.x_outputs.append(x_output)
+                self.y_outputs.append(y_output)
 
                 if self.scoring is not None:
                     # save scores
-                    prediction = instance.predict(X_test)
+                    prediction = instance.predict(x_test)
                     score = self.__scorer.score(y_test, prediction)
                     self.scores.append(score)
 
@@ -122,13 +128,14 @@ class Step:
             if self.scoring:
                 self.__eliminate_by_score()
 
-        return self.outputs
+        return self.x_outputs, self.y_outputs
 
     # eliminate instances and datasets by score
     def __eliminate_by_score(self):
 
         best_index = np.argmax(self.scores)
         self.best_score = self.scores[best_index]
+        self.best_model = self.iterated_instances[best_index]
 
         iterated_instances = []
         outputs = []
