@@ -1,7 +1,9 @@
 import time
 import numpy as np
 from contextlib import contextmanager
+
 from log import *
+from step import IterationResult
 
 
 INITIAL_SAMPLE_SIZE = 1000 # rows to first iteration
@@ -84,13 +86,19 @@ class Pipeline:
         # generate instances
         step.init_instances(MAX_INSTANCES)
 
+        x_outputs = []
+        y_outputs = []
+
         continue_sampling = True
         while continue_sampling:
             # TODO: stop if all datasets fully proceed, or survived only one model
 
             iteration_time = time.time()
 
+            log('sample size: {}'.format(sample_size))
+
             # train/test split for each sample
+            step.clear_train_test()
             for index in range(len(x_list)):
 
                 X = x_list[index]
@@ -103,7 +111,13 @@ class Pipeline:
                 step.add_train_test_split(X, y)
 
             # iterate input datasets
-            x_outputs, y_outputs = step.iterate_datasets(sample_size)
+            iteration_results = step.iterate_datasets(sample_size)
+
+            for iteration_result in iteration_results:
+                if iteration_result.x_output is not None:
+                    # add fully proceeded output datasets
+                    x_outputs.append(iteration_result.x_output)
+                    y_outputs.append(iteration_result.y_output)
 
             # check time & re-calc sample size
             iteration_time = time.time() - iteration_time
@@ -115,7 +129,7 @@ class Pipeline:
                     step_index, time_left, iteration_time))
                     
             # check if only one instance survive
-            many_instance_survived = len(x_outputs) > 1
+            many_instance_survived = len(iteration_results) > 1
 
             # define stop condition
             continue_sampling = have_time and (many_instance_survived and (sample_size is not None))

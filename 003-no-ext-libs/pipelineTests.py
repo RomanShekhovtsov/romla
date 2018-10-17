@@ -3,31 +3,33 @@ import numpy as np
 from copy import deepcopy
 
 from pipeline import *
+from step import IterationResult
 from stepTests import *
 
 
 class StepMock:
 
-    best_score = None
+    def __init__(self, models, scorer=None, elimination_policy=None, sampling=False):
+        self.sampling = sampling
 
-    def __init__(self):
-        self.sampling = False
-
+        self.models = models
         self.instances = []
-
-        self.iterated_instances = []
-        self.scores = []
-
         self.__x_list = []
         self.__y_list = []
+        self.iteration_results = []
+        self.best_score = None
 
     def init_instances(self, max_instances):
         pass
 
+    def clear_train_test(self):
+        self.__x_list = []
+        self.__y_list = []
+
     def add_train_test_split(self, x, y):
         # print('add_train start',self.__x_list)
-        self.__x_list.append(deepcopy(x))
-        self.__y_list.append(deepcopy(y))
+        self.__x_list.append(x)
+        self.__y_list.append(y)
         # print('add_train',self.__x_list)
 
     def iterate_datasets(self, sample_size):
@@ -40,8 +42,14 @@ class StepMock:
 
         self.__x_list.append(deepcopy(self.__x_list[0]))
         self.__y_list.append(deepcopy(self.__y_list[0]))
+
+        self.iteration_results = []
+        for i in range(len(self.__x_list)):
+            iteration_result = IterationResult(None, deepcopy(self.__x_list[i]), deepcopy(self.__y_list[i]))
+            self.iteration_results.append(iteration_result)
+
         # print(self.__x_list)
-        return deepcopy(self.__x_list), deepcopy(self.__y_list)
+        return self.iteration_results
 
     # def instances(self):
     #     n = 0
@@ -64,26 +72,33 @@ class ScorerMock:
 
 class PipelineTest(unittest.TestCase):
 
-    def test_train_on_mocks(self, time_budget=21):
-        steps = [StepMock(), StepMock(), StepMock()]
+    def test_train_on_mocks(self, time_budget=22):
+
+        steps_count = 3
+        rows = 10000
+
+        steps = []
+        for i in range(steps_count):
+            steps.append(StepMock([],sampling=True))
+
         p = Pipeline(steps, time_budget)
 
-        data = list(range(5, 0, -1))
+        data = list(range(rows, 0, -1))
         best_score = p.train(data)
 
-        self.assertEqual(best_score, 5 + 3)
+        self.assertEqual(best_score, rows + len(steps))
 
-        self.assertEqual(p.steps[0].scores[0], 6)
-        self.assertEqual(p.steps[1].scores[0], 7)
-        self.assertEqual(p.steps[2].scores[0], 8)
+        self.assertEqual(p.steps[0].scores[0], rows + 1)
+        self.assertEqual(p.steps[1].scores[0], rows + 2)
+        self.assertEqual(p.steps[2].scores[0], rows + 3)
 
-        self.assertEqual(p.steps[0].best_score, 6)
-        self.assertEqual(p.steps[1].best_score, 7)
-        self.assertEqual(p.steps[2].best_score, 8)
+        self.assertEqual(p.steps[0].best_score, rows + 1)
+        self.assertEqual(p.steps[1].best_score, rows + 2)
+        self.assertEqual(p.steps[2].best_score, rows + 3)
 
-        self.assertEqual(p.steps[0].scores[0], 6)
-        self.assertEqual(p.steps[1].scores[0], 7)
-        self.assertEqual(p.steps[2].scores[0], 8)
+        self.assertEqual(p.steps[0].scores[0], rows + 1)
+        self.assertEqual(p.steps[1].scores[0], rows + 2)
+        self.assertEqual(p.steps[2].scores[0], rows + 3)
 
     # @unittest.expectedFailure
     def test_zero_time_budget(self):
