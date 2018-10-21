@@ -1,34 +1,56 @@
 import time
+from typing import List, Any
+from copy import deepcopy
+
 import numpy as np
 from contextlib import contextmanager
+from sklearn.model_selection import train_test_split
 
 from log import *
-from step import IterationResult
+from step import IterationData
 
 
 INITIAL_SAMPLE_SIZE = 1000 # rows to first iteration
 MAX_INSTANCES = 100  # max instances to evaluate at each step
+TEST_SIZE = 0.3
+
+REGRESSION = 'regression'
+CLASSIFICATION = 'classification'
 
 # use this to stop the algorithm before time limit exceeds
 TIME_RESERVE_SECONDS = 20  # we must finish 20 seconds prior to time limit
 TIME_RESERVE_COEFF = 0.8  # we won't exceed 80% of TIME_LIMIT
 
 
+class PipelineInstance:
+
+    def __init__(self, x=None, y=None):
+        self.models = []
+        self.score = None
+        self.x = x
+        self.y = y
+
+
 # Abstract AutoML pipeline.
 # Responsibilities:
 # 1. Execute pipeline steps
 # 2. Time management & sub-sampling
+# 3. Models elimination
 class Pipeline:
 
-    def __init__(self, steps, time_budget):
+    def __init__(self, steps, time_budget, mode=CLASSIFICATION):
         self.steps = steps
         self.time_budget = time_budget
+        self.mode = mode
 
-        self.best_instance = None
-        self.best_score = None
-
+        self.best_pipeline = None
         self.__start_time = None
         self.__times = {}
+
+        self.__X_trains = []
+        self.__y_trains = []
+        self.__X_tests = []
+        self.__y_tests = []
 
     def predict(self, x_train, x_test=None, y_train=None):
         self.__start_time = time.time()
@@ -46,21 +68,58 @@ class Pipeline:
         return prediction
 
     def train(self, x, y=None):
-        self.__start_time = time.time()
 
-        x_list = [x]
-        y_list = [y]
+        self.__start_time = time.time()
         steps_count = len(self.steps)
         log('pipeline of {} step(s) started'.format(steps_count))
 
-        for index in range(steps_count):
-            x_list, y_list = self.__iterate_step(index, x_list, y_list)
+        sample_size = INITIAL_SAMPLE_SIZE
+        rows = len(x)
 
-        last_step = self.steps[len(self.steps) - 1]
-        best_index = np.argmax(last_step.scores)
-        self.best_instance = last_step.iterated_instances[best_index]
-        self.best_score = last_step.scores[best_index]
-        log('pipeline finished, best score: {}'.format(self.best_score))
+        pipelines = [PipelineInstance()]
+        continue_sampling = True
+        while continue_sampling:
+
+            run_time = time.time()
+
+            log('sample size: {}'.format(sample_size))
+            # TODO: sampling methods
+            # TODO: modify for re-fit (start new sample from end of previous one)
+            sample_rows = min(sample_size, rows)
+            is_subsampling = (sample_rows < rows)
+
+            # init pipelines with new sample
+            for pipeline in pipelines:
+                pipeline.x = x[:sample_rows]
+                pipeline.y = y[:sample_rows]
+
+            # run pipelines for that sample
+            for index in range(steps_count):
+                pipelines = self.__iterate_step(index, pipelines, is_subsampling)
+
+            # check time & re-calc sample size
+            run_time = time.time() - run_time
+            time_left = self.time_left()
+            have_time = time_left > run_time * 2
+
+            if not have_time:
+                log('pipeline stopped by time limit (time left: {}; last iteration time: {})'.format(
+                    time_left, run_time))
+
+            # define stop condition
+            continue_sampling = have_time and is_subsampling
+
+            if continue_sampling:
+                if len(pipelines) > 1:
+                    sample_size = sample_size * 2
+                else:
+                    # only one survived - let's do last fit_transform on full dataset
+                    sample_size = rows
+
+        best_index = np.argmax(map(lambda p: p.score, pipelines))
+        self.best_pipeline = pipelines[best_index]
+        self.best_score = pipelines[best_index].score
+        log('train finished, best score: {}'.format(self.best_score))
         log_trail()
 
         return self.best_score
@@ -71,77 +130,86 @@ class Pipeline:
     #   - iterate input datasets
     #     - for each dataset iterate all models
     #   - then eliminate models (and datasets).
-    def __iterate_step(self, step_index, x_list, y_list):
+    def __iterate_step(self, step_index, pipelines, is_subsampling):
 
         log('STEP {} STARTED'.format(step_index))
         step = self.steps[step_index]
-        datasets_count = len(x_list)
-
-
-        # initial sample size
-        sample_size = None
-        if step.sampling:
-            sample_size = INITIAL_SAMPLE_SIZE
+        pipelines_count = len(pipelines)
 
         # generate instances
         step.init_instances(MAX_INSTANCES)
 
-        x_outputs = []
-        y_outputs = []
+        # train/test split
+        if step.scoring:
+            self.train_test_splits(pipelines)
 
-        continue_sampling = True
-        while continue_sampling:
-            # TODO: stop if all datasets fully proceed, or survived only one model
+        # iterate step for all pipelines
+        for index in range(pipelines_count):
 
-            iteration_time = time.time()
+            log('starting pipeline {}'.format(index))
 
-            log('sample size: {}'.format(sample_size))
+            if step.scoring:
+                x_train = self.__X_trains[index]
+                y_train = self.__y_trains[index]
+                x_test = self.__X_tests[index]
+                y_test = self.__y_tests[index]
 
-            # train/test split for each sample
-            step.clear_train_test()
-            for index in range(len(x_list)):
+                step_results: List[IterationData] = step.iterate(x_train, y_train, x_test, y_test, is_subsampling)
 
-                X = x_list[index]
-                y = y_list[index]
+            else:
+                x = pipelines[index].x
+                y = pipelines[index].y
 
-                if X is None:
-                    continue
+                step_results: List[IterationData] = step.iterate(x, y, is_subsampling=is_subsampling)
 
-                log('train/test split dataset {}'.format(index))
-                step.add_train_test_split(X, y)
+            # replace base pipeline with steps results
+            for step_result in step_results:
+                new_pipeline = PipelineInstance(step_result.x, step_result.y)
+                new_pipeline.score = step_result.score
+                new_pipeline.models = deepcopy(pipelines[index].models)
+                new_pipeline.models.append(step_result.instance)
+                pipelines.append(new_pipeline)
+            pipelines.pop(index)
 
-            # iterate input datasets
-            iteration_results = step.iterate_datasets(sample_size)
+            if step.scoring:
+                # cleanup input data
+                self.__X_trains[index] = None
+                self.__y_trains[index] = None
+                self.__X_tests[index] = None
+                self.__y_tests[index] = None
 
-            for iteration_result in iteration_results:
-                if iteration_result.x_output is not None:
-                    # add fully proceeded output datasets
-                    x_outputs.append(iteration_result.x_output)
-                    y_outputs.append(iteration_result.y_output)
+        # eliminate pipelines
+        if step.scoring:
+            pipelines = self.__eliminate_by_score(pipelines, step.elimination_policy)
 
-            # check time & re-calc sample size
-            iteration_time = time.time() - iteration_time
-            time_left = self.time_left()
-            have_time = time_left > iteration_time * 2
-            
-            if not have_time:
-                log('step {} stopped by time limit (time left: {}; last iteration time: {})'.format(
-                    step_index, time_left, iteration_time))
-                    
-            # check if only one instance survive
-            many_instance_survived = len(iteration_results) > 1
+        self.clean_train_test()
+        return pipelines
 
-            # define stop condition
-            continue_sampling = have_time and (many_instance_survived and (sample_size is not None))
+    # eliminate instances by score
+    def __eliminate_by_score(self, pipelines, elimination_policy):
 
-            if continue_sampling:
-                if many_instance_survived:
-                    sample_size = sample_size * 2
-                else:
-                    # only one survived - let's do last fit_transform on full dataset
-                    sample_size = None
+        before_elimination = len(pipelines)
 
-        return x_outputs, y_outputs
+        scores = list(map(lambda x: x.score, pipelines))
+        best_index = np.argmax(scores)
+        self.best_pipeline = pipelines[best_index]
+
+        filtered_results = []
+
+        if elimination_policy == 'median':
+            median = np.median(scores)
+            for i in range(len(scores)):
+                if scores[i] >= median:
+                    filtered_results.append(pipelines[i])
+
+        elif elimination_policy == 'one_best':
+            filtered_results = [pipelines[best_index]]
+
+        else:
+            raise Exception('UNKNOWN ELIMINATION POLICY')
+
+        log('elimination: {} of {} instances survived'.format(len(filtered_results), before_elimination))
+        return filtered_results
 
     # seconds left to work
     def time_left(self):
@@ -154,3 +222,37 @@ class Pipeline:
         t = time.time()
         yield
         self.__times[name] = time.time() - t
+
+    # add train/test split for input dataset
+    def train_test_splits(self, pipelines):
+
+        self.clean_train_test()
+
+        for index in range(len(pipelines)):
+
+            x = pipelines[index].x
+            y = pipelines[index].y
+
+            log('train/test split dataset {}'.format(index))
+
+            # define stratify or not
+            stratify = None
+            if self.mode == CLASSIFICATION:
+                stratify = y
+
+            #log('x:', x)
+            #log('y:', y)
+            x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=TEST_SIZE, stratify=stratify)
+            #log('x_train:', x_train)
+            #log('y_train:', y_train)
+
+            self.__X_trains.append(x_train)
+            self.__y_trains.append(y_train)
+            self.__X_tests.append(x_test)
+            self.__y_tests.append(y_test)
+
+    def clean_train_test(self):
+        self.__X_trains = []
+        self.__y_trains = []
+        self.__X_tests = []
+        self.__y_tests = []

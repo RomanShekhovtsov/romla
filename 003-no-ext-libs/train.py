@@ -27,6 +27,9 @@ from lightgbm_wrapper import LightGBMWrapper
 from model import Model
 from estimator import NEG_MEAN_SQUARED_ERROR
 
+REGRESSION = 'regression'
+CLASSIFICATION = 'classification'
+
 MAX_MODEL_SELECTION_ROWS = 10 ** 5
 
 TRAIN_TEST_SPLIT_TEST_SIZE = 0.25
@@ -60,7 +63,7 @@ def _train(args):
 
     # fitting
     model_config['mode'] = args.mode
-    regression = (args.mode == 'regression')
+    regression = (args.mode == REGRESSION)
 
 
     if regression:
@@ -156,7 +159,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--train-csv', required=True)
     parser.add_argument('--model-dir', required=True)
-    parser.add_argument('--mode', choices=['classification', 'regression'], required=True)
+    parser.add_argument('--mode', choices=[CLASSIFICATION, REGRESSION], required=True)
     parser.add_argument('--nrows', type=int)
     args = parser.parse_args()
 
