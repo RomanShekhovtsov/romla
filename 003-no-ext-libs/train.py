@@ -79,27 +79,7 @@ def _train(args):
         models = [XGBoostWrapper.get_classifier(),
                   LightGBMWrapper.get_classifier()]
 
-        #     RandomForestClassifier(),
-        #     ExtraTreesClassifier(),
-        #     AdaBoostClassifier()
-
-        # if train_rows < 10 ** 4:
-        #     models.append(LinearSVC())
-        #     models.append(SVC())
-
-    #    param_grid = {
-    #        'min_samples_leaf': range(1, 30),
-    #        'max_features': np.arange(0.1, 1.1, 0.1),
-    #    }
-
-    #    cv = KFold( n_splits=5, shuffle=True)
-    #    grid = GridSearchCV( model, param_grid, cv=cv, scoring=scoring, n_jobs=N_JOBS)
-    #    grid.fit(df_X, df_y)
-
-    # X_test_scaled, _, _ = preprocess_test_data(args, model_config)
-    # y_test = read_test_target(args)
-
-    log('starting models selection by sampling data by {} rows'.format(SAMPLING_RATES))
+    log('starting stepInstances selection by sampling data by {} rows'.format(SAMPLING_RATES))
     model_selection_start = time.time()
 
     selected = models
@@ -107,7 +87,7 @@ def _train(args):
         X_selection = X[:min(samples, train_rows)]
         y_selection = y[:min(samples, train_rows)]
 
-        models = selected # leave only best models for next iteration
+        models = selected # leave only best stepInstances for next iteration
         scores, speeds = iterate_models(models, X_selection, y_selection, scoring)
 
         # already cross-validate on full dataset, go best model selection
@@ -115,10 +95,10 @@ def _train(args):
             log('sample size meet dataset size, stop sampling')
             break
 
-        # select models better than average
+        # select stepInstances better than average
         selected = []
         for i in range(len(models)):
-            if scores[i] >= np.mean(scores):  # >= for case of equal scores for all models
+            if scores[i] >= np.mean(scores):  # >= for case of equal scores for all stepInstances
                 selected.append(models[i])
 
         # only one model? go model selection

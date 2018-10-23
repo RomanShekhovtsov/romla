@@ -12,21 +12,33 @@ empty_date = datetime.datetime.strptime( str(datetime.MINYEAR).rjust(4,'0') + '-
 metrics = get_metrics()
 
 
+class CsvLoader:
+
+    def __init__(self, nrows, model_config):
+        self.nrows = nrows
+        self.model_config = model_config
+
+    def fit_transform(self, train_csv):
+        with time_metric('read dataset'):
+            df = read_csv(train_csv, self.nrows)
+        # metrics['read_csv'] = time.time() - t
+        initial_dataset_size = sys.getsizeof(df)
+        is_big = initial_dataset_size > BIG_DATASET_SIZE
+        self.model_config['is_big'] = is_big
+
+        metrics['df_rows'] = df.shape[0]
+        metrics['df_cols'] = df.shape[1]
+        metrics['df_size'] = initial_dataset_size
+
+        with time_metric('optimize dataframe'):
+            optimize_dataframe(df)
+        return df
+
+
 def preprocessing(args, model_config):
 
-    with time_metric('read dataset'):
-        df = read_csv(args.train_csv, args.nrows)
-    # metrics['read_csv'] = time.time() - t
-    initial_dataset_size = sys.getsizeof(df)
-    is_big = initial_dataset_size > BIG_DATASET_SIZE
-    model_config['is_big'] = is_big
-
-    metrics['df_rows'] = df.shape[0]
-    metrics['df_cols'] = df.shape[1]
-    metrics['df_size'] = initial_dataset_size
-
-    with time_metric('optimize dataframe'):
-        optimize_dataframe(df)
+    loader = CsvLoader(args.nrows, model_config)
+    df = loader.fit_transform(args.train_csv)
 
     # missing values
     model_config['missing'] = False
