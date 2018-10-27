@@ -46,24 +46,27 @@ class StepMock:
 
 class TransformMock(Model):
 
-    def fit_transform(self, x, y):
+    def fit(self, x, y):
+        print(x, y)
         return np.add(x, 1)
 
 
 class ModelMock(Model):
 
     def __init__(self, shift):
-        super(ModelMock, self).__init__(None, {'shift': [0, 1, 2]})
-        self.shift = shift
+        super(ModelMock, self).__init__(None,
+                                        param_space={'shift': list(range(shift + 1))},
+                                        param_rules={'shift': ParamRuleType.SEQUENCE})
 
-    def fit_transform(self, x, y=None):
-        return np.mod(np.add(x, -self.shift), 2)
+    def fit(self, x, y=None):
+        # print(x, y)
+        return x
 
-
-class ScorerMock:
-
-    def score(self, x, y):
-        return np.sum(x - y)
+    def predict(self, x, y=None):
+        shift = self.params['shift']
+        print('shift:', shift)
+        # print(x, y)
+        return np.mod(np.add(x, -shift), 7)
 
 
 class PipelineTest(unittest.TestCase):
@@ -90,7 +93,7 @@ class PipelineTest(unittest.TestCase):
         p = Pipeline(steps, time_budget)
         best_score = p.train(x, y)
 
-        self.assertEqual(best_score, rows * (1 - TEST_SIZE))
+        self.assertEqual(rows * (1 - TEST_SIZE), best_score)
         #self.assertEqual(p.best_pipeline.score, best_score)
 
         return p
@@ -100,7 +103,7 @@ class PipelineTest(unittest.TestCase):
         steps_count = 3
 
         x = np.arange(rows)
-        y = x % 2
+        y = x % 7
 
         steps = []
         for i in range(steps_count-1):
@@ -110,12 +113,13 @@ class PipelineTest(unittest.TestCase):
                           ModelMock(1),
                           ModelMock(2)
                           ]
-        steps.append(Step(predict_models, scorer=ScorerMock()))
+        self.assertEqual(1, predict_models[0].param_space_cardinality())
+        steps.append(Step(predict_models, scorer=neg_mean_squared_error))
 
         p = Pipeline(steps, time_budget)
         best_score = p.train(x, y)
 
-        self.assertEqual(best_score, rows * (1 - TEST_SIZE))
+        self.assertEqual(0, best_score)
         #self.assertEqual(p.best_pipeline.score, best_score)
 
         return p
@@ -146,6 +150,16 @@ class PipelineTest(unittest.TestCase):
 
         #pipeline_instances = p.iterate_step(2, [p.best_pipeline], is_subsampling=False)
         #self.assertEqual(len(pipeline_instances), 2)
+
+    @staticmethod
+    def test_csv_loader():
+        model_config = []
+        loader = CsvLoader(None, model_config)
+        step = Step([loader])
+        p = Pipeline([step], 22)
+        p.train('E:\\ds\\sdsj\\examples\\sdsj2018_lightgbm_baseline\\res\\check_8_c\\train.csv')
+
+        print(step.instances[0].x)
 
 
 if __name__ == '__main__':

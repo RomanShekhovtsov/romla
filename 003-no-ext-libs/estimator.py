@@ -35,7 +35,7 @@ class Estimator():
         #     cv = math.ceil((min_train_rows / rows)) + 1  # make X_train_rows >= rows * (nfolds - 1)
         #     cv = min(rows, cv)  # correction for extra-small datasets
         #     method = 'cross validation ' + str(cv) + '-folds'
-        #     score = np.mean(cross_val_score(estimator, X, y=y, scoring=scoring, cv=cv, n_jobs=N_JOBS))
+        #     score = np.mean(cross_val_score(wrapper, X, y=y, scoring=scoring, cv=cv, n_jobs=N_JOBS))
 
         else:
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TRAIN_TEST_SPLIT_TEST_SIZE)
@@ -52,7 +52,7 @@ class Estimator():
 
         return score, speed
 
-    # calculate sample size (rows) to perform estimator parameters search
+    # calculate sample size (rows) to perform wrapper parameters search
     def calc_sample_size(self, test_size, total_rows, fit_speed, predict_speed, n_iter):
 
         time_to_fit_all = 3 * total_rows / fit_speed  # 3 - empirical coeff.

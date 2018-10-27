@@ -14,15 +14,27 @@ class ModelParamsSearchStrategy(Enum):
     FIRST_BEST = 'first_best'
 
 
+class ParamRuleType(Enum):
+    RANDOM = 'random'
+    SEQUENCE = 'sequence'
+
+
+class WrongParamRule(Exception):
+    pass
+
+
 class Model:
 
-    def __init__(self, estimator, param_space):
-        self.estimator = estimator
+    def __init__(self, wrapper=None, param_space={}, param_rules={}):
+        self.wrapper = wrapper
         self.param_space = param_space
+        self.param_rules = param_rules
+
+        self.param_counters = {}
         self.params = []
 
     def get_name(self):
-        return self.estimator.__class__.__name__
+        return self.wrapper.__class__.__name__
 
     def new_instance(self):
         return deepcopy(self)
@@ -30,8 +42,10 @@ class Model:
     # return params combinations count
     def param_space_cardinality(self):
         cardinality = 1
+
         for key in self.param_space.keys():
             cardinality *= len(self.param_space[key])
+
         return cardinality
 
     # sample params from param space
@@ -46,16 +60,32 @@ class Model:
 
     # sample parameter from space
     def sample_param(self, key):
+
         # TODO: sampling types; avoid random value duplications.
         param_distribution = self.param_space[key]
-        distribution_index = random.randint(1, len(param_distribution)) - 1
+        param_rule = self.param_rules.get(key, ParamRuleType.RANDOM)
+
+        if param_rule == ParamRuleType.SEQUENCE:
+            distribution_index = self.param_counters.get(key, 0) % len(param_distribution)
+            self.param_counters[key] = distribution_index + 1
+
+        elif param_rule == ParamRuleType.RANDOM:
+            distribution_index = random.randint(1, len(param_distribution)) - 1
+
+        else:
+            raise WrongParamRule('UNKNOWN PARAM RULE TYPE: \'{}\', supported types: {}'.format(
+                param_rule,
+                [p.value for p in ParamRuleType]
+            ))
+
         return param_distribution[distribution_index]
 
     def set_params(self, params):
         self.params = params
+        self.wrapper.set_params(params)
 
-    def fit_transform(self, x, y=None):
-        return self.estimator.fit_transform(x, y=y), y
+    def fit(self, x, y=None):
+        return self.wrapper.fit(x, y=y), y
 
     def predict(self, x):
-        return self.estimator.predict(x)
+        return self.wrapper.predict(x)

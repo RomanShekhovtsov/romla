@@ -6,6 +6,8 @@ import os
 import pandas as pd
 from contextlib import contextmanager
 
+from sklearn.metrics import mean_squared_error
+
 from log import *
 
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
@@ -97,3 +99,8 @@ def optimize_dataframe(df):
     log('optimize dataframe ({} to {}, ratio: {})'.format(old_size, new_size, round(old_size/new_size, 2)))
 
     return df
+
+
+def neg_mean_squared_error(y_true, y_pred):
+    return -mean_squared_error(y_true, y_pred)
+

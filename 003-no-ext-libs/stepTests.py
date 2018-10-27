@@ -2,25 +2,28 @@ import unittest
 import random
 from copy import deepcopy
 import numpy as np
+from sklearn.metrics import mean_squared_error
+from preprocessing import CsvLoader
 
 from step import *
+from model import Model, ParamRuleType, WrongParamRule
 
 
-class ModelMock():
+class ModelMock:
 
     def __init__(self, param_space_cardinality):
-        self.koeff = None
+        self.coeff = 0
         self.__cardinality = param_space_cardinality
-        self.estimator = lambda x, koeff: np.dot(x, koeff)
+        self.estimator = lambda x, coeff: np.dot(x, coeff)
 
     def get_name(self):
         return self.estimator.__class__.__name__ + str(self.__cardinality)
 
-    def fit_transform(self, x, y_train):
-        return self.estimator(x, self.koeff), y_train
+    def fit_transform(self, x, y=None):
+        return self.estimator(x, self.coeff)
 
     def predict(self, x):
-        pass
+        return self.estimator(x, self.coeff)
 
     def param_space_cardinality(self):
         return self.__cardinality
@@ -29,10 +32,11 @@ class ModelMock():
         return deepcopy(self)
 
     def sample_param_space(self):
-        return {'koeff': random.randint(1, self.__cardinality)}
+        self.coeff +=1
+        return {'coeff': self.coeff % self.__cardinality}
 
     def set_params(self, params):
-        self.koeff = params['koeff']
+        self.coeff = params['coeff']
 
 
 class StepTest(unittest.TestCase):
@@ -57,7 +61,7 @@ class StepTest(unittest.TestCase):
         instances_count = 10
 
         # summary param spaces < max instances
-        step = Step([ModelMock(1), ModelMock(2), ModelMock(3)], scorer=None)
+        step = Step([ModelMock(1), ModelMock(2), ModelMock(3)], scorer=neg_mean_squared_error)
         self.assertEqual(len(step.models), 3)
         step.init_instances(instances_count)
         self.step = step
@@ -66,27 +70,44 @@ class StepTest(unittest.TestCase):
 
         cardinalities = [1, 2, 2, 3, 3, 3]
         for i in range(len(cardinalities)):
-            self.assertEqual(step.instances[i].get_name(), 'function' + str(cardinalities[i]))
+            self.assertEqual(step.instances[i].instance.get_name(), 'function' + str(cardinalities[i]))
 
         # summary param spaces > max instances
-        step = Step([ModelMock(2), ModelMock(6), ModelMock(5)], scorer=None)
+        step = Step([ModelMock(2), ModelMock(6), ModelMock(5)], scorer=neg_mean_squared_error)
         step.init_instances(instances_count)
 
         # check instances-models distribution
         cardinalities = [2, 2, 6, 6, 6, 6, 5, 5, 5]
         for i in range(len(cardinalities)):
-            self.assertEqual( step.instances[i].get_name(), 'function' + str(cardinalities[i]))
+            self.assertEqual( step.instances[i].instance.get_name(), 'function' + str(cardinalities[i]))
 
         self.assertEqual(len(step.instances), instances_count)
 
         self.step = step
         for instance in step.instances:
-            self.assertIsNotNone(instance.koeff)
+            self.assertIsNotNone(instance.instance.coeff)
 
     # @unittest.skip
     def test_iterate(self):
         self.test_init_instances()
-        self.step.iterate([1, 2, 3, 4], [2, 4, 6, 8])
+        self.step.iterate([1, 2, 3, 4],
+                          [2, 4, 6, 8],
+                          [5, 6, 7],
+                          [10, 12, 14])
+        self.assertEqual(0, self.step.best_score)
+
+    # @unittest.expectedFailure
+    @staticmethod
+    def test_wrong_param_rule():
+        try:
+            m = Model(None, {'p': [1, 2, 3]},{'p': 'wrong'})
+            m.sample_param_space()
+
+        except WrongParamRule as e:
+            print(e)
+
+        except Exception as e:
+            raise Exception(e)
 
 
 if __name__ == '__main__':

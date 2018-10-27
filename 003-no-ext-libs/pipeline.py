@@ -9,7 +9,7 @@ from numpy.core.multiarray import ndarray
 from sklearn.model_selection import train_test_split
 
 from log import *
-from step import StepInstance
+from step import StepInstance, Step
 
 
 INITIAL_SAMPLE_SIZE = 1000 # rows to first iteration
@@ -31,7 +31,7 @@ TIME_RESERVE_COEFF = 0.8  # we won't exceed 80% of TIME_LIMIT
 # 3. Models elimination
 class Pipeline:
 
-    def __init__(self, steps, time_budget, mode=CLASSIFICATION):
+    def __init__(self, steps: List[Step], time_budget, mode=CLASSIFICATION):
         self.steps = steps
         self.time_budget = time_budget
         self.mode = mode
@@ -70,7 +70,7 @@ class Pipeline:
 
             run_time = time.time()
 
-            log('sample size: {}'.format(sample_size))
+            log('SAMPLE SIZE: {}'.format(sample_size))
             # TODO: sampling methods
             # TODO: modify for re-fit (start new sample from end of previous one)
             sample_rows = min(sample_size, rows)
@@ -99,11 +99,12 @@ class Pipeline:
                 else:
                     # only one survived - let's do last fit_transform on full dataset
                     sample_size = rows
+            log_trail()
 
-        best_index = np.argmax(map(lambda p: p.score, step_instances))
+        best_index = np.argmax(list(map(lambda p: p.score, step_instances)))
         self.best_score = step_instances[best_index].score
         log('train finished, best score: {}'.format(self.best_score))
-        log_trail()
+        log_trail('=')
 
         return self.best_score
 
@@ -169,14 +170,14 @@ class Pipeline:
         self.__times[name] = time.time() - t
 
     # add train/test split for input dataset
-    def train_test_splits(self, pipelines):
+    def train_test_splits(self, step_results):
 
         self.clean_train_test()
 
-        for index in range(len(pipelines)):
+        for index in range(len(step_results)):
 
-            x = pipelines[index].x
-            y = pipelines[index].y
+            x = step_results[index].x
+            y = step_results[index].y
 
             log('train/test split dataset {}'.format(index))
 

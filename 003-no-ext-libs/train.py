@@ -16,11 +16,15 @@ from sklearn.ensemble import \
     ExtraTreesClassifier, ExtraTreesRegressor, \
     AdaBoostClassifier, AdaBoostRegressor
 from sklearn.svm import LinearSVC, SVC
+from sklearn.metrics import roc_auc_score
 
 from utils import *
 from metrics import *
 from log import *
 from preprocessing import preprocessing
+from pipeline import Pipeline
+from step import StepInstance, Step
+from model import *
 
 from xgboost_wrapper import XGBoostWrapper
 from lightgbm_wrapper import LightGBMWrapper
@@ -37,6 +41,7 @@ SAMPLING_RATES = [10000]
 MIN_TRAIN_ROWS = SAMPLING_RATES[0] * (1 - TRAIN_TEST_SPLIT_TEST_SIZE)
 
 metrics = get_metrics()
+start_train_time = time.time()
 
 
 def train(args):
@@ -47,14 +52,14 @@ def train(args):
         log(traceback.format_exc())
         exit(1)
 
-def _train(args):
 
-    start_train_time = time.time()
+def _train(args):
 
     # dict with data necessary to make predictions
     model_config = {}
 
     log('time limit:', TIME_LIMIT)
+    metrics['run_date'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     metrics['dataset'] = args.train_csv
 
     X, y = preprocessing(args, model_config)
@@ -65,74 +70,50 @@ def _train(args):
     model_config['mode'] = args.mode
     regression = (args.mode == REGRESSION)
 
-
     if regression:
-        scoring = NEG_MEAN_SQUARED_ERROR
-        models = [XGBoostWrapper.get_regressor(),
-                  LightGBMWrapper.get_regressor()]
-            # RandomForestRegressor(),
-            # ExtraTreesRegressor(),
-            # AdaBoostRegressor()
+        scorer = neg_mean_squared_error
+        models = [XGBoostWrapper().get_regressor(),
+                  LightGBMWrapper().get_regressor()
+                  ]
 
     else:
-        scoring = 'roc_auc'
-        models = [XGBoostWrapper.get_classifier(),
-                  LightGBMWrapper.get_classifier()]
+        scorer = roc_auc_score
+        models = [XGBoostWrapper().get_classifier(),
+                  LightGBMWrapper().get_classifier()
+                  ]
 
-    log('starting stepInstances selection by sampling data by {} rows'.format(SAMPLING_RATES))
-    model_selection_start = time.time()
-
-    selected = models
-    for samples in SAMPLING_RATES:
-        X_selection = X[:min(samples, train_rows)]
-        y_selection = y[:min(samples, train_rows)]
-
-        models = selected # leave only best stepInstances for next iteration
-        scores, speeds = iterate_models(models, X_selection, y_selection, scoring)
-
-        # already cross-validate on full dataset, go best model selection
-        if y_selection.shape[0] == train_rows:
-            log('sample size meet dataset size, stop sampling')
-            break
-
-        # select stepInstances better than average
-        selected = []
-        for i in range(len(models)):
-            if scores[i] >= np.mean(scores):  # >= for case of equal scores for all stepInstances
-                selected.append(models[i])
-
-        # only one model? go model selection
-        if len(selected) == 1:
-            log('only one model survive, stop sampling')
-            break
-
-        log('survive {} model(s)'.format(len(selected)))
-
-    metrics['model selection'] = time.time() - model_selection_start
-
-    best_index = np.argmax(scores)
-    best_model = models[best_index]
-    speed = speeds[best_index]
-
-    log('best score:', scores[best_index])
+    step = Step( models, scorer=scorer)
+    steps = [step]
+    p = Pipeline(steps, time_left(), args.mode)
+    p.train(X, y)
+    print(p.best_score)
+    best_model = step.best_model.wrapper.estimator
+    log('best score:', p.best_score)
     log('best model:', best_model)
-    log('best model speed:', speed)
+    # log('best model speed:', speed)
 
-    metrics['best_method'] = best_model.get_name()
+    metrics['best_method'] = step.best_model.get_name()
+    metrics['best_score'] = p.best_score
 
-    with time_metric('model_params_search'):
-        best_model = best_model.model.model_params_search(best_model, X, y, scoring, speed)
-        # best_model = model
+    # with time_metric('model_params_search'):
+    #     best_model = best_model.model.model_params_search(best_model, X, y, scoring, speed)
+    #     # best_model = model
+    #
+    # with time_metric('fit_best_model'):
+    #     best_model.fit(X, y=y)
 
-    with time_metric('fit_best_model'):
-        best_model.fit(X, y=y)
-        model_config['model'] = best_model
+    model_config['model'] = best_model
 
     save_metrics('train')
 
     log('Train time: {}'.format(time.time() - start_train_time))
     log_trail()
     return model_config
+
+
+def time_left():
+    t_left = TIME_LIMIT - (time.time() - start_train_time)
+    return max(t_left, 0)
 
 
 if __name__ == '__main__':
@@ -148,3 +129,4 @@ if __name__ == '__main__':
     model_config_filename = os.path.join(args.model_dir, 'model_config.pkl')
     with open(model_config_filename, 'wb') as fout:
         pickle.dump(model_config, fout, protocol=pickle.HIGHEST_PROTOCOL)
+

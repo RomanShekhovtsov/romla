@@ -1,24 +1,35 @@
 import xgboost as xgb
 
-from model import Model, ModelParamsSearchStrategy
+from model import Model, ParamRuleType
 
 
 class XGBoostWrapper:
 
-    const_params = {'n_jobs': 4}
-    strategy = ModelParamsSearchStrategy.FIRST_BEST
-    param_grid = {'max_depth': list(range(2, 16))}
-    n_iter = 15
+    def __init__(self):
+        self.const_params = {'n_jobs': 4}
+        self.param_space = {'max_depth': list(range(2, 16))}
+        self.param_rules = {'max_depth': ParamRuleType.SEQUENCE}
+        self.estimator = None
 
     def get_regressor(self):
-        est = xgb.sklearn.XGBRegressor()
-        return self.get_model(est)
+        self.estimator = xgb.sklearn.XGBRegressor()
+        return self.get_model()
 
     def get_classifier(self):
-        est = xgb.sklearn.XGBClassifier()
-        return self.get_model(est)
+        self.estimator = xgb.sklearn.XGBClassifier()
+        return self.get_model()
 
-    def get_model(self, est):
-        est.set_params(**self.const_params)
-        return Model(est, self.param_grid, self.strategy, self.n_iter)
+    def get_model(self):
+        self.estimator.set_params(**self.const_params)
+        return Model(self, self.param_space, self.param_rules)
+
+    def set_params(self, params):
+        self.estimator.set_params(**params)
+
+    def fit(self, x, y=None):
+        return self.estimator.fit(x, y=y), y
+
+    def predict(self, x):
+        return self.estimator.predict(x)
+
 

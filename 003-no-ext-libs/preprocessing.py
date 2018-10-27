@@ -35,19 +35,28 @@ class CsvLoader:
         return df
 
 
+class Imputer:
+
+    # missing values
+    def impute(self, df):
+        res = False
+
+        with time_metric('impute missing values'):
+            if df.isnull().values.any():
+                df.fillna(-1, inplace=True)
+                res = True
+            else:
+                log('dataset has no missing values')
+
+        return res
+
+
 def preprocessing(args, model_config):
 
     loader = CsvLoader(args.nrows, model_config)
     df = loader.fit_transform(args.train_csv)
 
-    # missing values
-    model_config['missing'] = False
-    with time_metric('impute missing values'):
-        if df.isnull().values.any():
-            model_config['missing'] = True
-            df.fillna(-1, inplace=True)
-        else:
-            log('dataset has no missing values')
+    model_config['missing'] = Imputer().impute(df)
 
     df_y = df.target
     df_X = df.drop('target', axis=1)
