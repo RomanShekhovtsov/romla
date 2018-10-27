@@ -6,7 +6,7 @@ import numpy as np
 from contextlib import contextmanager
 
 from numpy.core.multiarray import ndarray
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, StratifiedKFold
 
 from log import *
 from step import StepInstance, Step
@@ -188,7 +188,7 @@ class Pipeline:
 
             # log('x:', x)
             # log('y:', y)
-            x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=TEST_SIZE, stratify=stratify)
+            x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=TEST_SIZE, stratify=stratify, random_state=1)
             # log('x_train:', x_train)
             # log('y_train:', y_train)
 

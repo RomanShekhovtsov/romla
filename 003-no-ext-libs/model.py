@@ -85,6 +85,7 @@ class Model:
         self.wrapper.set_params(params)
 
     def fit(self, x, y=None):
+        log('fitting model {} {}'.format(self.get_name(), self.params))
         return self.wrapper.fit(x, y=y), y
 
     def predict(self, x):

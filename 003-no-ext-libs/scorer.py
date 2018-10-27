@@ -35,8 +35,8 @@ def score(args, target=None, prediction=None):
         # read dataset
         log_start()
         predict = pd.read_csv(args.prediction_csv, low_memory=False, nrows=nrows)
-        log_time('read', args.prediction_csv, 'shape', prediction.shape)
         prediction = predict['prediction']
+        log_time('read', args.prediction_csv, 'shape', prediction.shape)
 
     if args.mode == 'regression':
         score = mean_squared_error(target, prediction) ** 0.5
@@ -51,12 +51,10 @@ def score(args, target=None, prediction=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train-csv', required=True)
-    parser.add_argument('--test-csv', required=True)
     parser.add_argument('--prediction-csv', required=True)
     parser.add_argument('--test-target-csv', required=True)
-    parser.add_argument('--model-dir', required=True)
     parser.add_argument('--mode', choices=['classification', 'regression'], required=True)
+    parser.add_argument('--nrows')
     args = parser.parse_args()
 
     score(args)

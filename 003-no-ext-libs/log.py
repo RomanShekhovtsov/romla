@@ -7,7 +7,10 @@ import pandas as pd
 from contextlib import contextmanager
 
 
-LOG_FILE = 'logs\\{}.log'.format(time.strftime("%Y-%m-%d_%H", time.localtime()))
+log_folder = 'logs'
+if not os.path.exists(log_folder):
+    os.makedirs(log_folder)
+LOG_FILE = '{}\\{}.log'.format(log_folder, time.strftime("%Y-%m-%d_%H", time.localtime()))
 log_file = open(LOG_FILE, mode='a')
 start_time = -1
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S'

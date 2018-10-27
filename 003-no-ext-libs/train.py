@@ -72,7 +72,7 @@ def _train(args):
 
     if regression:
         scorer = neg_mean_squared_error
-        models = [XGBoostWrapper().get_regressor(),
+        models = [#XGBoostWrapper().get_regressor(),
                   LightGBMWrapper().get_regressor()
                   ]
 
@@ -88,8 +88,13 @@ def _train(args):
     p.train(X, y)
     print(p.best_score)
     best_model = step.best_model.wrapper.estimator
-    log('best score:', p.best_score)
-    log('best model:', best_model)
+
+    if regression:
+        log('best score:', (-p.best_score) ** 0.5)
+    else:
+        log('best score:', p.best_score)
+
+    log('best model:', step.best_model.get_name(), step.best_model.wrapper.params)
     # log('best model speed:', speed)
 
     metrics['best_method'] = step.best_model.get_name()

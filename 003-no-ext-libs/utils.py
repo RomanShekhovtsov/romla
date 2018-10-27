@@ -46,7 +46,6 @@ def read_csv(file_name, nrows):
     log('dataset shape: {}, nrows: {})'.format(df.shape, nrows))
     return df
 
-
 def optimize_dataframe(df):
     """Optimize pandas dataframe size:
     - downcast numeric (int and float) types columns.
@@ -55,7 +54,7 @@ def optimize_dataframe(df):
     :return:
     """
 
-    # return df  # TODO: remove - check for failure!!!
+    #return df  # TODO: remove - check for failure!!!
 
     int_cols = []
     float_cols = []
