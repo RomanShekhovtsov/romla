@@ -85,8 +85,8 @@ def _train(args):
     step = Step( models, scorer=scorer)
     steps = [step]
     p = Pipeline(steps, time_left(), args.mode)
-    p.train(X, y)
-    print(p.best_score)
+    p.train(X.values, y.values)
+    #print(p.best_score)
     best_model = step.best_model.wrapper.estimator
 
     if regression:

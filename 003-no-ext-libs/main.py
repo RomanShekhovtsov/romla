@@ -37,7 +37,7 @@ if __name__ == '__main__':
             7: 'classification',
             8: 'classification',
         }
-        for i in [1]:  # tests.keys():
+        for i in [7]:  # tests.keys():
             start_total_time = time.time()
             folder = r'..\..\check_' + str(i) + '_' + tests[i][0] + '\\'
             argv = [
@@ -46,7 +46,7 @@ if __name__ == '__main__':
                 '--prediction-csv', folder + 'prediction.csv',
                 '--test-target-csv', folder + 'test-target.csv',
                 '--model-dir', '.',
-                '--nrows', '5000' if i in [3, 4, 5, 6, 7] else '500' if i in [8] else '-1',
+                # '--nrows', '5000' if i in [3, 4, 5, 6, 7] else '500' if i in [8] else '-1',
                 '--mode', tests[i]]
             args = parser.parse_args(argv)
 

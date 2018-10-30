@@ -15,7 +15,7 @@ class StepInstance:
         self.y = y
         self.score = None
 
-    def fit_transform(self, x, y):
+    def fit(self, x, y):
         return self.instance.fit(x, y=y), y
 
     def predict(self, x):
@@ -50,7 +50,13 @@ class Step:
     # for given sample size, iterate all input datasets through all stepInstances
     # return output datasets (when sample size == dataset size) and save scores
     # TODO: clean data after iteration
-    def iterate(self, x_train, y_train=None, x_test=None, y_test=None, is_subsampling=False):
+    def iterate(self,
+                x_train,
+                y_train=None,
+                x_test=None,
+                y_test=None,
+                is_subsampling=False,
+                disable_elimination=False):
 
         # params validation
         if self.__scorer is None and is_subsampling:
@@ -59,7 +65,7 @@ class Step:
         # iterate sample through instances
         for instance in self.instances:
 
-            x_output, y_output = instance.fit_transform(x_train, y_train)
+            x_output, y_output = instance.fit(x_train, y_train)
 
             if is_subsampling:
                 # dataset not proceed, clear output
@@ -69,14 +75,14 @@ class Step:
             instance.x = x_output
             instance.y = y_output
 
-            if self.scoring:
+            if self.scoring and x_test is not None:
                 # save scores
                 prediction = instance.predict(x_test)
                 instance.score = self.__scorer(y_test, prediction)
 
         # eliminate results
-        if self.scoring:
-            self.__eliminate_by_score()
+        if self.scoring and not disable_elimination:
+            self.eliminate_by_score()
 
         return self.instances
 
@@ -106,7 +112,7 @@ class Step:
                 self.instances.append(StepInstance(deepcopy(model)))
 
     # eliminate instances by score
-    def __eliminate_by_score(self):
+    def eliminate_by_score(self):
 
         # scores = list(map(lambda x: -np.inf if x.score is None else x.score, step_results))
         scores = list(map(lambda x: x.score, self.instances))
@@ -133,3 +139,5 @@ class Step:
 
         log('elimination: {} of {} instances survived'.format(len(survived), len(scores)))
         self.instances = survived
+
+        return self.instances

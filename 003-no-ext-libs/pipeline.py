@@ -6,7 +6,7 @@ import numpy as np
 from contextlib import contextmanager
 
 from numpy.core.multiarray import ndarray
-from sklearn.model_selection import train_test_split, StratifiedKFold
+from sklearn.model_selection import train_test_split, KFold, StratifiedKFold
 
 from log import *
 from step import StepInstance, Step
@@ -22,6 +22,8 @@ CLASSIFICATION = 'classification'
 # use this to stop the algorithm before time limit exceeds
 TIME_RESERVE_SECONDS = 20  # we must finish 20 seconds prior to time limit
 TIME_RESERVE_COEFF = 0.8  # we won't exceed 80% of TIME_LIMIT
+
+N_SPLITS = 10
 
 
 # Abstract AutoML pipeline.
@@ -41,6 +43,7 @@ class Pipeline:
         self.__start_time = None
         self.__times = {}
 
+        self.__split_types = []
         self.__X_trains = []
         self.__y_trains = []
         self.__X_tests = []
@@ -77,7 +80,8 @@ class Pipeline:
             is_subsampling = (sample_rows < rows)
 
             # run pipelines for sample
-            step_instances = [StepInstance(None, x[:sample_rows], y[:sample_rows])]
+            random_sample_index = np.random.choice(rows, sample_rows, replace=False)  # random subsample
+            step_instances = [StepInstance(None, x[random_sample_index], y[random_sample_index])]
             for index in range(steps_count):
                 step_instances = self.iterate_step(index, step_instances, is_subsampling)
 
@@ -118,7 +122,6 @@ class Pipeline:
 
         log('STEP {} STARTED'.format(step_index))
         step = self.steps[step_index]
-        inputs_count = len(inputs)
 
         # generate instances
         if len(step.instances) == 0:
@@ -126,22 +129,51 @@ class Pipeline:
 
         # train/test split
         if step.scoring:
-            self.train_test_splits(inputs)
+            self.split_datasets(inputs, is_subsampling)
 
         # iterate step for all inputs
-        for index in range(inputs_count):
+        datasets_count = len(inputs)
+        for index in range(datasets_count):
 
-            log('input {} of {}'.format(index, inputs_count))
+            if step.scoring and len(step.instances) > 1:  # if only one model, fit to all dataset
+                log('input data {} of {}'.format(index + 1, datasets_count))
 
-            if step.scoring:
                 x_train = self.__X_trains[index]
                 y_train = self.__y_trains[index]
                 x_test = self.__X_tests[index]
                 y_test = self.__y_tests[index]
+                if self.__split_types[index] == 'KFold':
 
-                step_results: List[StepInstance] = step.iterate(x_train, y_train, x_test, y_test, is_subsampling)
+                    folds_count = len(x_train)
+                    instances_count = len(step.instances)
+                    scores = np.zeros(instances_count)
+
+                    for fold_index in range(folds_count):
+                        log('processing fold {} of {}'.format(fold_index + 1, folds_count))
+                        step_results: List[StepInstance] = step.iterate(x_train[fold_index],
+                                                                        y_train[fold_index],
+                                                                        x_test[fold_index],
+                                                                        y_test[fold_index],
+                                                                        is_subsampling,
+                                                                        disable_elimination=True)
+                        step_scores = list(map(lambda p: p.score, step_results))
+                        scores = np.add(scores, step_scores)
+                        # will use last fold results as output
+
+                    # set KFold average score as instance scores and eliminate by score
+                    scores = np.divide(scores, folds_count)  # average score
+                    for instance_index in range(instances_count):
+                        step_results[instance_index].score = scores[instance_index]
+
+                    step_results = step.eliminate_by_score()
+
+                else:
+                    step_results: List[StepInstance] = step.iterate(x_train, y_train, x_test, y_test, is_subsampling)
 
             else:
+
+                log('input data {} of {}'.format(index, datasets_count))
+
                 x = inputs[index].x
                 y = inputs[index].y
 
@@ -170,28 +202,53 @@ class Pipeline:
         self.__times[name] = time.time() - t
 
     # add train/test split for input dataset
-    def train_test_splits(self, step_results):
+    def split_datasets(self, datasets, is_subsampling):
 
         self.clean_train_test()
 
-        for index in range(len(step_results)):
+        for index in range(len(datasets)):
 
-            x = step_results[index].x
-            y = step_results[index].y
+            x = datasets[index].x
+            y = datasets[index].y
 
-            log('train/test split dataset {}'.format(index))
+            if len(x) <= INITIAL_SAMPLE_SIZE and not is_subsampling:  # KFold
+                split_type = 'KFold'
+                log('KFold split dataset {}'.format(index))
 
-            # define stratify or not
-            stratify = None
-            if self.mode == CLASSIFICATION:
-                stratify = y
+                x_train = []
+                x_test = []
+                y_train = []
+                y_test = []
 
-            # log('x:', x)
-            # log('y:', y)
-            x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=TEST_SIZE, stratify=stratify, random_state=1)
-            # log('x_train:', x_train)
-            # log('y_train:', y_train)
+                if self.mode == CLASSIFICATION:
+                    kf = StratifiedKFold(n_splits=N_SPLITS, random_state=1, shuffle=False)
+                    split = kf.split(x, y)
+                else:
+                    kf = KFold(n_splits=N_SPLITS, random_state=1, shuffle=True)
+                    split = kf.split(x)
 
+                for train_index, test_index in split:
+                    x_train.append(x[train_index])
+                    y_train.append(y[train_index])
+                    x_test.append(x[test_index])
+                    y_test.append(y[test_index])
+
+            else:  # train/test split
+                split_type = 'test_train_split'
+                log('test/train split dataset {}'.format(index))
+
+                # define stratify or not
+                stratify = None
+                if self.mode == CLASSIFICATION:
+                    stratify = y
+
+                # log('x:', x)
+                # log('y:', y)
+                x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=TEST_SIZE, stratify=stratify, random_state=1)
+                # log('x_train:', x_train)
+                # log('y_train:', y_train)
+
+            self.__split_types.append(split_type)
             self.__X_trains.append(x_train)
             self.__y_trains.append(y_train)
             self.__X_tests.append(x_test)

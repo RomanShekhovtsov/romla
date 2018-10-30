@@ -7,7 +7,7 @@ from preprocessing import CsvLoader
 
 from step import *
 from model import Model, ParamRuleType, WrongParamRule
-
+from utils import *
 
 class ModelMock:
 
@@ -19,7 +19,7 @@ class ModelMock:
     def get_name(self):
         return self.estimator.__class__.__name__ + str(self.__cardinality)
 
-    def fit_transform(self, x, y=None):
+    def fit(self, x, y=None):
         return self.estimator(x, self.coeff)
 
     def predict(self, x):

@@ -31,7 +31,7 @@ class LightGBMWrapper:
         self.params['seed'] = 1
 
         max_depth_list = [-1]
-        #max_depth_list.extend(list(range(2, 16)))
+        max_depth_list.extend(list(range(2, 16)))
         self.param_space = {'max_depth': max_depth_list}
         self.param_rules = {'max_depth': ParamRuleType.SEQUENCE}
         self.estimator = None

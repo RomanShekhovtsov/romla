@@ -86,7 +86,7 @@ class Model:
 
     def fit(self, x, y=None):
         log('fitting model {} {}'.format(self.get_name(), self.params))
-        return self.wrapper.fit(x, y=y), y
+        return self.wrapper.fit(x, y=y)
 
     def predict(self, x):
         return self.wrapper.predict(x)
