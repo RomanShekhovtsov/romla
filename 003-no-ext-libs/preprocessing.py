@@ -92,6 +92,9 @@ def preprocessing(args, model_config):
         df_X = pd.concat((df_X, df_dates), axis=1)
         df_dates = None
 
+        # features from holidays
+        df_X = add_holidays(df_X)
+
     # calculate unique values
     with time_metric('process categorical features'):
         df_unique = df_X.apply(lambda x: x.nunique())
@@ -108,7 +111,7 @@ def preprocessing(args, model_config):
         # df_X, categorical_values = onehot_categorical_features(is_big, df_unique, df_X)
         model_config['categorical_values'] = categorical_values
         model_config['categorical_columns'] = categorical_columns
-
+        model_config['categorical_indices'] = [df_X.columns.get_loc(col) for col in categorical_values]
 
     # use only numeric columns
     used_columns = [
@@ -270,3 +273,15 @@ def transform_datetime_features(df):
         #df_dates['number_minute_of_day_{}'.format(col_name)] = df[col_name].apply(lambda x: x.minute + x.hour * 60)
 
     return df_dates
+
+
+def add_holidays(df, file='holidays.csv'):
+    holidays = pd.read_csv(file, parse_dates=True, infer_datetime_format=True)
+    col = holidays.columns[0]
+    ht = pd.to_datetime(holidays[col])
+
+    dt_cols = [col for col in df if col.startswith('date')]
+    for col in dt_cols:
+        df['number_' + col + '_holidays'] = df[col].isin(ht).astype(int)
+
+    return df

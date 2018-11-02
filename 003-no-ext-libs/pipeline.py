@@ -183,7 +183,8 @@ class Pipeline:
 
                     # TODO: replace with hyperopt
                     if len(step.step_results) == 0:
-                        step.init_instances(MAX_INSTANCES)
+                        # step.init_instances(MAX_INSTANCES)
+                        step.init_instances_default()
 
                     folds_count = len(x_train)
                     instances_count = len(step.step_results)
@@ -214,25 +215,25 @@ class Pipeline:
                 else:
 
                     if len(step.step_results) == 0:
-                        work_time = time.time()
-                        step_results = step.init_instances_hyperopt(x_train, y_train, x_test, y_test, self.time_left() / 2)
-                        step_results = step.eliminate_by_score(0.5)
+                        # work_time = time.time()
+                        #step_results = step.init_instances_hyperopt(x_train, y_train, x_test, y_test, self.time_left() / 2)
+                        #step_results = step.eliminate_by_score(0.5)
+                        step_results = step.init_instances_default()
 
-                    else:
-                        work_time = time.time()
-                        # step_iterations_forecast = min(
-                        #     math.ceil(np.log2(len(step.step_results))),
-                        #     math.ceil(np.log2(self.total_rows / len(x_train)))
-                        # )
-                        # log('step_iterations_forecast:', step_iterations_forecast)
+                    work_time = time.time()
+                    # step_iterations_forecast = min(
+                    #     math.ceil(np.log2(len(step.step_results))),
+                    #     math.ceil(np.log2(self.total_rows / len(x_train)))
+                    # )
+                    # log('step_iterations_forecast:', step_iterations_forecast)
 
-                        step_results = step.iterate(
-                            x_train,
-                            y_train,
-                            x_test,
-                            y_test,
-                            is_subsampling,
-                            time_budget=self.time_left())
+                    step_results = step.iterate(
+                        x_train,
+                        y_train,
+                        x_test,
+                        y_test,
+                        is_subsampling,
+                        time_budget=self.time_left())
 
             if step.scoring:
                 # cleanup input data

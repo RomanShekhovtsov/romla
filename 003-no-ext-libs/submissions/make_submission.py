@@ -6,6 +6,7 @@ zip_file_name = r'submissions\{}_submission.zip'.format( time.strftime("%Y-%m-%d
     
 files = [f for f in os.listdir(path='.') if f.endswith('.py')]
 files.append('metadata.json')
+files.append('holidays.csv')
 
 
 with ZipFile(zip_file_name, mode='w') as submission:

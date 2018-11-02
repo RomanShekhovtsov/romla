@@ -57,6 +57,9 @@ def preprocess_test_data(args, model_config=None):
     df = pd.concat((df, df_dates), axis=1)
     df_dates = None
 
+    # features from holidays
+    df = add_holidays(df)
+
     # categorical encoding
     log_start()
     df, _, _ = count_encoding(df, model_config['categorical_values'])

@@ -28,6 +28,8 @@ from model import *
 
 from xgboost_wrapper import XGBoostWrapper
 from lightgbm_wrapper import LightGBMWrapper
+from catboost_wrapper import CatBoostWrapper
+
 from model import Model
 from estimator import NEG_MEAN_SQUARED_ERROR
 
@@ -76,12 +78,14 @@ def _train(args):
     if regression:
         scorer = neg_mean_squared_error
         models = [  # XGBoostWrapper().get_regressor(),
+                  # CatBoostWrapper().get_regressor(model_config['categorical_indices']),
                   LightGBMWrapper().get_regressor()  # model_config['categorical_columns'], model_config['used_columns'])
                   ]
 
     else:
         scorer = roc_auc_score
         models = [  # XGBoostWrapper().get_classifier(),
+                  # CatBoostWrapper().get_classifier(model_config['categorical_indices']),
                   LightGBMWrapper().get_classifier()  # model_config['categorical_columns'], model_config['used_columns'])
                   ]
 

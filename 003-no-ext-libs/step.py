@@ -142,6 +142,24 @@ class Step:
         # iterate sample through step_results
         for index in range(len(self.models)):
 
+            model = deepcopy(self.models[index])
+            params = model.wrapper.base_params
+            result = __hyperopt_objective(params)
+            model.set_params(result['params'])
+            model.wrapper.estimator = result['estimator']
+            step_result = StepResult(model)
+            step_result.instance = model
+            step_result.score = -result['loss']
+            # TODO: step_result.x, step_result.y
+
+            self.step_results.append(step_result)
+            log('{}/{} hyperopt iteration 0 (base params), params: {}, score: {}'.format(
+                index + 1,
+                len(self.models),
+                model.params,
+                step_result.score)
+            )
+
             trials = Trials()
             log('{}/{} hyperopt {}'.format(index + 1, len(self.models), self.models[index].get_name()))
 
@@ -209,6 +227,19 @@ class Step:
             else:
                 self.step_results.append(StepResult(deepcopy(model)))
 
+    # initiate step_results
+    def init_instances_default(self):
+
+        self.step_results = []
+        models_count = len(self.models)
+
+        for i in range(models_count):
+            model = self.models[i]
+            instance = model.new_instance()
+            params = model.wrapper.base_params
+            instance.set_params(params)
+            self.step_results.append(StepResult(instance))
+
     # eliminate step_results by score
     def eliminate_by_score(self, survive_fraction=0.5, elimination_policy=None):
 
@@ -241,3 +272,4 @@ class Step:
         log('elimination: {} of {} step_results survived'.format(len(survived), len(scores)))
 
         return survived
+
