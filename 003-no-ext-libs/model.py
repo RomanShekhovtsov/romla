@@ -31,7 +31,7 @@ class Model:
         self.param_rules = param_rules
 
         self.param_counters = {}
-        self.params = []
+        self.params = {}
 
     def get_name(self):
         return self.wrapper.__class__.__name__
@@ -81,12 +81,16 @@ class Model:
         return param_distribution[distribution_index]
 
     def set_params(self, params):
-        self.params = params
+        for key in params.keys():
+            self.params[key] = params[key]
         self.wrapper.set_params(params)
 
+    def set_final_params(self):
+        self.wrapper.set_final_params()
+
     def fit(self, x, y=None):
-        log('fitting model {} {}'.format(self.get_name(), self.params))
-        return self.wrapper.fit(x, y=y)
+        #log('fitting model {} {}'.format(self.get_name(), self.params))
+        return self.wrapper.fit(x, y=y), y
 
     def predict(self, x):
         return self.wrapper.predict(x)

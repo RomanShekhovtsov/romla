@@ -9,7 +9,7 @@ import traceback
 from utils import *
 from log import *
 from metrics import *
-from preprocessing import transform_categorical_features, transform_datetime_features
+from preprocessing import *
 
 # use this to stop the algorithm before time limit exceeds
 TIME_LIMIT = int(os.environ.get('TIME_LIMIT', 5 * 60))
@@ -59,7 +59,8 @@ def preprocess_test_data(args, model_config=None):
 
     # categorical encoding
     log_start()
-    transform_categorical_features(df, model_config['categorical_values'])
+    df, _, _ = count_encoding(df, model_config['categorical_values'])
+    # transform_categorical_features(df, model_config['categorical_values'])
     # df_cat = pd.DataFrame()
     # for col_name, unique_values in model_config['categorical_values'].items():
     #     for unique_value in unique_values:
@@ -81,7 +82,7 @@ def preprocess_test_data(args, model_config=None):
     # X_scaled = model_config['scaler'].transform(df.values.astype(np.float16))
     # df = None
     # log_time('scale')
-    X = df
+    X = df.values
 
     return X, line_ids, model_config
 

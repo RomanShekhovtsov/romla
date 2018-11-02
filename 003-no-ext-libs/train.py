@@ -23,7 +23,7 @@ from metrics import *
 from log import *
 from preprocessing import preprocessing
 from pipeline import Pipeline
-from step import StepInstance, Step
+from step import StepResult, Step
 from model import *
 
 from xgboost_wrapper import XGBoostWrapper
@@ -36,13 +36,16 @@ CLASSIFICATION = 'classification'
 
 MAX_MODEL_SELECTION_ROWS = 10 ** 5
 
+# use this to stop the algorithm before time limit exceeds
+TIME_RESERVE_SECONDS = 20  # we must finish 20 seconds prior to time limit
+TIME_RESERVE_COEFF = 0.8  # we won't exceed 80% of TIME_LIMIT
+
 TRAIN_TEST_SPLIT_TEST_SIZE = 0.25
 SAMPLING_RATES = [10000]
 MIN_TRAIN_ROWS = SAMPLING_RATES[0] * (1 - TRAIN_TEST_SPLIT_TEST_SIZE)
 
 metrics = get_metrics()
-start_train_time = time.time()
-
+start_train_time = None
 
 def train(args):
     try:
@@ -54,7 +57,8 @@ def train(args):
 
 
 def _train(args):
-
+    global start_train_time
+    start_train_time = time.time()
     # dict with data necessary to make predictions
     model_config = {}
 
@@ -62,9 +66,8 @@ def _train(args):
     metrics['run_date'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     metrics['dataset'] = args.train_csv
 
-    X, y = preprocessing(args, model_config)
-    metrics['X_size'] = sys.getsizeof(X)
-    train_rows = X.shape[0]
+    x, y = preprocessing(args, model_config)
+    metrics['X_size'] = sys.getsizeof(x)
 
     # fitting
     model_config['mode'] = args.mode
@@ -72,20 +75,51 @@ def _train(args):
 
     if regression:
         scorer = neg_mean_squared_error
-        models = [#XGBoostWrapper().get_regressor(),
-                  LightGBMWrapper().get_regressor()
+        models = [  # XGBoostWrapper().get_regressor(),
+                  LightGBMWrapper().get_regressor()  # model_config['categorical_columns'], model_config['used_columns'])
                   ]
 
     else:
         scorer = roc_auc_score
-        models = [XGBoostWrapper().get_classifier(),
-                  LightGBMWrapper().get_classifier()
+        models = [  # XGBoostWrapper().get_classifier(),
+                  LightGBMWrapper().get_classifier()  # model_config['categorical_columns'], model_config['used_columns'])
                   ]
 
-    step = Step( models, scorer=scorer)
+    x = x.values
+    y = y.values
+    # feature selection:
+    # if len(x) > 5 * 10**4:
+    #     log('FEATURE SELECTION PIPELINE RUN:')
+    #     step = Step(models, scorer=scorer)
+    #     steps = [step]
+    #     p = Pipeline(steps, 30, args.mode)
+    #     sample_size = int(len(x) / 10)
+    #
+    #     p.train(x[:sample_size], y[:sample_size], feature_selection=True)
+    #     feature_importance = None
+    #     for step_instance in step.step_results:
+    #         if feature_importance is None:
+    #             feature_importance = step_instance.instance.wrapper.estimator.feature_importance()
+    #         else:
+    #             feature_importance = np.add(feature_importance,
+    #                                         step_instance.instance.wrapper.estimator.feature_importance())
+    #
+    #     x = x[:, feature_importance > 0]
+    #     model_config['used_columns'] = list(np.array(model_config['used_columns'])[feature_importance > 0])
+    #     feature_used = len(model_config['used_columns'])
+    #     feature_removed = len(feature_importance) - feature_used
+    #     log('feature selection: {} of {} used, {} removed'.format(
+    #         feature_used,
+    #         len(feature_importance),
+    #         feature_removed
+    #     ))
+
+    # train pipeline
+    step = Step(models, scorer=scorer)
     steps = [step]
     p = Pipeline(steps, time_left(), args.mode)
-    p.train(X.values, y.values)
+    p.train(x, y)
+
     #print(p.best_score)
     best_model = step.best_model.wrapper.estimator
 
@@ -97,29 +131,30 @@ def _train(args):
     log('best model:', step.best_model.get_name(), step.best_model.wrapper.params)
     # log('best model speed:', speed)
 
-    metrics['best_method'] = step.best_model.get_name()
+    metrics['best_method'] = step.best_model.get_name() + ' ' + str(step.best_model.params)
     metrics['best_score'] = p.best_score
 
     # with time_metric('model_params_search'):
-    #     best_model = best_model.model.model_params_search(best_model, X, y, scoring, speed)
+    #     best_model = best_model.model.model_params_search(best_model, x, y, scoring, speed)
     #     # best_model = model
     #
     # with time_metric('fit_best_model'):
-    #     best_model.fit(X, y=y)
+    #     best_model.fit(x, y=y)
 
     model_config['model'] = best_model
-
     save_metrics('train')
-
     log('Train time: {}'.format(time.time() - start_train_time))
     log_trail()
+
     return model_config
 
 
 def time_left():
     t_left = TIME_LIMIT - (time.time() - start_train_time)
+    t_left = TIME_RESERVE_COEFF * (t_left - TIME_RESERVE_SECONDS)
     return max(t_left, 0)
 
+    return max(t_left, 0)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

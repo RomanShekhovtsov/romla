@@ -3,7 +3,7 @@ import numpy as np
 from copy import deepcopy
 
 from pipeline import *
-from step import StepInstance
+from step import StepResult
 from stepTests import *
 
 
@@ -16,17 +16,17 @@ from stepTests import *
 #         self.scoring = scorer is not None
 #         self.elimination_policy = elimination_policy
 #
-#         self.instances = []
+#         self.step_results = []
 #
 #     def init_instances(self, max_instances):
-#         self.instances = self.models
+#         self.step_results = self.models
 #
 #     def iterate(self, x_train, y_train, x_test=None, y_test=None, is_subsampling=False):
 #
 #         x = deepcopy(x_train)
 #         iteration_results = []
 #
-#         for instance in self.instances:
+#         for instance in self.step_results:
 #             iteration_result = StepInstance(instance, list(map(instance, x)), deepcopy(y_train))
 #
 #             if self.scorer is not None:
@@ -37,7 +37,7 @@ from stepTests import *
 #
 #         return iteration_results
 #
-#     # def instances(self):
+#     # def step_results(self):
 #     #     n = 0
 #     #     while n < 2:
 #     #         yield InstanceMock()
@@ -170,7 +170,7 @@ class PipelineTest(unittest.TestCase):
     #     p = Pipeline([step], 22)
     #     p.train('E:\\ds\\sdsj\\examples\\sdsj2018_lightgbm_baseline\\res\\check_8_c\\train.csv')
     #
-    #     print(step.instances[0].x)
+    #     print(step.step_results[0].x)
 
 
 if __name__ == '__main__':

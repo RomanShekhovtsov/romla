@@ -37,7 +37,7 @@ if __name__ == '__main__':
             7: 'classification',
             8: 'classification',
         }
-        for i in [7]:  # tests.keys():
+        for i in [7,8]:  # tests.keys():
             start_total_time = time.time()
             folder = r'..\..\check_' + str(i) + '_' + tests[i][0] + '\\'
             argv = [

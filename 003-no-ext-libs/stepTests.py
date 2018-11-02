@@ -52,7 +52,7 @@ class StepTest(unittest.TestCase):
         self.assertEqual(len(step.models), 0)
         self.assertEqual(step.scoring, False)
         self.assertEqual(step.elimination_policy, policy)
-        self.assertEqual(len(step.instances), 0)
+        self.assertEqual(len(step.step_results), 0)
         self.assertEqual(step.best_score, None)
         self.assertEqual(step.best_model, None)
 
@@ -60,31 +60,31 @@ class StepTest(unittest.TestCase):
 
         instances_count = 10
 
-        # summary param spaces < max instances
+        # summary param spaces < max step_results
         step = Step([ModelMock(1), ModelMock(2), ModelMock(3)], scorer=neg_mean_squared_error)
         self.assertEqual(len(step.models), 3)
         step.init_instances(instances_count)
         self.step = step
 
-        self.assertEqual(len(step.instances), 1 + 2 + 3)  # < max instances
+        self.assertEqual(len(step.step_results), 1 + 2 + 3)  # < max step_results
 
         cardinalities = [1, 2, 2, 3, 3, 3]
         for i in range(len(cardinalities)):
-            self.assertEqual(step.instances[i].instance.get_name(), 'function' + str(cardinalities[i]))
+            self.assertEqual(step.step_results[i].instance.get_name(), 'function' + str(cardinalities[i]))
 
-        # summary param spaces > max instances
+        # summary param spaces > max step_results
         step = Step([ModelMock(2), ModelMock(6), ModelMock(5)], scorer=neg_mean_squared_error)
         step.init_instances(instances_count)
 
-        # check instances-models distribution
+        # check step_results-models distribution
         cardinalities = [2, 2, 6, 6, 6, 6, 5, 5, 5]
         for i in range(len(cardinalities)):
-            self.assertEqual( step.instances[i].instance.get_name(), 'function' + str(cardinalities[i]))
+            self.assertEqual(step.step_results[i].instance.get_name(), 'function' + str(cardinalities[i]))
 
-        self.assertEqual(len(step.instances), instances_count)
+        self.assertEqual(len(step.step_results), instances_count)
 
         self.step = step
-        for instance in step.instances:
+        for instance in step.step_results:
             self.assertIsNotNone(instance.instance.coeff)
 
     # @unittest.skip

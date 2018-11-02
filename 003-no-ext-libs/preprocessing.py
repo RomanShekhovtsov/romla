@@ -104,15 +104,17 @@ def preprocessing(args, model_config):
         df_X.drop(df_const.index, axis=1, inplace=True)
         log('{} constant features dropped'.format(df_const.shape[0]))
 
-        df_X, categorical_values = transform_categorical_features(df_X)
+        df_X, categorical_values, categorical_columns = count_encoding(df_X)  # transform_categorical_features(df_X)
         # df_X, categorical_values = onehot_categorical_features(is_big, df_unique, df_X)
         model_config['categorical_values'] = categorical_values
+        model_config['categorical_columns'] = categorical_columns
+
 
     # use only numeric columns
     used_columns = [
         col_name
         for col_name in df_X.columns
-        if check_column_name(col_name) or col_name in categorical_values
+        if check_column_name(col_name) or col_name in categorical_columns
     ]
 
     df_X = df_X[used_columns]
@@ -145,6 +147,34 @@ def check_column_name(name):
         return False
 
     return True
+
+
+def count_encoding(df, categorical_values=None):
+    """count encoding of categorical features"""
+    cat_columns = []
+
+    # train stage
+    if categorical_values is None:
+        categorical_values = {}
+        for col_name in list(df.columns):
+                if col_name.startswith('id') or col_name.startswith('string'):
+                    categorical_values[col_name] = df[col_name].value_counts().to_dict()
+                    cat_column = 'count_{}'.format(col_name)
+                    cat_columns.append(cat_column)
+                    df[cat_column] = df[col_name] \
+                        .map(lambda x: categorical_values[col_name].get(x, 0)).astype(int)
+
+    # test stage
+    else:
+        for col_name in list(df.columns):
+            if col_name in categorical_values:
+                cat_column = 'count_{}'.format(col_name)
+                cat_columns.append(cat_column)
+                df[cat_column] = df[col_name] \
+                    .map(lambda x: categorical_values[col_name].get(x, 0)).astype(int)
+
+    return df, categorical_values, cat_columns
+
 
 def transform_categorical_features(df, categorical_values={}):
     # categorical encoding
